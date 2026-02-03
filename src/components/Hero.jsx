@@ -26,7 +26,7 @@ export default function Hero() {
             />
 
             {/* Main Content Container */}
-            <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:mt-22">
+            <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:mt-25">
                 {/* Glassmorphic Content Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -42,7 +42,7 @@ export default function Hero() {
                         className="mb-4 sm:mb-6"
                     >
                         <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
-                            Portfolio 2024
+                            Portfolio 2026
                         </span>
                     </motion.div>
 
@@ -128,27 +128,6 @@ export default function Hero() {
                             </svg>
                         </motion.a>
                     </motion.div>
-
-                    {/* Stats or Quick Info */}
-                    {/* <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 1.4 }}
-                        className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8"
-                    >
-                        <div className="text-center sm:text-left">
-                            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">3+</div>
-                            <div className="text-xs tracking-wide text-gray-500 uppercase">Years Experience</div>
-                        </div>
-                        <div className="text-center sm:text-left">
-                            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">40+</div>
-                            <div className="text-xs tracking-wide text-gray-500 uppercase">Web Apps Built</div>
-                        </div>
-                        <div className="text-center sm:text-left">
-                            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">100%</div>
-                            <div className="text-xs tracking-wide text-gray-500 uppercase">Client Satisfaction</div>
-                        </div>
-                    </motion.div> */}
                 </motion.div>
             </div>
         </section>

@@ -5,8 +5,8 @@ const skills = [
     {
         category: 'Frontend Development',
         items: [
-            { name: 'React.js', level: 95 },
-            { name: 'JavaScript (ES6+)', level: 93 },
+            { name: 'React.js', level: 80 },
+            { name: 'JavaScript (ES6+)', level: 85 },
             { name: 'HTML5 & CSS3', level: 92 },
             { name: 'Tailwind CSS', level: 90 },
         ],
@@ -19,10 +19,10 @@ const skills = [
     {
         category: 'Backend Development',
         items: [
-            { name: 'Node.js', level: 90 },
-            { name: 'Express.js', level: 88 },
-            { name: 'RESTful APIs', level: 92 },
-            { name: 'JWT Authentication', level: 85 },
+            { name: 'Node.js', level: 80 },
+            { name: 'Express.js', level: 80 },
+            { name: 'RESTful APIs', level: 79 },
+            { name: 'JWT Authentication', level: 80 },
         ],
         icon: (
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,9 +47,9 @@ const skills = [
     {
         category: 'Additional Skills',
         items: [
-            { name: 'Redux', level: 82 },
-            { name: 'WebSocket', level: 80 },
-            { name: 'Responsive Design', level: 93 },
+            { name: 'Redux', level: 75 },
+            { name: 'Git & GitHub', level: 85 },
+            { name: 'Responsive Design', level: 80 },
             { name: 'Deployment', level: 85 },
         ],
         icon: (
@@ -62,13 +62,13 @@ const skills = [
 
 const tools = [
     'VS Code',
-    'npm/yarn',
-    'Webpack',
-    'Babel',
-    'ESLint',
+    'npm/npx',
+    'Git & GitHub',
+    'Chrome DevTools',
+    'Postman',
     'Vercel',
-    'Heroku',
     'Netlify',
+    'MongoDB Compass',
 ];
 
 export default function Skills() {
