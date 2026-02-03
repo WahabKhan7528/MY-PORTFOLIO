@@ -102,7 +102,7 @@ export default function Projects() {
                         </span>
                     </motion.div>
 
-                    <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-8">
+                    <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8 mb-8">
                         <div>
                             <h2 className="heading-lg mb-4">
                                 MERN Stack <span className="text-gradient">Projects</span>
@@ -134,8 +134,8 @@ export default function Projects() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className={`px-6 py-3 rounded-full text-sm tracking-wide transition-all ${filter === cat
-                                        ? 'bg-white text-black font-medium'
-                                        : 'glass border border-white/20 hover:bg-white/10'
+                                    ? 'bg-white text-black font-medium'
+                                    : 'glass border border-white/20 hover:bg-white/10'
                                     }`}
                             >
                                 {cat}
@@ -145,7 +145,7 @@ export default function Projects() {
                 </motion.div>
 
                 {/* Projects Grid */}
-                <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <AnimatePresence mode="popLayout">
                         {filteredProjects.map((project, index) => (
                             <motion.div
@@ -273,7 +273,7 @@ export default function Projects() {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 50 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="glass-strong rounded-3xl p-6 md:p-12 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+                            className="glass-strong rounded-3xl p-6 sm:p-8 md:p-12 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
                         >
                             {/* Header */}
                             <div className="flex justify-between items-start mb-8">

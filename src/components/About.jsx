@@ -99,7 +99,7 @@ export default function About() {
                             className="glass-hover rounded-3xl p-8"
                         >
                             <h3 className="text-xl font-display font-semibold mb-6">Core Technologies</h3>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {[
                                     { name: 'MongoDB', desc: 'Database' },
                                     { name: 'Express.js', desc: 'Backend' },
@@ -158,7 +158,7 @@ export default function About() {
                             whileHover={{ y: -4 }}
                             className="glass-hover rounded-3xl p-8"
                         >
-                            <div className="grid grid-cols-3 gap-6 text-center">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
                                 <div>
                                     <div className="text-2xl font-bold text-white mb-1">40+</div>
                                     <div className="text-xs text-gray-500 uppercase tracking-wide">Projects</div>

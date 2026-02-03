@@ -110,7 +110,7 @@ export default function Skills() {
                 </motion.div>
 
                 {/* Skills Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                     {skills.map((skill, index) => (
                         <motion.div
                             key={skill.category}
@@ -198,7 +198,7 @@ export default function Skills() {
                     viewport={{ once: true }}
                     className="glass-strong rounded-3xl p-8 md:p-12"
                 >
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
                         <div>
                             <h3 className="text-2xl font-display font-semibold mb-3">
                                 Development Tools

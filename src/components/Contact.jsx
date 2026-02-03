@@ -233,7 +233,7 @@ export default function Contact() {
 
                                 <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
                                     {/* Name & Email Row */}
-                                    <div className="grid md:grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="relative">
                                             <label htmlFor="name" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
                                                 Your Name
@@ -249,8 +249,8 @@ export default function Contact() {
                                                     onBlur={() => setFocusedField(null)}
                                                     required
                                                     className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all placeholder:text-gray-600 focus:outline-none ${focusedField === 'name'
-                                                            ? 'border-white/40 bg-black/30'
-                                                            : 'border-white/10 hover:border-white/20'
+                                                        ? 'border-white/40 bg-black/30'
+                                                        : 'border-white/10 hover:border-white/20'
                                                         }`}
                                                     placeholder="John Doe"
                                                 />
@@ -281,8 +281,8 @@ export default function Contact() {
                                                     onBlur={() => setFocusedField(null)}
                                                     required
                                                     className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all placeholder:text-gray-600 focus:outline-none ${focusedField === 'email'
-                                                            ? 'border-white/40 bg-black/30'
-                                                            : 'border-white/10 hover:border-white/20'
+                                                        ? 'border-white/40 bg-black/30'
+                                                        : 'border-white/10 hover:border-white/20'
                                                         }`}
                                                     placeholder="john@example.com"
                                                 />
@@ -315,8 +315,8 @@ export default function Contact() {
                                                 onBlur={() => setFocusedField(null)}
                                                 required
                                                 className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all placeholder:text-gray-600 focus:outline-none ${focusedField === 'subject'
-                                                        ? 'border-white/40 bg-black/30'
-                                                        : 'border-white/10 hover:border-white/20'
+                                                    ? 'border-white/40 bg-black/30'
+                                                    : 'border-white/10 hover:border-white/20'
                                                     }`}
                                                 placeholder="Project Inquiry"
                                             />
@@ -348,8 +348,8 @@ export default function Contact() {
                                                 required
                                                 rows={6}
                                                 className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all resize-none placeholder:text-gray-600 focus:outline-none ${focusedField === 'message'
-                                                        ? 'border-white/40 bg-black/30'
-                                                        : 'border-white/10 hover:border-white/20'
+                                                    ? 'border-white/40 bg-black/30'
+                                                    : 'border-white/10 hover:border-white/20'
                                                     }`}
                                                 placeholder="Tell me about your project, goals, and timeline..."
                                             />
@@ -435,7 +435,7 @@ export default function Contact() {
                     viewport={{ once: true }}
                     className="mt-32 pt-12 border-t border-white/10"
                 >
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
                         <p className="text-sm text-gray-500">
                             © 2024 Your Name. All rights reserved.
                         </p>

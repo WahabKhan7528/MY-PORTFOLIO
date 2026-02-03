@@ -3,7 +3,7 @@ import RippleEffect from './RippleEffect';
 
 export default function Hero() {
     return (
-        <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-32 md:pt-0">
             {/* WebGL Ripple Background */}
             <RippleEffect />
 
@@ -16,30 +16,30 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 0.1, scale: 1 }}
                 transition={{ duration: 2, delay: 0.5 }}
-                className="absolute top-1/4 left-1/4 w-96 h-96 bg-white rounded-full blur-[120px] pointer-events-none"
+                className="hidden sm:block absolute top-1/4 left-1/4 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 bg-white rounded-full blur-[80px] sm:blur-[100px] md:blur-[120px] pointer-events-none"
             />
             <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 0.05, scale: 1 }}
                 transition={{ duration: 2, delay: 0.7 }}
-                className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-white rounded-full blur-[150px] pointer-events-none"
+                className="hidden sm:block absolute bottom-1/4 right-1/4 w-80 sm:w-96 md:w-[500px] h-80 sm:h-96 md:h-[500px] bg-white rounded-full blur-[100px] sm:blur-[120px] md:blur-[150px] pointer-events-none"
             />
 
             {/* Main Content Container */}
-            <div className="relative z-10 w-full max-w-6xl mx-auto px-6">
+            <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:mt-22">
                 {/* Glassmorphic Content Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.3 }}
-                    className="glass rounded-3xl p-8 md:p-16 backdrop-blur-xl"
+                    className="glass rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 backdrop-blur-xl"
                 >
                     {/* Eyebrow Text */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.5 }}
-                        className="mb-6"
+                        className="mb-4 sm:mb-6"
                     >
                         <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
                             Portfolio 2024
@@ -51,7 +51,7 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.6 }}
-                        className="mb-6"
+                        className="mb-4 sm:mb-6"
                     >
                         <h1 className="heading-xl mb-2 leading-[0.9]">
                             <span className="block text-gradient">MERN Stack Developer</span>
@@ -63,9 +63,9 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.8 }}
-                        className="mb-8"
+                        className="mb-6 sm:mb-8"
                     >
-                        <p className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white/90">
+                        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light tracking-tight text-white/90">
                             Full-Stack Web Developer
                             <span className="text-gray-500"> & </span>
                             Problem Solver
@@ -77,9 +77,9 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 1 }}
-                        className="mb-12"
+                        className="mb-8 sm:mb-12"
                     >
-                        <p className="text-lg md:text-xl max-w-3xl text-gray-400 font-light leading-relaxed">
+                        <p className="text-base sm:text-lg md:text-xl max-w-3xl text-gray-400 font-light leading-relaxed">
                             Building scalable web applications with MongoDB, Express.js, React, and Node.js.
                             Transforming ideas into robust, high-performance digital solutions.
                         </p>
@@ -90,13 +90,13 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 1.2 }}
-                        className="flex flex-wrap gap-4"
+                        className="flex flex-wrap gap-3 sm:gap-4"
                     >
                         <motion.a
                             href="#projects"
                             whileHover={{ scale: 1.05, y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            className="group relative px-8 py-4 rounded-full bg-white text-black font-medium text-sm tracking-wide overflow-hidden transition-all"
+                            className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-white text-black font-medium text-sm tracking-wide overflow-hidden transition-all"
                         >
                             <span className="relative z-10">View My Work</span>
                             <motion.div
@@ -111,7 +111,7 @@ export default function Hero() {
                             href="#contact"
                             whileHover={{ scale: 1.05, y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-full border border-white/30 text-white font-medium text-sm tracking-wide hover:bg-white/10 transition-all backdrop-blur-sm"
+                            className="px-6 sm:px-8 py-3 sm:py-4 rounded-full border border-white/30 text-white font-medium text-sm tracking-wide hover:bg-white/10 transition-all backdrop-blur-sm"
                         >
                             Get In Touch
                         </motion.a>
@@ -120,7 +120,7 @@ export default function Hero() {
                             href="#about"
                             whileHover={{ scale: 1.05, y: -2 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-8 py-4 rounded-full text-gray-400 font-medium text-sm tracking-wide hover:text-white transition-colors flex items-center gap-2"
+                            className="px-6 sm:px-8 py-3 sm:py-4 rounded-full text-gray-400 font-medium text-sm tracking-wide hover:text-white transition-colors flex items-center gap-2"
                         >
                             <span>Learn More</span>
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -130,53 +130,27 @@ export default function Hero() {
                     </motion.div>
 
                     {/* Stats or Quick Info */}
-                    <motion.div
+                    {/* <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 1.4 }}
-                        className="mt-12 pt-8 border-t border-white/10 grid grid-cols-3 gap-8"
+                        className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8"
                     >
-                        <div>
-                            <div className="text-3xl font-bold text-white mb-1">3+</div>
+                        <div className="text-center sm:text-left">
+                            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">3+</div>
                             <div className="text-xs tracking-wide text-gray-500 uppercase">Years Experience</div>
                         </div>
-                        <div>
-                            <div className="text-3xl font-bold text-white mb-1">40+</div>
+                        <div className="text-center sm:text-left">
+                            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">40+</div>
                             <div className="text-xs tracking-wide text-gray-500 uppercase">Web Apps Built</div>
                         </div>
-                        <div>
-                            <div className="text-3xl font-bold text-white mb-1">100%</div>
+                        <div className="text-center sm:text-left">
+                            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">100%</div>
                             <div className="text-xs tracking-wide text-gray-500 uppercase">Client Satisfaction</div>
                         </div>
-                    </motion.div>
+                    </motion.div> */}
                 </motion.div>
             </div>
-
-            {/* Enhanced Scroll Indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.6 }}
-                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
-            >
-                <motion.a
-                    href="#about"
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="flex flex-col items-center gap-3 cursor-pointer group"
-                >
-                    <span className="text-xs tracking-[0.2em] text-gray-500 uppercase group-hover:text-gray-300 transition-colors">
-                        Scroll to Explore
-                    </span>
-                    <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
-                        <motion.div
-                            animate={{ y: [0, 12, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                            className="w-1 h-2 bg-white rounded-full"
-                        />
-                    </div>
-                </motion.a>
-            </motion.div>
         </section>
     );
 }
