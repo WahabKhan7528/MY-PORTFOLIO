@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+
 
 const socialLinks = [
     {
@@ -83,18 +85,27 @@ export default function Contact() {
         setIsSubmitting(true);
         setSubmitStatus(null);
 
-        // Simulate form submission
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        try {
+            await emailjs.send(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                {
+                    name: formData.name,
+                    email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                },
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            );
 
-        console.log('Form submitted:', formData);
-        setIsSubmitting(false);
-        setSubmitStatus('success');
-
-        // Reset form after success
-        setTimeout(() => {
+            setSubmitStatus('success');
             setFormData({ name: '', email: '', subject: '', message: '' });
-            setSubmitStatus(null);
-        }, 3000);
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+            setSubmitStatus('error');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -428,7 +439,7 @@ export default function Contact() {
                 >
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
                         <p className="text-sm text-gray-500">
-                            © 2026 ABDUL WAHAB KHAN ARIB 
+                            © 2026 ABDUL WAHAB KHAN ARIB
                         </p>
                         <p className="text-sm text-gray-500">All rights reserved.</p>
                     </div>

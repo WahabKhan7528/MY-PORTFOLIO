@@ -171,7 +171,7 @@ export default function About() {
             {/* Quick Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-2xl font-bold text-white mb-1">5+</div>
+                <div className="text-2xl font-bold text-white mb-1">4+</div>
                 <div className="text-xs text-gray-500 uppercase tracking-wide">
                   Personal Projects
                 </div>
