@@ -21,7 +21,7 @@ const projects = [
     ],
     demoUrl: "https://encodex-chi.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/ENCODEX",
-    image: "/src/project images/encodex-1.png",
+    image: "/project-images/encodex-1.png",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const projects = [
       "A comprehensive library management system with user authentication, book management, and Email service.",
     longDescription:
       "Developing a full-stack library management system that enables users to register, log in, and manage book inventories. The backend is built with Node.js and Express, utilizing MongoDB for data storage. Features include secure user authentication with JWT, CRUD operations for books, and integration with Cloudinary for image uploads. Additionally, the system incorporates Nodemailer to send email notifications for overdue books and other alerts. The project emphasizes security, scalability, and a user-friendly interface.",
-    tags: ["React", "Node.js", "Cloudinary", "MongoDB", "JWT", "Express","Nodemailer", "REST API", "CRUD Operations"],
+    tags: ["React", "Node.js", "Cloudinary", "MongoDB", "JWT", "Express", "Nodemailer", "REST API", "CRUD Operations"],
     repoUrl: "https://github.com/WahabKhan7528/library-system",
     image: null,
     status: "Under Construction",
@@ -56,7 +56,7 @@ const projects = [
     ],
     demoUrl: "https://woxo-blogs-v2.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/WOXO-BLOGS-V2", // replace if needed
-    image: "/src/project images/woxo-blogs-1.png",
+    image: "/project-images/woxo-blogs-1.png",
   },
   {
     id: 4,
@@ -78,7 +78,7 @@ const projects = [
     ],
     demoUrl: "https://the-best-group-of-colleges.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/THE-BEST-GROUP-OF-COLLEGES",
-    image: "/src/project images/tbc-1.png",
+    image: "/project-images/tbc-1.png",
   },
 ];
 
@@ -87,7 +87,7 @@ export default function Projects() {
   const [filter, setFilter] = useState("All");
   const [hoveredId, setHoveredId] = useState(null);
 
-  const categories = ["All", "Full Stack","WEB-APP", "Front End", "Live", "GitHub"];
+  const categories = ["All", "Full Stack", "WEB-APP", "Front End", "Live", "GitHub"];
 
   const filteredProjects = projects.filter((project) => {
     if (filter === "All") return true;
