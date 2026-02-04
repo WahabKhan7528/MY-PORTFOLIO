@@ -87,7 +87,7 @@ export default function Projects() {
   const [filter, setFilter] = useState("All");
   const [hoveredId, setHoveredId] = useState(null);
 
-  const categories = ["All", "Full Stack", "Front End", "Live", "GitHub"];
+  const categories = ["All", "Full Stack","WEB-APP", "Front End", "Live", "GitHub"];
 
   const filteredProjects = projects.filter((project) => {
     if (filter === "All") return true;
