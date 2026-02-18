@@ -78,7 +78,7 @@ const projects = [
     ],
     demoUrl: "https://the-best-group-of-colleges.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/THE-BEST-GROUP-OF-COLLEGES",
-    image: "/project-images/tbc-1.png",
+    image: "/project-images/tbc-2.png",
   },
 ];
 
@@ -193,7 +193,7 @@ export default function Projects() {
                 className="glass-hover rounded-3xl overflow-hidden cursor-pointer group relative"
               >
                 {/* Project Image */}
-                <div className="aspect-video bg-gradient-to-br from-gray-800 via-gray-850 to-gray-900 flex items-center justify-center overflow-hidden relative">
+                <div className="aspect-video  from-gray-800 via-gray-850 to-gray-900 flex items-center justify-center overflow-hidden relative">
                   {/* Animated Background Pattern */}
                   <motion.div
                     animate={{
