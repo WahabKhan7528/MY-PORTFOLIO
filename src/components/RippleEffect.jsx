@@ -143,11 +143,14 @@ function RipplePlane() {
 
     return (
         <mesh ref={meshRef}>
-            <planeGeometry args={[Math.max(viewport.width, 10), Math.max(viewport.height, 10), 128, 128]} />
+            {/* Reduced segments from 128 to 64 for much better performance (4x fewer vertices) */}
+            <planeGeometry args={[Math.max(viewport.width, 10), Math.max(viewport.height, 10), 64, 64]} />
             <shaderMaterial
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader}
                 uniforms={uniforms}
+            // Setting transparent/depth options can sometimes help performance if needed, 
+            // but main fix is geometry segments calculation.
             />
         </mesh>
     );
@@ -159,6 +162,8 @@ export default function RippleEffect() {
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 75 }}
                 style={{ background: 'transparent' }}
+                dpr={[1, 1.5]} // Limit pixel ratio to 1.5max for performance on Retina screens
+                gl={{ powerPreference: "high-performance", antialias: false }} // Optimize WebGL context
             >
                 <RipplePlane />
             </Canvas>

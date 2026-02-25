@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -13,7 +17,21 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const locomotiveScroll = new LocomotiveScroll();
+    // Initialize Locomotive Scroll (v5 uses Lenis under the hood)
+    const locomotiveScroll = new LocomotiveScroll({
+      lenisOptions: {
+        lerp: 0.1, // Responsiveness of smooth scroll
+        duration: 1.2,
+        smoothWheel: true,
+        smoothTouch: false, // Disabling on touch devices often improves performance
+        wheelMultiplier: 1,
+      }
+    });
+
+    // Sync with GSAP ScrollTrigger if needed
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
 
     return () => {
       if (locomotiveScroll) {
