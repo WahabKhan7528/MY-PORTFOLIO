@@ -7,7 +7,7 @@ function RipplePlane() {
     const mousePos = useRef({ x: 0.5, y: 0.5 });
     const prevMousePos = useRef({ x: 0.5, y: 0.5 });
     const time = useRef(0);
-    const { size } = useThree();
+    const { size, viewport } = useThree();
 
     // Enhanced vertex shader with multiple wave layers
     const vertexShader = `
@@ -142,11 +142,8 @@ function RipplePlane() {
     });
 
     return (
-        <mesh
-            ref={meshRef}
-            rotation={[-Math.PI / 2, 0, 0]}
-        >
-            <planeGeometry args={[10, 10, 256, 256]} />
+        <mesh ref={meshRef}>
+            <planeGeometry args={[Math.max(viewport.width, 10), Math.max(viewport.height, 10), 128, 128]} />
             <shaderMaterial
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader}
@@ -158,9 +155,9 @@ function RipplePlane() {
 
 export default function RippleEffect() {
     return (
-        <div className="absolute inset-0 w-full h-full pointer-events-none">
+        <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
             <Canvas
-                camera={{ position: [0, 5, 0], fov: 75 }}
+                camera={{ position: [0, 0, 5], fov: 75 }}
                 style={{ background: 'transparent' }}
             >
                 <RipplePlane />

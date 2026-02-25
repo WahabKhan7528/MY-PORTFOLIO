@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const navRef = useRef(null);
+    const mobileBgRef = useRef(null);
+    const mobileMenuRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -14,9 +19,52 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Initial Load Animation
+    useGSAP(() => {
+        const tl = gsap.timeline({ delay: 2.5 });
+        tl.fromTo(navRef.current,
+            { y: -100 },
+            { y: 0, duration: 1.0, ease: 'expo.out' }
+        );
+        tl.fromTo('.nav-item',
+            { opacity: 0, y: -20 },
+            { opacity: 1, y: 0, duration: 0.8, stagger: 0.05, ease: 'expo.out' },
+            "-=0.5"
+        );
+    }, []);
+
+    // Mobile Menu Enter Animation
+    useGSAP(() => {
+        if (mobileMenuOpen && mobileBgRef.current && mobileMenuRef.current) {
+            gsap.fromTo(mobileBgRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 });
+            gsap.fromTo(mobileMenuRef.current, { x: '100%' }, { x: 0, duration: 0.6, ease: 'expo.out' });
+            gsap.fromTo('.mobile-nav-item',
+                { opacity: 0, x: 30 },
+                { opacity: 1, x: 0, duration: 0.6, stagger: 0.05, delay: 0.2, ease: 'expo.out' }
+            );
+        }
+    }, { dependencies: [mobileMenuOpen] });
+
+    const closeMenu = () => {
+        if (mobileMenuRef.current && mobileBgRef.current) {
+            gsap.to(mobileMenuRef.current, { x: '100%', duration: 0.3, ease: 'power2.inOut' });
+            gsap.to(mobileBgRef.current, { opacity: 0, duration: 0.3, onComplete: () => setMobileMenuOpen(false) });
+        } else {
+            setMobileMenuOpen(false);
+        }
+    };
+
+    const handleToggleMenu = () => {
+        if (mobileMenuOpen) {
+            closeMenu();
+        } else {
+            setMobileMenuOpen(true);
+        }
+    };
+
     // Close mobile menu when clicking on a link
     const handleNavClick = () => {
-        setMobileMenuOpen(false);
+        closeMenu();
     };
 
     const navItems = [
@@ -29,10 +77,8 @@ export default function Navbar() {
 
     return (
         <>
-            <motion.nav
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.6 }}
+            <nav
+                ref={navRef}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'
                     }`}
             >
@@ -42,24 +88,17 @@ export default function Navbar() {
                             }`}
                     >
                         {/* Logo */}
-                        <motion.a
+                        <a
                             href="#home"
-                            className="text-lg sm:text-xl font-display font-bold tracking-tight"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="text-lg sm:text-xl font-display font-bold tracking-tight transition-transform hover:scale-105 active:scale-95 block"
                         >
                             WAHAB.
-                        </motion.a>
+                        </a>
 
                         {/* Navigation Links */}
                         <ul className="hidden md:flex items-center gap-8">
-                            {navItems.map((item, index) => (
-                                <motion.li
-                                    key={item.name}
-                                    initial={{ opacity: 0, y: -20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                                >
+                            {navItems.map((item) => (
+                                <li key={item.name} className="nav-item opacity-0">
                                     <a
                                         href={item.href}
                                         className="text-sm tracking-wide text-gray-300 hover:text-white transition-colors relative group"
@@ -67,89 +106,69 @@ export default function Navbar() {
                                         {item.name}
                                         <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
                                     </a>
-                                </motion.li>
+                                </li>
                             ))}
                         </ul>
 
                         {/* Mobile Menu Button */}
-                        <motion.button
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="md:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 relative z-50"
-                            whileTap={{ scale: 0.9 }}
+                        <button
+                            onClick={handleToggleMenu}
+                            className="md:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 relative z-50 transition-transform active:scale-95"
                             aria-label="Toggle menu"
                         >
-                            <motion.span
-                                animate={mobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                                className="w-6 h-[2px] bg-white transition-all"
+                            <span
+                                className={`w-6 h-[2px] bg-white transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-[8px]' : ''}`}
                             />
-                            <motion.span
-                                animate={mobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                                className="w-6 h-[2px] bg-white transition-all"
+                            <span
+                                className={`w-6 h-[2px] bg-white transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}
                             />
-                            <motion.span
-                                animate={mobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                                className="w-6 h-[2px] bg-white transition-all"
+                            <span
+                                className={`w-6 h-[2px] bg-white transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`}
                             />
-                        </motion.button>
+                        </button>
                     </div>
                 </div>
-            </motion.nav>
+            </nav>
 
             {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="fixed inset-0 z-40 md:hidden"
-                        onClick={() => setMobileMenuOpen(false)}
+            {mobileMenuOpen && (
+                <div className="fixed inset-0 z-40 md:hidden">
+                    {/* Backdrop */}
+                    <div
+                        ref={mobileBgRef}
+                        className="absolute inset-0 bg-black/95 backdrop-blur-xl opacity-0"
+                        onClick={closeMenu}
+                    />
+
+                    {/* Menu Content */}
+                    <div
+                        ref={mobileMenuRef}
+                        className="absolute right-0 top-0 bottom-0 w-full sm:w-80 glass-strong p-8 pt-24 translate-x-full"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Backdrop */}
-                        <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" />
-
-                        {/* Menu Content */}
-                        <motion.div
-                            initial={{ x: '100%' }}
-                            animate={{ x: 0 }}
-                            exit={{ x: '100%' }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="absolute right-0 top-0 bottom-0 w-full sm:w-80 glass-strong p-8 pt-24"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <nav>
-                                <ul className="space-y-6">
-                                    {navItems.map((item, index) => (
-                                        <motion.li
-                                            key={item.name}
-                                            initial={{ opacity: 0, x: 50 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ duration: 0.3, delay: index * 0.1 }}
+                        <nav>
+                            <ul className="space-y-6">
+                                {navItems.map((item) => (
+                                    <li key={item.name} className="mobile-nav-item opacity-0 translate-x-12">
+                                        <a
+                                            href={item.href}
+                                            onClick={handleNavClick}
+                                            className="block text-2xl font-display font-semibold text-white hover:text-gray-300 transition-colors"
                                         >
-                                            <a
-                                                href={item.href}
-                                                onClick={handleNavClick}
-                                                className="block text-2xl font-display font-semibold text-white hover:text-gray-300 transition-colors"
-                                            >
-                                                {item.name}
-                                            </a>
-                                        </motion.li>
-                                    ))}
-                                </ul>
+                                            {item.name}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
 
-                                {/* Decorative Element */}
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 0.1, scale: 1 }}
-                                    transition={{ duration: 1, delay: 0.5 }}
-                                    className="absolute bottom-8 right-8 w-32 h-32 bg-white rounded-full blur-[80px]"
-                                />
-                            </nav>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                            {/* Decorative Element */}
+                            <div
+                                className="absolute bottom-8 right-8 w-32 h-32 bg-white rounded-full blur-[80px] opacity-10"
+                            />
+                        </nav>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

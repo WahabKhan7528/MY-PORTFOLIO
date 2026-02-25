@@ -1,27 +1,53 @@
 import { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 export default function FloatingResumeButton() {
-    const ref = useRef(null);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const containerRef = useRef(null);
+    const buttonRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
 
-    const handleMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const xTo = useRef();
+    const yTo = useRef();
 
+    useGSAP(() => {
+        // Initial Mount Animation
+        gsap.fromTo(containerRef.current,
+            { opacity: 0, scale: 0 },
+            { opacity: 1, scale: 1, duration: 1.0, delay: 1.5, ease: 'back.out(1.5)' }
+        );
+
+        // Setup quickTo for optimized magnetic movement
+        xTo.current = gsap.quickTo(buttonRef.current, "x", { duration: 0.4, ease: "power4.out" });
+        yTo.current = gsap.quickTo(buttonRef.current, "y", { duration: 0.4, ease: "power4.out" });
+    }, { scope: containerRef });
+
+    const handleMouseMove = (e) => {
+        if (!buttonRef.current) return;
+        const { clientX, clientY } = e;
+        const { left, top, width, height } = buttonRef.current.getBoundingClientRect();
+
+        // Calculate center precisely based on current DOM Rect (which includes transforms)
+        // Wait, if it transforms, the Rect center shifts. So we need the original or subtract the current transform.
+        // Even simpler: calculate distance from the mouse to the center of the viewport-based bounding box.
         const centerX = left + width / 2;
         const centerY = top + height / 2;
 
         const distanceX = clientX - centerX;
         const distanceY = clientY - centerY;
 
-        // Smoother, slightly stronger magnetic pull
-        setPosition({ x: distanceX * 0.35, y: distanceY * 0.35 });
+        // Smooth magnetic pull
+        if (xTo.current && yTo.current) {
+            xTo.current(distanceX * 0.35);
+            yTo.current(distanceY * 0.35);
+        }
     };
 
     const handleMouseLeave = () => {
-        setPosition({ x: 0, y: 0 });
+        if (xTo.current && yTo.current) {
+            xTo.current(0);
+            yTo.current(0);
+        }
         setIsHovered(false);
     };
 
@@ -30,56 +56,26 @@ export default function FloatingResumeButton() {
     };
 
     return (
-        <motion.div
-            className="fixed bottom-8 right-8 z-50 pointer-events-auto"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 1 }}
+        <div
+            ref={containerRef}
+            className="fixed bottom-8 right-8 z-50 pointer-events-auto opacity-0 transform-gpu"
         >
-            <motion.a
-                ref={ref}
+            <a
+                ref={buttonRef}
                 href="/resume.pdf"
                 download="Wahab_Resume.pdf"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 onMouseEnter={handleMouseEnter}
-                layout
-                animate={{ x: position.x, y: position.y }}
-                transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 15,
-                    mass: 0.1,
-                    layout: { type: "spring", stiffness: 300, damping: 25 }
-                }}
-                className="relative flex items-center justify-center bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl overflow-hidden cursor-pointer group"
-                style={{
-                    borderRadius: 9999,
-                    height: 56,
-                    paddingLeft: isHovered ? 24 : 0,
-                    paddingRight: isHovered ? 24 : 0,
-                    width: isHovered ? "auto" : 56,
-                    minWidth: 56
-                }}
+                className="relative flex items-center justify-center bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl overflow-hidden cursor-pointer group rounded-full w-14 h-14"
             >
                 {/* Glowing background effect */}
-                <motion.div
+                <div
                     className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
 
-                {/* Text */}
-                <motion.span
-                    initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: isHovered ? "auto" : 0, opacity: isHovered ? 1 : 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="font-medium text-white whitespace-nowrap overflow-hidden"
-                    style={{ marginRight: isHovered ? 8 : 0 }}
-                >
-                    Download Resume
-                </motion.span>
-
                 {/* Icon */}
-                <div className="flex items-center justify-center w-5 h-5 text-white">
+                <div className="flex items-center justify-center w-6 h-6 text-white relative z-10">
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -87,14 +83,14 @@ export default function FloatingResumeButton() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="w-5 h-5"
+                        className="w-6 h-6"
                     >
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                         <polyline points="7 10 12 15 17 10" />
                         <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
                 </div>
-            </motion.a>
-        </motion.div>
+            </a>
+        </div>
     );
 }

@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import emailjs from '@emailjs/browser';
+import { useState, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+gsap.registerPlugin(ScrollTrigger);
 
 const socialLinks = [
     {
@@ -69,6 +71,7 @@ const contactMethods = [
 ];
 
 export default function Contact() {
+    const container = useRef(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -78,7 +81,51 @@ export default function Contact() {
 
     const [focusedField, setFocusedField] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
+    const [submitStatus, setSubmitStatus] = useState(null);
+
+    useGSAP(() => {
+        // Left Column (Text & Methods)
+        gsap.fromTo('.contact-eyebrow',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+        );
+
+        gsap.fromTo('.contact-title',
+            { opacity: 0, x: -30 },
+            { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+        );
+
+        const methods = gsap.utils.toArray('.contact-method');
+        gsap.fromTo(methods,
+            { opacity: 0, x: -20 },
+            { opacity: 1, x: 0, duration: 0.8, ease: 'expo.out', stagger: 0.1, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+        );
+
+        // Social Links
+        gsap.fromTo('.social-section',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.2, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+        );
+
+        // Availability Badge
+        gsap.fromTo('.availability-badge',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.3, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+        );
+
+        // Right Column (Form)
+        gsap.fromTo('.contact-form-container',
+            { opacity: 0, x: 30 },
+            { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+        );
+
+        // Footer
+        gsap.fromTo('.contact-footer',
+            { opacity: 0 },
+            { opacity: 1, duration: 0.8, scrollTrigger: { trigger: '.contact-footer', start: 'top 90%', once: true } }
+        );
+
+    }, { scope: container });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -86,6 +133,9 @@ export default function Contact() {
         setSubmitStatus(null);
 
         try {
+            // Dynamically import emailjs only when the form is submitted
+            const emailjs = (await import('@emailjs/browser')).default;
+
             await emailjs.send(
                 import.meta.env.VITE_EMAILJS_SERVICE_ID,
                 import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -116,7 +166,7 @@ export default function Contact() {
     };
 
     return (
-        <section id="contact" className="section-padding min-h-screen flex items-center relative overflow-hidden">
+        <section id="contact" ref={container} className="contact-section section-padding min-h-screen flex items-center relative overflow-hidden">
             {/* Background Elements */}
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
@@ -124,46 +174,31 @@ export default function Contact() {
             <div className="max-w-7xl mx-auto w-full relative z-10">
                 <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
                     {/* Contact Info - 2 columns */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        viewport={{ once: true }}
-                        className="lg:col-span-2"
-                    >
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            viewport={{ once: true }}
-                            className="mb-6"
-                        >
+                    <div className="lg:col-span-2">
+                        <div className="contact-eyebrow mb-6 opacity-0">
                             <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
                                 Get In Touch
                             </span>
-                        </motion.div>
+                        </div>
 
-                        <h2 className="heading-lg mb-6 leading-tight">
-                            Let's Create
-                            <span className="block text-gradient">Something Amazing</span>
-                        </h2>
+                        <div className="contact-title opacity-0">
+                            <h2 className="heading-lg mb-6 leading-tight">
+                                Let's Create
+                                <span className="block text-gradient">Something Amazing</span>
+                            </h2>
 
-                        <p className="body-text mb-12 text-lg leading-relaxed">
-                            Have a project in mind? Let's discuss how we can work together to bring your vision to life.
-                        </p>
+                            <p className="body-text mb-12 text-lg leading-relaxed">
+                                Have a project in mind? Let's discuss how we can work together to bring your vision to life.
+                            </p>
+                        </div>
 
                         {/* Contact Methods */}
                         <div className="space-y-4 mb-12">
-                            {contactMethods.map((method, index) => (
-                                <motion.a
+                            {contactMethods.map((method) => (
+                                <a
                                     key={method.title}
                                     href={method.href}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                    whileHover={{ x: 4 }}
-                                    className="flex items-center gap-4 p-4 rounded-2xl glass hover:bg-white/5 transition-all group"
+                                    className="contact-method flex items-center gap-4 p-4 rounded-2xl glass hover:bg-white/5 transition-all transition-transform hover:translate-x-1 group opacity-0"
                                 >
                                     <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
                                         {method.icon}
@@ -172,58 +207,39 @@ export default function Contact() {
                                         <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">{method.title}</div>
                                         <div className="text-sm font-medium">{method.value}</div>
                                     </div>
-                                </motion.a>
+                                </a>
                             ))}
                         </div>
 
                         {/* Social Links */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            viewport={{ once: true }}
-                        >
+                        <div className="social-section opacity-0">
                             <h3 className="text-sm font-semibold mb-4 text-gray-400 uppercase tracking-wide">Follow Me</h3>
                             <div className="flex gap-3">
                                 {socialLinks.map((social) => (
-                                    <motion.a
+                                    <a
                                         key={social.name}
                                         href={social.url}
-                                        whileHover={{ scale: 1.1, y: -2 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        className="w-12 h-12 rounded-xl glass-hover flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                                        className="w-12 h-12 rounded-xl glass-hover flex items-center justify-center text-gray-400 hover:text-white transition-all hover:scale-110 hover:-translate-y-0.5 active:scale-95"
                                         title={social.name}
                                     >
                                         {social.icon}
-                                    </motion.a>
+                                    </a>
                                 ))}
                             </div>
-                        </motion.div>
+                        </div>
 
                         {/* Availability Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.5 }}
-                            viewport={{ once: true }}
-                            className="mt-8 flex items-center gap-3 p-4 rounded-2xl glass"
-                        >
+                        <div className="availability-badge opacity-0 mt-8 flex items-center gap-3 p-4 rounded-2xl glass">
                             <span className="relative flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                             </span>
                             <span className="text-sm text-gray-300">Available for new projects</span>
-                        </motion.div>
-                    </motion.div>
+                        </div>
+                    </div>
 
                     {/* Contact Form - 3 columns */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        viewport={{ once: true }}
-                        className="lg:col-span-3"
-                    >
+                    <div className="contact-form-container lg:col-span-3 opacity-0">
                         <div className="relative">
                             {/* Form Container */}
                             <div className="glass-strong rounded-3xl p-8 lg:p-12 relative overflow-hidden">
@@ -256,15 +272,7 @@ export default function Contact() {
                                                         }`}
                                                     placeholder="John Doe"
                                                 />
-                                                {focusedField === 'name' && (
-                                                    <motion.div
-                                                        layoutId="focus-indicator"
-                                                        className="absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10"
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        exit={{ opacity: 0 }}
-                                                    />
-                                                )}
+                                                <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'name' ? 'opacity-100' : 'opacity-0'}`} />
                                             </div>
                                         </div>
 
@@ -288,15 +296,7 @@ export default function Contact() {
                                                         }`}
                                                     placeholder="john@example.com"
                                                 />
-                                                {focusedField === 'email' && (
-                                                    <motion.div
-                                                        layoutId="focus-indicator"
-                                                        className="absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10"
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        exit={{ opacity: 0 }}
-                                                    />
-                                                )}
+                                                <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'email' ? 'opacity-100' : 'opacity-0'}`} />
                                             </div>
                                         </div>
                                     </div>
@@ -322,15 +322,7 @@ export default function Contact() {
                                                     }`}
                                                 placeholder="Project Inquiry"
                                             />
-                                            {focusedField === 'subject' && (
-                                                <motion.div
-                                                    layoutId="focus-indicator"
-                                                    className="absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10"
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    exit={{ opacity: 0 }}
-                                                />
-                                            )}
+                                            <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'subject' ? 'opacity-100' : 'opacity-0'}`} />
                                         </div>
                                     </div>
 
@@ -355,29 +347,18 @@ export default function Contact() {
                                                     }`}
                                                 placeholder="Tell me about your project, goals, and timeline..."
                                             />
-                                            {focusedField === 'message' && (
-                                                <motion.div
-                                                    layoutId="focus-indicator"
-                                                    className="absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10"
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    exit={{ opacity: 0 }}
-                                                />
-                                            )}
+                                            <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'message' ? 'opacity-100' : 'opacity-0'}`} />
                                         </div>
                                     </div>
 
                                     {/* Submit Button */}
                                     <div className="flex items-center gap-4">
-                                        <motion.button
+                                        <button
                                             type="submit"
                                             disabled={isSubmitting || submitStatus === 'success'}
-                                            whileHover={{ scale: isSubmitting ? 1 : 1.02, y: isSubmitting ? 0 : -2 }}
-                                            whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                                            className="flex-1 px-8 py-5 rounded-2xl bg-white text-black font-semibold text-sm tracking-wide transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+                                            className="flex-1 px-8 py-5 rounded-2xl bg-white text-black font-semibold text-sm tracking-wide transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group hover:scale-[1.02] active:scale-98"
                                         >
-                                            {/* Button Background Effect */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
                                             <span className="relative z-10 flex items-center gap-3">
                                                 {isSubmitting ? (
@@ -404,46 +385,33 @@ export default function Contact() {
                                                     </>
                                                 )}
                                             </span>
-                                        </motion.button>
+                                        </button>
                                     </div>
 
                                     {/* Success Message */}
-                                    <AnimatePresence>
-                                        {submitStatus === 'success' && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: -10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -10 }}
-                                                className="p-4 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center gap-3"
-                                            >
-                                                <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                <span className="text-sm text-green-300">Thank you! Your message has been sent successfully.</span>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                    <div className={`transition-all duration-500 overflow-hidden ${submitStatus === 'success' ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                        <div className="p-4 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center gap-3 mt-4">
+                                            <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span className="text-sm text-green-300">Thank you! Your message has been sent successfully.</span>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* Footer */}
-                <motion.footer
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="mt-32 pt-12 border-t border-white/10"
-                >
+                <footer className="contact-footer mt-32 pt-12 border-t border-white/10 opacity-0">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
                         <p className="text-sm text-gray-500">
                             © 2026 ABDUL WAHAB KHAN ARIB
                         </p>
                         <p className="text-sm text-gray-500">All rights reserved.</p>
                     </div>
-                </motion.footer>
+                </footer>
             </div>
         </section>
     );
