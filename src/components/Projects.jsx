@@ -26,6 +26,7 @@ const projects = [
     demoUrl: "https://encodex-chi.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/ENCODEX",
     image: "/project-images/encodex-1.png",
+    images: ["/project-images/encodex-1.png"],
   },
   {
     id: 2,
@@ -39,6 +40,7 @@ const projects = [
     tags: ["React", "Node.js", "Cloudinary", "MongoDB", "JWT", "Express", "Nodemailer", "REST API", "CRUD Operations"],
     repoUrl: "https://github.com/WahabKhan7528/library-system",
     image: null,
+    images: [],
     status: "Under Construction",
   },
   {
@@ -61,6 +63,7 @@ const projects = [
     demoUrl: "https://woxo-blogs-v2.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/WOXO-BLOGS-V2",
     image: "/project-images/woxo-blogs-1.png",
+    images: ["/project-images/woxo-blogs-1.png"],
   },
   {
     id: 4,
@@ -83,6 +86,7 @@ const projects = [
     demoUrl: "https://the-best-group-of-colleges.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/THE-BEST-GROUP-OF-COLLEGES",
     image: "/project-images/tbc-2.png",
+    images: ["/project-images/tbc-1.png", "/project-images/tbc-2.png"],
   },
 ];
 
@@ -90,6 +94,7 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [filter, setFilter] = useState("All");
   const [hoveredId, setHoveredId] = useState(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const container = useRef(null);
   const modalRef = useRef(null);
@@ -154,10 +159,16 @@ export default function Projects() {
 
   const closeProject = () => {
     if (modalRef.current && modalBgRef.current) {
-      gsap.to(modalRef.current, { scale: 0.9, opacity: 0, y: 50, duration: 0.3 });
-      gsap.to(modalBgRef.current, { opacity: 0, duration: 0.3, onComplete: () => setSelectedProject(null) });
+      gsap.to(modalRef.current, { scale: 0.95, opacity: 0, y: 30, duration: 0.3 });
+      gsap.to(modalBgRef.current, {
+        opacity: 0, duration: 0.3, onComplete: () => {
+          setSelectedProject(null);
+          setActiveImageIndex(0);
+        }
+      });
     } else {
       setSelectedProject(null);
+      setActiveImageIndex(0);
     }
   };
 
@@ -224,7 +235,10 @@ export default function Projects() {
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              onClick={() => setSelectedProject(project)}
+              onClick={() => {
+                setSelectedProject(project);
+                setActiveImageIndex(0);
+              }}
               onMouseEnter={() => setHoveredId(project.id)}
               onMouseLeave={() => setHoveredId(null)}
               className="project-card glass-hover rounded-3xl overflow-hidden cursor-pointer group relative"
@@ -378,31 +392,53 @@ export default function Projects() {
               </button>
             </div>
 
-
-            <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl mb-8 flex items-center justify-center overflow-hidden relative">
-              <div
-                className="absolute inset-0 opacity-10 animate-[pulse_10s_ease-in-out_infinite]"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle at center, white 1px, transparent 1px)",
-                  backgroundSize: "40px 40px",
-                }}
-              />
-
-              {selectedProject.image ? (
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-contain p-2"
+            <div className="mb-10 w-full flex flex-col gap-4">
+              {/* Main Image */}
+              <div className="w-full aspect-video rounded-2xl bg-black/40 flex items-center justify-center relative overflow-hidden border border-white/5 shadow-2xl">
+                <div
+                  className="absolute inset-0 opacity-[0.03] animate-[pulse_10s_ease-in-out_infinite]"
+                  style={{
+                    backgroundImage: "radial-gradient(circle at center, white 1px, transparent 1px)",
+                    backgroundSize: "30px 30px",
+                  }}
                 />
-              ) : (
-                <span className="text-gray-500 font-bold text-xl relative z-10">
-                  {selectedProject.status || "Project Screenshot"}
-                </span>
+                {(selectedProject.images && selectedProject.images.length > 0) ? (
+                  <img
+                    src={selectedProject.images[activeImageIndex]}
+                    alt={selectedProject.title}
+                    className="absolute inset-0 w-full h-full object-contain p-2 md:p-4 drop-shadow-2xl z-10"
+                  />
+                ) : selectedProject.image ? (
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className="absolute inset-0 w-full h-full object-contain p-2 md:p-4 drop-shadow-2xl z-10"
+                  />
+                ) : (
+                  <span className="text-gray-600 font-bold text-xl relative z-10">
+                    {selectedProject.status || "Project Screenshot"}
+                  </span>
+                )}
+              </div>
+
+              {/* Thumbnails */}
+              {selectedProject.images && selectedProject.images.length > 0 && (
+                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide py-1">
+                  {selectedProject.images.map((imgSrc, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveImageIndex(idx)}
+                      className={`w-24 h-16 md:w-32 md:h-20 shrink-0 rounded-xl overflow-hidden border-2 transition-all p-1 bg-black/40 ${activeImageIndex === idx
+                          ? 'border-white opacity-100 scale-105 shadow-lg'
+                          : 'border-transparent opacity-50 hover:opacity-100'
+                        }`}
+                    >
+                      <img src={imgSrc} alt="Thumbnail" className="w-full h-full object-cover rounded-lg" />
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
-
 
             <div className="mb-8">
               <h4 className="text-sm font-semibold mb-3 text-gray-400 uppercase tracking-wide">
