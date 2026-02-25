@@ -340,6 +340,7 @@ export default function Projects() {
           <div
             ref={modalRef}
             onClick={(e) => e.stopPropagation()}
+            data-lenis-prevent="true"
             className="glass-strong rounded-3xl p-6 sm:p-8 md:p-12 max-w-5xl w-full max-h-[90vh] overflow-y-auto opacity-0 scale-90 translate-y-12"
           >
 
