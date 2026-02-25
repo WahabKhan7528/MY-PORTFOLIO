@@ -59,7 +59,7 @@ const projects = [
       "React Router",
     ],
     demoUrl: "https://woxo-blogs-v2.vercel.app/",
-    repoUrl: "https://github.com/WahabKhan7528/WOXO-BLOGS-V2", // replace if needed
+    repoUrl: "https://github.com/WahabKhan7528/WOXO-BLOGS-V2",
     image: "/project-images/woxo-blogs-1.png",
   },
   {
@@ -105,7 +105,6 @@ export default function Projects() {
   });
 
   useGSAP(() => {
-    // Header initial animations
     gsap.fromTo('.projects-header',
       { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.projects-header', start: 'top 85%', once: true } }
@@ -120,7 +119,6 @@ export default function Projects() {
     );
   }, { scope: container });
 
-  // On Filter Change
   useGSAP(() => {
     gsap.fromTo('.project-card',
       { opacity: 0, scale: 0.95 },
@@ -128,7 +126,6 @@ export default function Projects() {
     );
   }, { dependencies: [filter], scope: container });
 
-  // Modal animations
   useGSAP(() => {
     if (selectedProject) {
       gsap.fromTo(modalBgRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 });
@@ -138,6 +135,22 @@ export default function Projects() {
       );
     }
   }, { dependencies: [selectedProject] });
+
+  useGSAP(() => {
+    const cards = gsap.utils.toArray('.project-card-image-wrap');
+    cards.forEach((card) => {
+      gsap.to(card, {
+        yPercent: 15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: card,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+    });
+  }, { dependencies: [filter], scope: container });
 
   const closeProject = () => {
     if (modalRef.current && modalBgRef.current) {
@@ -154,12 +167,12 @@ export default function Projects() {
       ref={container}
       className="section-padding min-h-screen relative overflow-hidden"
     >
-      {/* Background Elements */}
+
       <div className="absolute top-1/3 right-0 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/3 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        {/* Header */}
+
         <div className="projects-header mb-16 opacity-0">
           <div className="projects-eyebrow mb-6 opacity-0">
             <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
@@ -178,7 +191,7 @@ export default function Projects() {
               </p>
             </div>
 
-            {/* Project Count */}
+
             <div className="projects-count glass rounded-2xl px-6 py-4 text-center opacity-0">
               <div className="text-3xl font-bold mb-1">
                 {filteredProjects.length}
@@ -189,7 +202,7 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Filter Buttons */}
+
           <div className="flex flex-wrap gap-3">
             {categories.map((cat) => (
               <button
@@ -206,7 +219,7 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Projects Grid */}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <div
@@ -216,9 +229,9 @@ export default function Projects() {
               onMouseLeave={() => setHoveredId(null)}
               className="project-card glass-hover rounded-3xl overflow-hidden cursor-pointer group relative"
             >
-              {/* Project Image */}
+
               <div className="aspect-video from-gray-800 via-gray-850 to-gray-900 flex items-center justify-center overflow-hidden relative bg-black/40">
-                {/* Custom Background Pattern logic replacing framer-motion */}
+
                 <div
                   className={`absolute inset-0 opacity-10 transition-all duration-1000 ease-linear`}
                   style={{
@@ -228,14 +241,16 @@ export default function Projects() {
                   }}
                 />
 
-                {project.image && (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-contain p-2 opacity-80 group-hover:opacity-100 transition-all duration-700"
-                  />
-                )}
+                <div className="project-card-image-wrap absolute inset-[-15%] w-[130%] h-[130%] pointer-events-none">
+                  {project.image && (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-contain p-2 opacity-80 group-hover:opacity-100 transition-all duration-700 pointer-events-auto"
+                    />
+                  )}
+                </div>
 
                 <div className="absolute inset-0 bg-white/5 group-hover:scale-110 transition-transform duration-700" />
                 {!project.image && (
@@ -244,12 +259,12 @@ export default function Projects() {
                   </span>
                 )}
 
-                {/* Year Badge */}
+
                 <div className="absolute top-4 right-4 px-3 py-1 rounded-full glass text-xs text-gray-400 z-20">
                   {project.year}
                 </div>
 
-                {/* Overlay on Hover */}
+
                 <div
                   className={`absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent flex flex-col justify-end p-6 z-20 transition-opacity duration-300 ${hoveredId === project.id ? 'opacity-100' : 'opacity-0'}`}
                 >
@@ -274,7 +289,7 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Project Info */}
+
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs tracking-widest text-gray-500 uppercase">
@@ -290,7 +305,7 @@ export default function Projects() {
                   {project.description}
                 </p>
 
-                {/* Tags */}
+
                 <div className="flex flex-wrap gap-2">
                   {project.tags.slice(0, 3).map((tag) => (
                     <span
@@ -308,14 +323,14 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Hover Border Glow */}
+
               <div className="absolute inset-0 rounded-3xl border border-white/0 group-hover:border-white/20 transition-colors pointer-events-none" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Project Modal */}
+
       {selectedProject && (
         <div
           ref={modalBgRef}
@@ -327,7 +342,7 @@ export default function Projects() {
             onClick={(e) => e.stopPropagation()}
             className="glass-strong rounded-3xl p-6 sm:p-8 md:p-12 max-w-5xl w-full max-h-[90vh] overflow-y-auto opacity-0 scale-90 translate-y-12"
           >
-            {/* Header */}
+
             <div className="flex justify-between items-start mb-8">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-3">
@@ -362,7 +377,7 @@ export default function Projects() {
               </button>
             </div>
 
-            {/* Project Image */}
+
             <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl mb-8 flex items-center justify-center overflow-hidden relative">
               <div
                 className="absolute inset-0 opacity-10 animate-[pulse_10s_ease-in-out_infinite]"
@@ -387,7 +402,7 @@ export default function Projects() {
               )}
             </div>
 
-            {/* Description */}
+
             <div className="mb-8">
               <h4 className="text-sm font-semibold mb-3 text-gray-400 uppercase tracking-wide">
                 Project Overview
@@ -397,7 +412,7 @@ export default function Projects() {
               </p>
             </div>
 
-            {/* Technologies */}
+
             <div className="mb-8">
               <h4 className="text-sm font-semibold mb-4 text-gray-400 uppercase tracking-wide">
                 Technologies Used
@@ -414,7 +429,7 @@ export default function Projects() {
               </div>
             </div>
 
-            {/* Action Buttons */}
+
             <div className="flex flex-wrap gap-4">
               {selectedProject.demoUrl && (
                 <a

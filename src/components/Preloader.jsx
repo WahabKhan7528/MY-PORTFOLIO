@@ -17,10 +17,8 @@ export default function Preloader({ onComplete }) {
             onComplete: onComplete
         });
 
-        // Object to animate the number
         const progressObj = { value: 0 };
 
-        // 1. Simulate Loading Progress
         tl.to(progressObj, {
             value: 100,
             duration: 1.8,
@@ -36,7 +34,6 @@ export default function Preloader({ onComplete }) {
             ease: "power2.inOut"
         }, 0);
 
-        // 2. Hide Content
         tl.to(content.current, {
             opacity: 0,
             y: -20,
@@ -44,7 +41,6 @@ export default function Preloader({ onComplete }) {
             ease: "power2.in"
         }, "+=0.2");
 
-        // 3. Split the background like a sliding door
         tl.to(topHalf.current, {
             yPercent: -100,
             duration: 0.8,
@@ -57,7 +53,6 @@ export default function Preloader({ onComplete }) {
             ease: "power4.inOut"
         }, "split");
 
-        // --- Interactive Cursor Logic ---
         const xTo = gsap.quickTo(glowRef.current, "x", { duration: 0.8, ease: "power3" });
         const yTo = gsap.quickTo(glowRef.current, "y", { duration: 0.8, ease: "power3" });
 
@@ -72,16 +67,13 @@ export default function Preloader({ onComplete }) {
                 const textCenterX = textBounds.left + textBounds.width / 2;
                 const textCenterY = textBounds.top + textBounds.height / 2;
 
-                // Calculate distance from center of text
                 const distanceX = clientX - textCenterX;
                 const distanceY = clientY - textCenterY;
 
-                // Magnetize text slightly
                 textXTo(distanceX * 0.1);
                 textYTo(distanceY * 0.1);
             }
 
-            // Move ambient glow strictly to cursor
             xTo(clientX);
             yTo(clientY);
         };
@@ -100,7 +92,6 @@ export default function Preloader({ onComplete }) {
         document.addEventListener('mouseleave', handleMouseLeave);
         document.addEventListener('mouseenter', handleMouseEnter);
 
-        // Cleanup
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseleave', handleMouseLeave);
@@ -114,17 +105,14 @@ export default function Preloader({ onComplete }) {
             ref={container}
             className="fixed inset-0 z-[9999] pointer-events-auto flex flex-col overflow-hidden"
         >
-            {/* Interactive Glowing Orb */}
             <div
                 ref={glowRef}
                 className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-0 mix-blend-screen"
             />
 
-            {/* Split Backgrounds */}
             <div ref={topHalf} className="h-1/2 w-full bg-black border-b border-white/5 relative z-10 pointer-events-none" />
             <div ref={bottomHalf} className="h-1/2 w-full bg-black border-t border-white/5 relative z-10 pointer-events-none" />
 
-            {/* Overlay Content */}
             <div
                 ref={content}
                 className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-20 pointer-events-none"
@@ -142,9 +130,7 @@ export default function Preloader({ onComplete }) {
                         <span>{progress}%</span>
                     </div>
 
-                    {/* Progress Track */}
                     <div className="w-full h-[1px] bg-white/10 rounded-full overflow-hidden">
-                        {/* Progress Fill */}
                         <div
                             ref={progressBar}
                             className="h-full bg-white w-0"

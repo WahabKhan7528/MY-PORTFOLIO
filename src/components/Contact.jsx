@@ -84,7 +84,6 @@ export default function Contact() {
     const [submitStatus, setSubmitStatus] = useState(null);
 
     useGSAP(() => {
-        // Left Column (Text & Methods)
         gsap.fromTo('.contact-eyebrow',
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
@@ -101,25 +100,21 @@ export default function Contact() {
             { opacity: 1, x: 0, duration: 0.8, ease: 'expo.out', stagger: 0.1, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
         );
 
-        // Social Links
         gsap.fromTo('.social-section',
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.2, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
         );
 
-        // Availability Badge
         gsap.fromTo('.availability-badge',
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.3, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
         );
 
-        // Right Column (Form)
         gsap.fromTo('.contact-form-container',
             { opacity: 0, x: 30 },
             { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
         );
 
-        // Footer
         gsap.fromTo('.contact-footer',
             { opacity: 0 },
             { opacity: 1, duration: 0.8, scrollTrigger: { trigger: '.contact-footer', start: 'top 90%', once: true } }
@@ -133,7 +128,6 @@ export default function Contact() {
         setSubmitStatus(null);
 
         try {
-            // Dynamically import emailjs only when the form is submitted
             const emailjs = (await import('@emailjs/browser')).default;
 
             await emailjs.send(
@@ -167,13 +161,11 @@ export default function Contact() {
 
     return (
         <section id="contact" ref={container} className="contact-section section-padding min-h-screen flex items-center relative overflow-hidden">
-            {/* Background Elements */}
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto w-full relative z-10">
                 <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-                    {/* Contact Info - 2 columns */}
                     <div className="lg:col-span-2">
                         <div className="contact-eyebrow mb-6 opacity-0">
                             <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
@@ -192,7 +184,6 @@ export default function Contact() {
                             </p>
                         </div>
 
-                        {/* Contact Methods */}
                         <div className="space-y-4 mb-12">
                             {contactMethods.map((method) => (
                                 <a
@@ -211,7 +202,6 @@ export default function Contact() {
                             ))}
                         </div>
 
-                        {/* Social Links */}
                         <div className="social-section opacity-0">
                             <h3 className="text-sm font-semibold mb-4 text-gray-400 uppercase tracking-wide">Follow Me</h3>
                             <div className="flex gap-3">
@@ -228,7 +218,6 @@ export default function Contact() {
                             </div>
                         </div>
 
-                        {/* Availability Badge */}
                         <div className="availability-badge opacity-0 mt-8 flex items-center gap-3 p-4 rounded-2xl glass">
                             <span className="relative flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -238,19 +227,15 @@ export default function Contact() {
                         </div>
                     </div>
 
-                    {/* Contact Form - 3 columns */}
                     <div className="contact-form-container lg:col-span-3 opacity-0">
                         <div className="relative">
-                            {/* Form Container */}
                             <div className="glass-strong rounded-3xl p-8 lg:p-12 relative overflow-hidden">
-                                {/* Decorative Elements */}
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
 
                                 <h3 className="text-2xl font-display font-semibold mb-2">Send a Message</h3>
                                 <p className="text-gray-400 text-sm mb-8">Fill out the form below and I'll get back to you within 24 hours</p>
 
                                 <form onSubmit={handleSubmit} className="space-y-6 relative z-10" >
-                                    {/* Name & Email Row */}
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="relative">
                                             <label htmlFor="name" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
@@ -301,7 +286,6 @@ export default function Contact() {
                                         </div>
                                     </div>
 
-                                    {/* Subject */}
                                     <div className="relative">
                                         <label htmlFor="subject" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
                                             Subject
@@ -326,7 +310,6 @@ export default function Contact() {
                                         </div>
                                     </div>
 
-                                    {/* Message */}
                                     <div className="relative">
                                         <label htmlFor="message" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
                                             Message
@@ -351,7 +334,6 @@ export default function Contact() {
                                         </div>
                                     </div>
 
-                                    {/* Submit Button */}
                                     <div className="flex items-center gap-4">
                                         <button
                                             type="submit"
@@ -388,7 +370,6 @@ export default function Contact() {
                                         </button>
                                     </div>
 
-                                    {/* Success Message */}
                                     <div className={`transition-all duration-500 overflow-hidden ${submitStatus === 'success' ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'}`}>
                                         <div className="p-4 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center gap-3 mt-4">
                                             <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -403,7 +384,6 @@ export default function Contact() {
                     </div>
                 </div>
 
-                {/* Footer */}
                 <footer className="contact-footer mt-32 pt-12 border-t border-white/10 opacity-0">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
                         <p className="text-sm text-gray-500">

@@ -9,7 +9,6 @@ export default function About() {
   const container = useRef(null);
 
   useGSAP(() => {
-    // Floating Decorative Elements
     gsap.to('.deco-float-1', {
       y: -20,
       rotation: 5,
@@ -28,7 +27,6 @@ export default function About() {
       ease: 'sine.inOut'
     });
 
-    // Left Column Content
     const leftCols = gsap.utils.toArray('.left-col-item');
     gsap.fromTo(leftCols,
       { opacity: 0, x: -30 },
@@ -46,7 +44,6 @@ export default function About() {
       }
     );
 
-    // Right Column Structure
     const rightSide = gsap.utils.toArray('.right-side-anim');
     gsap.fromTo(rightSide,
       { opacity: 0, x: 30 },
@@ -64,7 +61,6 @@ export default function About() {
       }
     );
 
-    // Tech items stagger
     const techItems = gsap.utils.toArray('.tech-item');
     gsap.fromTo(techItems,
       { opacity: 0, scale: 0.95 },
@@ -82,7 +78,6 @@ export default function About() {
       }
     );
 
-    // Additional Skills stagger
     const skillItems = gsap.utils.toArray('.skill-item');
     gsap.fromTo(skillItems,
       { opacity: 0, scale: 0.8 },
@@ -106,11 +101,9 @@ export default function About() {
       ref={container}
       className="section-padding min-h-screen flex items-center relative overflow-hidden"
     >
-      {/* Background Elements */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
-      {/* Floating Decorative Elements */}
       <div
         className="deco-float-1 absolute top-1/3 left-1/4 w-32 h-32 border border-white/10 rounded-3xl pointer-events-none"
       />
@@ -120,7 +113,6 @@ export default function About() {
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Text Content */}
           <div>
             <div className="left-col-item mb-6 opacity-0">
               <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
@@ -163,9 +155,7 @@ export default function About() {
             </a>
           </div>
 
-          {/* Right Column - Skills & Info Cards */}
           <div className="space-y-6">
-            {/* Main Tech Stack Card */}
             <div
               className="right-side-anim glass-hover rounded-3xl p-8 transition-transform hover:-translate-y-1 opacity-0"
             >
@@ -192,7 +182,6 @@ export default function About() {
               </div>
             </div>
 
-            {/* Additional Skills */}
             <div
               className="right-side-anim glass-hover rounded-3xl p-8 transition-transform hover:-translate-y-1 opacity-0"
             >
@@ -220,7 +209,6 @@ export default function About() {
               </div>
             </div>
 
-            {/* Quick Stats */}
             <div className="right-side-anim grid grid-cols-1 sm:grid-cols-3 gap-6 text-center opacity-0">
               <div>
                 <div className="text-2xl font-bold text-white mb-1">4+</div>

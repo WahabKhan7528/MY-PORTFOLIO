@@ -12,23 +12,23 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import FloatingResumeButton from './components/FloatingResumeButton';
 import Preloader from './components/Preloader';
+import CustomCursor from './components/CustomCursor';
+import ScrollProgress from './components/ScrollProgress';
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize Locomotive Scroll (v5 uses Lenis under the hood)
     const locomotiveScroll = new LocomotiveScroll({
       lenisOptions: {
-        lerp: 0.1, // Responsiveness of smooth scroll
+        lerp: 0.1,
         duration: 1.2,
         smoothWheel: true,
-        smoothTouch: false, // Disabling on touch devices often improves performance
+        smoothTouch: false,
         wheelMultiplier: 1,
       }
     });
 
-    // Sync with GSAP ScrollTrigger if needed
     requestAnimationFrame(() => {
       ScrollTrigger.refresh();
     });
@@ -42,11 +42,11 @@ function App() {
 
   return (
     <div className="relative bg-black min-h-screen">
-      {/* Show the GSAP Preloader first */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {/* Main Content only becomes interactive/visible when loader is done animating out */}
       <div className={`transition-opacity duration-700 ${loading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
+        <CustomCursor />
+        <ScrollProgress />
         <Navbar />
 
         <main id="home">

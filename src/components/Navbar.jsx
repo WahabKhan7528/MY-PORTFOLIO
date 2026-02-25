@@ -19,7 +19,6 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Initial Load Animation
     useGSAP(() => {
         const tl = gsap.timeline({ delay: 2.5 });
         tl.fromTo(navRef.current,
@@ -33,7 +32,6 @@ export default function Navbar() {
         );
     }, []);
 
-    // Mobile Menu Enter Animation
     useGSAP(() => {
         if (mobileMenuOpen && mobileBgRef.current && mobileMenuRef.current) {
             gsap.fromTo(mobileBgRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 });
@@ -62,7 +60,6 @@ export default function Navbar() {
         }
     };
 
-    // Close mobile menu when clicking on a link
     const handleNavClick = () => {
         closeMenu();
     };
@@ -87,7 +84,6 @@ export default function Navbar() {
                         className={`glass rounded-full px-6 sm:px-8 py-4 flex items-center justify-between transition-all duration-300 ${scrolled ? 'glass-strong' : ''
                             }`}
                     >
-                        {/* Logo */}
                         <a
                             href="#home"
                             className="text-lg sm:text-xl font-display font-bold tracking-tight transition-transform hover:scale-105 active:scale-95 block"
@@ -95,7 +91,6 @@ export default function Navbar() {
                             WAHAB.
                         </a>
 
-                        {/* Navigation Links */}
                         <ul className="hidden md:flex items-center gap-8">
                             {navItems.map((item) => (
                                 <li key={item.name} className="nav-item opacity-0">
@@ -110,7 +105,6 @@ export default function Navbar() {
                             ))}
                         </ul>
 
-                        {/* Mobile Menu Button */}
                         <button
                             onClick={handleToggleMenu}
                             className="md:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 relative z-50 transition-transform active:scale-95"
@@ -130,17 +124,14 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            {/* Mobile Menu Overlay */}
             {mobileMenuOpen && (
                 <div className="fixed inset-0 z-40 md:hidden">
-                    {/* Backdrop */}
                     <div
                         ref={mobileBgRef}
                         className="absolute inset-0 bg-black/95 backdrop-blur-xl opacity-0"
                         onClick={closeMenu}
                     />
 
-                    {/* Menu Content */}
                     <div
                         ref={mobileMenuRef}
                         className="absolute right-0 top-0 bottom-0 w-full sm:w-80 glass-strong p-8 pt-24 translate-x-full"
@@ -161,7 +152,6 @@ export default function Navbar() {
                                 ))}
                             </ul>
 
-                            {/* Decorative Element */}
                             <div
                                 className="absolute bottom-8 right-8 w-32 h-32 bg-white rounded-full blur-[80px] opacity-10"
                             />

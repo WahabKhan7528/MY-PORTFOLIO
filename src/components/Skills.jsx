@@ -80,7 +80,6 @@ export default function Skills() {
     const container = useRef(null);
 
     useGSAP(() => {
-        // Header Animations
         gsap.fromTo('.skills-header',
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.skills-header', start: 'top 85%', once: true } }
@@ -91,7 +90,6 @@ export default function Skills() {
             { opacity: 1, y: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.skills-header', start: 'top 85%', once: true } }
         );
 
-        // Cards Stagger
         const cards = gsap.utils.toArray('.skill-card');
         gsap.fromTo(cards,
             { opacity: 0, y: 40 },
@@ -105,7 +103,6 @@ export default function Skills() {
             }
         );
 
-        // Progress Bars Stagger
         const progressBars = gsap.utils.toArray('.progress-fill');
         gsap.fromTo(progressBars,
             { width: 0 },
@@ -118,7 +115,6 @@ export default function Skills() {
             }
         );
 
-        // Inside card items stagger
         const skillItems = gsap.utils.toArray('.skill-item');
         gsap.fromTo(skillItems,
             { opacity: 0, x: -20 },
@@ -131,7 +127,6 @@ export default function Skills() {
             }
         );
 
-        // Tools Section
         gsap.fromTo('.tools-section',
             { opacity: 0, y: 30 },
             { opacity: 1, y: 0, duration: 0.8, scrollTrigger: { trigger: '.tools-section', start: 'top 85%', once: true } }
@@ -149,7 +144,6 @@ export default function Skills() {
             }
         );
 
-        // Bottom CTA
         gsap.fromTo('.bottom-cta',
             { opacity: 0, y: 30 },
             { opacity: 1, y: 0, duration: 0.8, delay: 0.4, scrollTrigger: { trigger: '.bottom-cta', start: 'top 90%', once: true } }
@@ -157,7 +151,6 @@ export default function Skills() {
 
     }, { scope: container });
 
-    // Handle Glow Continuous Animation
     useGSAP(() => {
         if (hoveredSkill) {
             gsap.to(`.glow-${hoveredSkill.replace(/[^a-zA-Z0-9]/g, '')}`, {
@@ -172,12 +165,10 @@ export default function Skills() {
 
     return (
         <section id="skills" ref={container} className="section-padding min-h-screen flex items-center relative overflow-hidden">
-            {/* Background Elements */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto w-full relative z-10">
-                {/* Header */}
                 <div className="skills-header mb-16 text-center opacity-0">
                     <div className="skills-eyebrow mb-6 opacity-0">
                         <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
@@ -193,29 +184,24 @@ export default function Skills() {
                     </p>
                 </div>
 
-                {/* Skills Grid */}
                 <div className="skills-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                     {skills.map((skill) => (
                         <div
                             key={skill.category}
                             className="skill-card glass-hover rounded-3xl p-8 group relative overflow-hidden opacity-0 transition-transform hover:-translate-y-2 duration-300"
                         >
-                            {/* Gradient Background */}
                             <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-gray-800/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                            {/* Icon */}
                             <div
                                 className="w-16 h-16 rounded-2xl glass flex items-center justify-center mb-6 text-white/70 group-hover:text-white transition-all duration-700 relative z-10 group-hover:rotate-[360deg] group-hover:scale-110"
                             >
                                 {skill.icon}
                             </div>
 
-                            {/* Category */}
                             <h3 className="text-xl font-display font-semibold mb-6 group-hover:text-white transition-colors relative z-10">
                                 {skill.category}
                             </h3>
 
-                            {/* Skills List with Progress Bars */}
                             <div className="space-y-4 relative z-10">
                                 {skill.items.map((item) => {
                                     const hoverId = `${skill.category}-${item.name}`;
@@ -237,13 +223,11 @@ export default function Skills() {
                                                 </span>
                                             </div>
 
-                                            {/* Progress Bar */}
                                             <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                                                 <div
                                                     data-level={item.level}
                                                     className="progress-fill h-full bg-gradient-to-r from-white/50 to-white rounded-full relative"
                                                 >
-                                                    {/* Animated Glow */}
                                                     <div
                                                         className={`glow-${safeHoverId} absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 -translate-x-full`}
                                                     />
@@ -257,7 +241,6 @@ export default function Skills() {
                     ))}
                 </div>
 
-                {/* Tools & Technologies */}
                 <div className="tools-section glass-strong rounded-3xl p-8 md:p-12 opacity-0">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
                         <div>
@@ -282,7 +265,6 @@ export default function Skills() {
                     </div>
                 </div>
 
-                {/* Bottom CTA */}
                 <div className="bottom-cta mt-16 text-center opacity-0">
                     <p className="text-gray-400 mb-6">Want to see these skills in action?</p>
                     <a
