@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from './lib/gsap';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -29,14 +26,20 @@ function App() {
       }
     });
 
-    requestAnimationFrame(() => {
+    const lenis = locomotiveScroll.lenisInstance;
+    if (lenis) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    const timeoutId = setTimeout(() => {
       ScrollTrigger.refresh();
-    });
+    }, 200);
 
     return () => {
-      if (locomotiveScroll) {
-        locomotiveScroll.destroy();
-      }
+      clearTimeout(timeoutId);
+      if (lenis) lenis.off('scroll', ScrollTrigger.update);
+      locomotiveScroll.destroy();
     };
   }, []);
 

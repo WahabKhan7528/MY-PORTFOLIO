@@ -1,9 +1,6 @@
 import { useState, useRef } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from "../lib/gsap";
 
 const projects = [
   {
@@ -401,7 +398,6 @@ export default function Projects() {
             </div>
 
             <div className="mb-10 w-full flex flex-col gap-4">
-              {/* Main Image */}
               <div className="w-full aspect-video rounded-2xl bg-black/40 flex items-center justify-center relative overflow-hidden border border-white/5 shadow-2xl">
                 {(selectedProject.images && selectedProject.images.length > 0) ? (
                   <img
@@ -422,7 +418,6 @@ export default function Projects() {
                 )}
               </div>
 
-              {/* Thumbnails */}
               {selectedProject.images && selectedProject.images.length > 0 && (
                 <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide py-1">
                   {selectedProject.images.map((imgSrc, idx) => (

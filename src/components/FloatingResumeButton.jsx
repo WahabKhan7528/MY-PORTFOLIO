@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { gsap } from '../lib/gsap';
 
 export default function FloatingResumeButton() {
     const containerRef = useRef(null);

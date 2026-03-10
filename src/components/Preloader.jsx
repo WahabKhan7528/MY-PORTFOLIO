@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { gsap } from '../lib/gsap';
 
 export default function Preloader({ onComplete }) {
     const [progress, setProgress] = useState(0);
@@ -88,9 +88,9 @@ export default function Preloader({ onComplete }) {
             gsap.to(glowRef.current, { opacity: 0.5, duration: 0.3 });
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseleave', handleMouseLeave);
-        document.addEventListener('mouseenter', handleMouseEnter);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+        document.addEventListener('mouseenter', handleMouseEnter, { passive: true });
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);

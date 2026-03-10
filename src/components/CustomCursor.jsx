@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { gsap } from '../lib/gsap';
 
 export default function CustomCursor() {
     const cursorRef = useRef(null);
@@ -38,11 +38,11 @@ export default function CustomCursor() {
             gsap.to(followerRef.current, { opacity: 0.5, duration: 0.3 });
         };
 
-        window.addEventListener('mousemove', moveCursor);
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
-        document.body.addEventListener('mouseleave', handleMouseLeave);
-        document.body.addEventListener('mouseenter', handleMouseEnter);
+        window.addEventListener('mousemove', moveCursor, { passive: true });
+        window.addEventListener('mousedown', handleMouseDown, { passive: true });
+        window.addEventListener('mouseup', handleMouseUp, { passive: true });
+        document.body.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+        document.body.addEventListener('mouseenter', handleMouseEnter, { passive: true });
 
         document.body.classList.add('cursor-none');
 

@@ -2,6 +2,12 @@ import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
+const isLowEndDevice =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(pointer: coarse)').matches;
+
+const PLANE_SEGMENTS = isLowEndDevice ? 32 : 48;
+
 function RipplePlane() {
     const meshRef = useRef();
     const mousePos = useRef({ x: 0.5, y: 0.5 });
@@ -101,13 +107,13 @@ function RipplePlane() {
             mousePos.current.y = y;
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, [size]);
 
     useFrame((state) => {
         if (meshRef.current) {
-            time.current += 0.015;
+            time.current += isLowEndDevice ? 0.01 : 0.015;
             meshRef.current.material.uniforms.uTime.value = time.current;
 
             meshRef.current.material.uniforms.uPrevMouse.value.copy(
@@ -121,7 +127,7 @@ function RipplePlane() {
 
     return (
         <mesh ref={meshRef}>
-            <planeGeometry args={[Math.max(viewport.width, 10), Math.max(viewport.height, 10), 64, 64]} />
+            <planeGeometry args={[Math.max(viewport.width, 10), Math.max(viewport.height, 10), PLANE_SEGMENTS, PLANE_SEGMENTS]} />
             <shaderMaterial
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader}
@@ -137,7 +143,7 @@ export default function RippleEffect() {
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 75 }}
                 style={{ background: 'transparent' }}
-                dpr={[1, 1.5]}
+                dpr={[1, 1]}
                 gl={{ powerPreference: "high-performance", antialias: false }}
             >
                 <RipplePlane />
