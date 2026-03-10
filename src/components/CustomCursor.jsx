@@ -6,11 +6,11 @@ export default function CustomCursor() {
     const followerRef = useRef(null);
 
     useEffect(() => {
-        const cursorX = gsap.quickTo(cursorRef.current, "x", { duration: 0.1, ease: "power3.out" });
-        const cursorY = gsap.quickTo(cursorRef.current, "y", { duration: 0.1, ease: "power3.out" });
+        const cursorX = gsap.quickTo(cursorRef.current, "x", { duration: 0, ease: "none" });
+        const cursorY = gsap.quickTo(cursorRef.current, "y", { duration: 0, ease: "none" });
 
-        const followerX = gsap.quickTo(followerRef.current, "x", { duration: 0.5, ease: "power3.out" });
-        const followerY = gsap.quickTo(followerRef.current, "y", { duration: 0.5, ease: "power3.out" });
+        const followerX = gsap.quickTo(followerRef.current, "x", { duration: 0.15, ease: "power2.out" });
+        const followerY = gsap.quickTo(followerRef.current, "y", { duration: 0.15, ease: "power2.out" });
 
         const moveCursor = (e) => {
             cursorX(e.clientX);
