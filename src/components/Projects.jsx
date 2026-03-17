@@ -1,13 +1,48 @@
 import { useState, useRef } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from "../lib/gsap";
 
 const projects = [
   {
     id: 1,
+    title: "The Best College Website – LMS & CMS",
+    category: "Full Stack",
+    year: "2025",
+    description:
+      "A full-stack college website with integrated LMS and CMS for academic and administrative management.",
+    longDescription:
+      "Developing a comprehensive college website that combines a Learning Management System (LMS) and a Content Management System (CMS) in a single platform. The system includes role-based dashboards for students, faculty, and administrators, enabling course management, assignment distribution, and academic content delivery. The CMS module allows administrators to manage news, events, galleries, and course listings. The project focuses on secure authentication, scalable architecture, and a clean, user-friendly interface, serving as a practical implementation of real-world academic management workflows.",
+    tags: [
+      "MERN Stack",
+      "LMS",
+      "CMS",
+      "Role-Based Access",
+      "Authentication and Authorization",
+      "Portals",
+      "REST API",
+    ],
+    demoUrl: "https://the-best-group-of-colleges.vercel.app/",
+    repoUrl: "https://github.com/WahabKhan7528/THE-BEST-GROUP-OF-COLLEGES",
+    image: "/project-images/TBC/1.webp",
+    images: ["/project-images/TBC/1.webp", "/project-images/TBC/2.webp", "/project-images/TBC/3.webp", "/project-images/TBC/4.webp", "/project-images/TBC/5.webp"],
+  },
+  {
+    id: 5,
+    title: "Premium Client Portfolio",
+    category: "Front End",
+    year: "2026",
+    description:
+      "A sophisticated portfolio website crafted for a professional client, emphasizing high-end aesthetics and smooth performance.",
+    longDescription:
+      "Designed and developed a premium portfolio platform for a client, focusing on visual excellence and technical precision. The project involved creating a custom design system, implementing complex GSAP animations for a 'flowy' feel, and ensuring perfect responsiveness across all devices. The site serves as a central hub for the client's professional presence, with integrated contact forms and a dynamic gallery of their work.",
+    tags: ["React", "GSAP", "Modern UI", "Portfolio", "Client Project"],
+    image: "/project-images/Momo Portfolio/2.webp",
+    images: ["/project-images/Momo Portfolio/2.webp", "/project-images/Momo Portfolio/1.webp", "/project-images/Momo Portfolio/3.webp", "/project-images/Momo Portfolio/4.webp", "/project-images/Momo Portfolio/5.webp"],
+    demoUrl: "https://masooma-portfolio.vercel.app/",
+    repoUrl: "https://github.com/WahabKhan7528/masooma-portfolio",
+  },
+  {
+    id: 2,
     title: "ENCODEX - Secure Text and File Encryption",
     category: "WEB-APP",
     year: "2026",
@@ -29,7 +64,7 @@ const projects = [
     images: ["/project-images/encodex-1.png"],
   },
   {
-    id: 2,
+    id: 3,
     title: "Library Management System",
     category: "Full Stack",
     year: "2026",
@@ -44,7 +79,7 @@ const projects = [
     status: "Under Construction",
   },
   {
-    id: 3,
+    id: 4,
     title: "WOXO BLOGS – Blog Platform",
     category: "Front End",
     year: "2023",
@@ -65,29 +100,7 @@ const projects = [
     image: "/project-images/woxo-blogs-1.png",
     images: ["/project-images/woxo-blogs-1.png"],
   },
-  {
-    id: 4,
-    title: "The Best College Website – LMS & CMS",
-    category: "Full Stack",
-    year: "2025",
-    description:
-      "A full-stack college website with integrated LMS and CMS for academic and administrative management.",
-    longDescription:
-      "Developing a comprehensive college website that combines a Learning Management System (LMS) and a Content Management System (CMS) in a single platform. The system includes role-based dashboards for students, faculty, and administrators, enabling course management, assignment distribution, and academic content delivery. The CMS module allows administrators to manage news, events, galleries, and course listings. The project focuses on secure authentication, scalable architecture, and a clean, user-friendly interface, serving as a practical implementation of real-world academic management workflows.",
-    tags: [
-      "MERN Stack",
-      "LMS",
-      "CMS",
-      "Role-Based Access",
-      "Authentication and Authorization",
-      "Portals",
-      "REST API",
-    ],
-    demoUrl: "https://the-best-group-of-colleges.vercel.app/",
-    repoUrl: "https://github.com/WahabKhan7528/THE-BEST-GROUP-OF-COLLEGES",
-    image: "/project-images/tbc-2.png",
-    images: ["/project-images/tbc-1.png", "/project-images/tbc-2.png"],
-  },
+
 ];
 
 export default function Projects() {
@@ -246,14 +259,6 @@ export default function Projects() {
 
               <div className="aspect-video from-gray-800 via-gray-850 to-gray-900 flex items-center justify-center overflow-hidden relative bg-black/40">
 
-                <div
-                  className={`absolute inset-0 opacity-10 transition-all duration-1000 ease-linear`}
-                  style={{
-                    backgroundImage: "radial-gradient(circle at center, white 1px, transparent 1px)",
-                    backgroundSize: "30px 30px",
-                    backgroundPosition: hoveredId === project.id ? "100% 100%" : "0% 0%"
-                  }}
-                />
 
                 <div className="project-card-image-wrap absolute inset-[-15%] w-[130%] h-[130%] pointer-events-none">
                   {project.image && (
@@ -393,15 +398,7 @@ export default function Projects() {
             </div>
 
             <div className="mb-10 w-full flex flex-col gap-4">
-              {/* Main Image */}
               <div className="w-full aspect-video rounded-2xl bg-black/40 flex items-center justify-center relative overflow-hidden border border-white/5 shadow-2xl">
-                <div
-                  className="absolute inset-0 opacity-[0.03] animate-[pulse_10s_ease-in-out_infinite]"
-                  style={{
-                    backgroundImage: "radial-gradient(circle at center, white 1px, transparent 1px)",
-                    backgroundSize: "30px 30px",
-                  }}
-                />
                 {(selectedProject.images && selectedProject.images.length > 0) ? (
                   <img
                     src={selectedProject.images[activeImageIndex]}
@@ -421,7 +418,6 @@ export default function Projects() {
                 )}
               </div>
 
-              {/* Thumbnails */}
               {selectedProject.images && selectedProject.images.length > 0 && (
                 <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide py-1">
                   {selectedProject.images.map((imgSrc, idx) => (
@@ -429,8 +425,8 @@ export default function Projects() {
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}
                       className={`w-24 h-16 md:w-32 md:h-20 shrink-0 rounded-xl overflow-hidden border-2 transition-all p-1 bg-black/40 ${activeImageIndex === idx
-                          ? 'border-white opacity-100 scale-105 shadow-lg'
-                          : 'border-transparent opacity-50 hover:opacity-100'
+                        ? 'border-white opacity-100 scale-105 shadow-lg'
+                        : 'border-transparent opacity-50 hover:opacity-100'
                         }`}
                     >
                       <img src={imgSrc} alt="Thumbnail" className="w-full h-full object-cover rounded-lg" />

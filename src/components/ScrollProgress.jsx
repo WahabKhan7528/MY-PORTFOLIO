@@ -7,24 +7,39 @@ export default function ScrollProgress() {
         const bar = barRef.current;
         if (!bar) return;
 
-        let rafId;
-        let currentWidth = 0;
+        let rafId = null;
+        let targetProgress = 0;
+        let currentProgress = 0;
 
-        const updateProgress = () => {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const targetWidth = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        const animate = () => {
+            currentProgress += (targetProgress - currentProgress) * 0.15;
+            bar.style.transform = `scaleX(${currentProgress / 100})`;
 
-            currentWidth += (targetWidth - currentWidth) * 0.15;
-
-            bar.style.width = `${currentWidth}%`;
-
-            rafId = requestAnimationFrame(updateProgress);
+            if (Math.abs(targetProgress - currentProgress) > 0.05) {
+                rafId = requestAnimationFrame(animate);
+            } else {
+                currentProgress = targetProgress;
+                bar.style.transform = `scaleX(${currentProgress / 100})`;
+                rafId = null;
+            }
         };
 
-        rafId = requestAnimationFrame(updateProgress);
+        const onScroll = () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            targetProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 
-        return () => cancelAnimationFrame(rafId);
+            if (rafId === null) {
+                rafId = requestAnimationFrame(animate);
+            }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            if (rafId !== null) cancelAnimationFrame(rafId);
+        };
     }, []);
 
     return (
@@ -35,10 +50,13 @@ export default function ScrollProgress() {
                 top: 0,
                 left: 0,
                 height: '3px',
-                width: '0%',
+                width: '100%',
+                transformOrigin: 'left center',
+                transform: 'scaleX(0)',
                 zIndex: 99999,
                 background: 'linear-gradient(to right, #6b7280, #d1d5db, #ffffff)',
                 pointerEvents: 'none',
+                willChange: 'transform',
             }}
         />
     );

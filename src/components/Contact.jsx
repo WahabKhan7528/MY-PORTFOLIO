@@ -1,9 +1,6 @@
 import { useState, useRef } from 'react';
-import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from '../lib/gsap';
 
 const socialLinks = [
     {
@@ -84,35 +81,37 @@ export default function Contact() {
     const [submitStatus, setSubmitStatus] = useState(null);
 
     useGSAP(() => {
+        const section = container.current;
+
         gsap.fromTo('.contact-eyebrow',
             { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
         );
 
         gsap.fromTo('.contact-title',
             { opacity: 0, x: -30 },
-            { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+            { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
         );
 
         const methods = gsap.utils.toArray('.contact-method');
         gsap.fromTo(methods,
             { opacity: 0, x: -20 },
-            { opacity: 1, x: 0, duration: 0.8, ease: 'expo.out', stagger: 0.1, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+            { opacity: 1, x: 0, duration: 0.8, ease: 'expo.out', stagger: 0.1, scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
         );
 
         gsap.fromTo('.social-section',
             { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.2, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.2, scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
         );
 
         gsap.fromTo('.availability-badge',
             { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.3, scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', delay: 0.3, scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
         );
 
         gsap.fromTo('.contact-form-container',
             { opacity: 0, x: 30 },
-            { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.contact-section', start: 'top 80%', once: true } }
+            { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
         );
 
         gsap.fromTo('.contact-footer',

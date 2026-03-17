@@ -1,6 +1,6 @@
 import { useRef, lazy, Suspense } from 'react';
-import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { gsap } from '../lib/gsap';
 
 const RippleEffect = lazy(() => import('./RippleEffect'));
 

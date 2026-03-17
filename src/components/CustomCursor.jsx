@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { gsap } from '../lib/gsap';
 
 export default function CustomCursor() {
     const cursorRef = useRef(null);
     const followerRef = useRef(null);
 
     useEffect(() => {
-        const cursorX = gsap.quickTo(cursorRef.current, "x", { duration: 0.1, ease: "power3.out" });
-        const cursorY = gsap.quickTo(cursorRef.current, "y", { duration: 0.1, ease: "power3.out" });
+        const cursorX = gsap.quickTo(cursorRef.current, "x", { duration: 0, ease: "none" });
+        const cursorY = gsap.quickTo(cursorRef.current, "y", { duration: 0, ease: "none" });
 
-        const followerX = gsap.quickTo(followerRef.current, "x", { duration: 0.5, ease: "power3.out" });
-        const followerY = gsap.quickTo(followerRef.current, "y", { duration: 0.5, ease: "power3.out" });
+        const followerX = gsap.quickTo(followerRef.current, "x", { duration: 0.15, ease: "power2.out" });
+        const followerY = gsap.quickTo(followerRef.current, "y", { duration: 0.15, ease: "power2.out" });
 
         const moveCursor = (e) => {
             cursorX(e.clientX);
@@ -38,11 +38,11 @@ export default function CustomCursor() {
             gsap.to(followerRef.current, { opacity: 0.5, duration: 0.3 });
         };
 
-        window.addEventListener('mousemove', moveCursor);
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
-        document.body.addEventListener('mouseleave', handleMouseLeave);
-        document.body.addEventListener('mouseenter', handleMouseEnter);
+        window.addEventListener('mousemove', moveCursor, { passive: true });
+        window.addEventListener('mousedown', handleMouseDown, { passive: true });
+        window.addEventListener('mouseup', handleMouseUp, { passive: true });
+        document.body.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+        document.body.addEventListener('mouseenter', handleMouseEnter, { passive: true });
 
         document.body.classList.add('cursor-none');
 

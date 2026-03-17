@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { gsap } from '../lib/gsap';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -12,10 +12,11 @@ export default function Navbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            const shouldBeScrolled = window.scrollY > 50;
+            setScrolled((prev) => (prev !== shouldBeScrolled ? shouldBeScrolled : prev));
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 

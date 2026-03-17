@@ -6,23 +6,38 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
-    rel="stylesheet">
-
   <!-- SEO Meta Tags -->
   <meta name="description"
-    content="Portfolio of [Your Name] - Creative Developer & Designer specializing in modern web experiences" />
-  <meta name="keywords" content="portfolio, web developer, designer, creative, React, Next.js" />
-  <meta name="author" content="Your Name" />
+    content="Portfolio of Abdul Wahab Khan - MERN Stack Developer specializing in full-stack web applications" />
+  <meta name="keywords" content="portfolio, MERN stack, web developer, React, Node.js, MongoDB, Express" />
+  <meta name="author" content="Abdul Wahab Khan" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Your Name - Portfolio" />
-  <meta property="og:description" content="Creative Developer & Designer" />
+  <meta property="og:title" content="WAHAB KHAN - MERN Stack Developer" />
+  <meta property="og:description" content="Full-Stack Web Developer & Problem Solver" />
   <meta property="og:type" content="website" />
+
+  <!-- Fonts — preconnect first so the TLS handshake is done before the CSS
+       is parsed; then load the stylesheet in a non-render-blocking way using
+       the media="print" trick which is the safest cross-browser approach.     -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Non-blocking font load: media=print is parsed but not applied until
+       onload swaps it to "all", so it never blocks the critical render path. -->
+  <link
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+  />
+  <!-- Fallback for browsers with JS disabled -->
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    />
+  </noscript>
 
   <title>Portfolio - WAHAB KHAN</title>
 </head>
