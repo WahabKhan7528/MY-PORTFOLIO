@@ -1,513 +1,271 @@
 import { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "../lib/gsap";
+import { gsap } from "../lib/gsap";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float, MeshDistortMaterial, Environment } from "@react-three/drei";
 
 const projects = [
   {
     id: 1,
-    title: "The Best College Website – LMS & CMS",
+    title: "The Best College Website",
     category: "Full Stack",
     year: "2025",
-    description:
-      "A full-stack college website with integrated LMS and CMS for academic and administrative management.",
-    longDescription:
-      "Developing a comprehensive college website that combines a Learning Management System (LMS) and a Content Management System (CMS) in a single platform. The system includes role-based dashboards for students, faculty, and administrators, enabling course management, assignment distribution, and academic content delivery. The CMS module allows administrators to manage news, events, galleries, and course listings. The project focuses on secure authentication, scalable architecture, and a clean, user-friendly interface, serving as a practical implementation of real-world academic management workflows.",
-    tags: [
-      "MERN Stack",
-      "LMS",
-      "CMS",
-      "Role-Based Access",
-      "Authentication and Authorization",
-      "Portals",
-      "REST API",
-    ],
+    description: "A full-stack college website with integrated LMS and CMS for academic and administrative management.",
+    tags: ["MERN Stack", "LMS", "CMS", "REST API"],
     demoUrl: "https://the-best-group-of-colleges.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/THE-BEST-GROUP-OF-COLLEGES",
     image: "/project-images/TBC/1.webp",
-    images: ["/project-images/TBC/1.webp", "/project-images/TBC/2.webp", "/project-images/TBC/3.webp", "/project-images/TBC/4.webp", "/project-images/TBC/5.webp"],
   },
   {
     id: 5,
     title: "Premium Client Portfolio",
     category: "Front End",
     year: "2026",
-    description:
-      "A sophisticated portfolio website crafted for a professional client, emphasizing high-end aesthetics and smooth performance.",
-    longDescription:
-      "Designed and developed a premium portfolio platform for a client, focusing on visual excellence and technical precision. The project involved creating a custom design system, implementing complex GSAP animations for a 'flowy' feel, and ensuring perfect responsiveness across all devices. The site serves as a central hub for the client's professional presence, with integrated contact forms and a dynamic gallery of their work.",
-    tags: ["React", "GSAP", "Modern UI", "Portfolio", "Client Project"],
+    description: "A sophisticated portfolio website crafted for a professional client, emphasizing high-end aesthetics and smooth performance.",
+    tags: ["React", "GSAP", "Modern UI", "Client Project"],
     image: "/project-images/Momo Portfolio/2.webp",
-    images: ["/project-images/Momo Portfolio/2.webp", "/project-images/Momo Portfolio/1.webp", "/project-images/Momo Portfolio/3.webp", "/project-images/Momo Portfolio/4.webp", "/project-images/Momo Portfolio/5.webp"],
-    demoUrl: "https://masooma-portfolio.vercel.app/",
-    repoUrl: "https://github.com/WahabKhan7528/masooma-portfolio",
   },
   {
     id: 2,
-    title: "ENCODEX - Secure Text and File Encryption",
+    title: "ENCODEX",
     category: "WEB-APP",
     year: "2026",
-    description:
-      "A client-side encryption tool for securely encrypting text and files directly in the browser.",
-    longDescription:
-      "Developed a browser-based encryption application that allows users to encrypt and decrypt text and files entirely on the client side. Implemented AES-GCM 256-bit encryption using the Web Crypto API, with keys derived from user passphrases via PBKDF2. Each encryption uses a random salt and IV to ensure security. The app works offline, sends no data to servers, and supports features such as file encryption, compression, QR code sharing, templates, password generation, and session history. Encrypted data and passphrases are intended to be shared separately for enhanced security.",
-    tags: [
-      "JavaScript",
-      "Web Crypto API",
-      "AES-GCM",
-      "PBKDF2",
-      "Client-Side Security",
-      "Responsive UI",
-    ],
-    demoUrl: "https://encodex-chi.vercel.app/",
-    repoUrl: "https://github.com/WahabKhan7528/ENCODEX",
+    description: "A client-side encryption tool for securely encrypting text and files directly in the browser.",
+    tags: ["JavaScript", "Web Crypto API", "AES-GCM", "PBKDF2"],
     image: "/project-images/encodex-1.png",
-    images: ["/project-images/encodex-1.png"],
   },
   {
     id: 3,
     title: "Library Management System",
     category: "Full Stack",
     year: "2026",
-    description:
-      "A comprehensive library management system with user authentication, book management, and Email service.",
-    longDescription:
-      "Developing a full-stack library management system that enables users to register, log in, and manage book inventories. The backend is built with Node.js and Express, utilizing MongoDB for data storage. Features include secure user authentication with JWT, CRUD operations for books, and integration with Cloudinary for image uploads. Additionally, the system incorporates Nodemailer to send email notifications for overdue books and other alerts. The project emphasizes security, scalability, and a user-friendly interface.",
-    tags: ["React", "Node.js", "Cloudinary", "MongoDB", "JWT", "Express", "Nodemailer", "REST API", "CRUD Operations"],
-    repoUrl: "https://github.com/WahabKhan7528/library-system",
+    description: "A comprehensive library management system with user authentication, book management, and Email service.",
+    tags: ["React", "Node.js", "MongoDB", "Express", "JWT"],
     image: null,
-    images: [],
-    status: "Under Construction",
   },
   {
     id: 4,
-    title: "WOXO BLOGS – Blog Platform",
+    title: "WOXO BLOGS",
     category: "Front End",
     year: "2023",
-    description:
-      "A modern, responsive blog platform focused on clean UI, readability, and smooth user experience.",
-    longDescription:
-      "Built a frontend-focused blogging platform that allows users to browse and read blog posts in a clean, distraction-free interface.The project emphasizes modern UI design, responsive layouts, and well-structured components.WOXO BLOGS was developed as a Semester project to strengthen frontend fundamentals and real-world React workflow.",
-    tags: [
-      "React",
-      "Responsive Design",
-      "Component-Based Architecture",
-      "Modern UI",
-      "Tailwind CSS",
-      "React Router",
-    ],
-    demoUrl: "https://woxo-blogs-v2.vercel.app/",
-    repoUrl: "https://github.com/WahabKhan7528/WOXO-BLOGS-V2",
+    description: "A modern, responsive blog platform focused on clean UI, readability, and smooth user experience.",
+    tags: ["React", "Tailwind CSS", "React Router"],
     image: "/project-images/woxo-blogs-1.png",
-    images: ["/project-images/woxo-blogs-1.png"],
   },
-
 ];
 
-export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [filter, setFilter] = useState("All");
-  const [hoveredId, setHoveredId] = useState(null);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-  const container = useRef(null);
-  const modalRef = useRef(null);
-  const modalBgRef = useRef(null);
-
-  const categories = ["All", "Full Stack", "WEB-APP", "Front End", "Live", "GitHub"];
-
-  const filteredProjects = projects.filter((project) => {
-    if (filter === "All") return true;
-    if (filter === "Live") return !!project.demoUrl;
-    if (filter === "GitHub") return !!project.repoUrl;
-    return project.category === filter;
+// 3D Background Blob that reacts to scrolling
+function BackgroundBlob() {
+  const meshRef = useRef();
+  
+  useFrame((state) => {
+    if (meshRef.current) {
+      // Smooth continuous rotation
+      meshRef.current.rotation.x = state.clock.elapsedTime * 0.1;
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.15;
+    }
   });
 
+  return (
+    <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
+      <mesh ref={meshRef} scale={1.8}>
+        <icosahedronGeometry args={[1, 64]} />
+        <MeshDistortMaterial 
+          color="#1a1a1a" 
+          envMapIntensity={2} 
+          clearcoat={1} 
+          clearcoatRoughness={0.1} 
+          metalness={0.8} 
+          roughness={0.2} 
+          distort={0.4} 
+          speed={1.5} 
+        />
+      </mesh>
+    </Float>
+  );
+}
+
+export default function Projects() {
+  const container = useRef(null);
+  const wrapperRef = useRef(null);
+
   useGSAP(() => {
-    gsap.fromTo('.projects-header',
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.projects-header', start: 'top 85%', once: true } }
-    );
-    gsap.fromTo('.projects-eyebrow',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', scrollTrigger: { trigger: '.projects-header', start: 'top 85%', once: true } }
-    );
-    gsap.fromTo('.projects-count',
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 1.0, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.projects-header', start: 'top 85%', once: true } }
-    );
+    const sections = gsap.utils.toArray('.project-panel');
+    
+    // 1. Horizontal Scroll Pinning
+    let tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container.current,
+        pin: true,
+        scrub: 1, // Smooth scrubbing effect
+        snap: 1 / (sections.length - 1), // Snap to closest project
+        end: () => "+=" + (window.innerWidth * sections.length), // Scroll duration based on width
+      }
+    });
+
+    // Move the wrapper horizontally
+    tl.to(sections, {
+      xPercent: -100 * (sections.length - 1),
+      ease: "none"
+    });
+
+    // 2. Parallax Zoom & Reveal inside horizontal scroll
+    sections.forEach((section) => {
+      const img = section.querySelector('.project-img');
+      const content = section.querySelector('.project-content');
+      
+      if (img) {
+        // Massive Zoom Effect on the image while it comes into view horizontally
+        gsap.fromTo(img, 
+          { scale: 1 }, 
+          {
+            scale: 1.6,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              containerAnimation: tl, // Bind to the horizontal scroll timeline
+              start: "left right", // When the left of the section hits the right of the screen
+              end: "right left",   // When the right of the section hits the left of the screen
+              scrub: true,
+            }
+          }
+        );
+      }
+
+      if (content) {
+        // Text reveals as it enters horizontally
+        gsap.fromTo(content, 
+          { opacity: 0, x: 100, scale: 0.9 }, 
+          {
+            opacity: 1, 
+            x: 0, 
+            scale: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              containerAnimation: tl,
+              start: "left 75%", 
+              end: "center center",
+              scrub: true,
+            }
+          }
+        );
+      }
+    });
+
+    // 3. 3D Canvas rotation tied to vertical scroll
+    gsap.to('.canvas-container', {
+      rotationZ: 45,
+      scale: 1.2,
+      scrollTrigger: {
+        trigger: container.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      }
+    });
+
   }, { scope: container });
 
-  useGSAP(() => {
-    gsap.fromTo('.project-card',
-      { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 0.8, stagger: 0.05, ease: 'expo.out', clearProps: 'all' }
-    );
-  }, { dependencies: [filter], scope: container });
-
-  useGSAP(() => {
-    if (selectedProject) {
-      gsap.fromTo(modalBgRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 });
-      gsap.fromTo(modalRef.current,
-        { scale: 0.95, opacity: 0, y: 30 },
-        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }
-      );
-    }
-  }, { dependencies: [selectedProject] });
-
-  useGSAP(() => {
-    const cards = gsap.utils.toArray('.project-card-image-wrap');
-    cards.forEach((card) => {
-      gsap.to(card, {
-        yPercent: 15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: card,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true
-        }
-      });
-    });
-  }, { dependencies: [filter], scope: container });
-
-  const closeProject = () => {
-    if (modalRef.current && modalBgRef.current) {
-      gsap.to(modalRef.current, { scale: 0.95, opacity: 0, y: 30, duration: 0.3 });
-      gsap.to(modalBgRef.current, {
-        opacity: 0, duration: 0.3, onComplete: () => {
-          setSelectedProject(null);
-          setActiveImageIndex(0);
-        }
-      });
-    } else {
-      setSelectedProject(null);
-      setActiveImageIndex(0);
-    }
-  };
-
   return (
-    <section
-      id="projects"
-      ref={container}
-      className="section-padding min-h-screen relative overflow-hidden"
+    <section 
+      id="projects" 
+      ref={container} 
+      className="relative w-full h-screen overflow-hidden bg-black text-white"
     >
-
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/3 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-
-        <div className="projects-header mb-16 opacity-0">
-          <div className="projects-eyebrow mb-6 opacity-0">
-            <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
-              Portfolio
-            </span>
-          </div>
-
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8 mb-8">
-            <div>
-              <h2 className="heading-lg mb-4">
-                MERN Stack <span className="text-gradient">Projects</span>
-              </h2>
-              <p className="body-text max-w-2xl">
-                Full-stack web applications built with MongoDB, Express.js,
-                React, and Node.js
-              </p>
-            </div>
-
-
-            <div className="projects-count glass rounded-2xl px-6 py-4 text-center opacity-0">
-              <div className="text-3xl font-bold mb-1">
-                {filteredProjects.length}
-              </div>
-              <div className="text-xs text-gray-400 uppercase tracking-wide">
-                Projects
-              </div>
-            </div>
-          </div>
-
-
-          <div className="flex flex-wrap gap-3">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-6 py-3 rounded-full text-sm tracking-wide transition-all hover:scale-105 active:scale-95 ${filter === cat
-                  ? "bg-white text-black font-medium"
-                  : "glass border border-white/20 hover:bg-white/10"
-                  }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              onClick={() => {
-                setSelectedProject(project);
-                setActiveImageIndex(0);
-              }}
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              className="project-card glass-hover rounded-3xl overflow-hidden cursor-pointer group relative"
-            >
-
-              <div className="aspect-video from-gray-800 via-gray-850 to-gray-900 flex items-center justify-center overflow-hidden relative bg-black/40">
-
-
-                <div className="project-card-image-wrap absolute inset-[-15%] w-[130%] h-[130%] pointer-events-none">
-                  {project.image && (
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-contain p-2 opacity-80 group-hover:opacity-100 transition-all duration-700 pointer-events-auto"
-                    />
-                  )}
-                </div>
-
-                <div className="absolute inset-0 bg-white/5 group-hover:scale-110 transition-transform duration-700" />
-                {!project.image && (
-                  <span className="text-gray-500 font-bold text-lg relative z-10">
-                    {project.status || "MERN Project"}
-                  </span>
-                )}
-
-
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full glass text-xs text-gray-400 z-20">
-                  {project.year}
-                </div>
-
-
-                <div
-                  className={`absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent flex flex-col justify-end p-6 z-20 transition-opacity duration-300 ${hoveredId === project.id ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <div className={`transition-all duration-300 ${hoveredId === project.id ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'}`}>
-                    <div className="flex items-center gap-2 text-white text-sm font-medium">
-                      <span>View Details</span>
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs tracking-widest text-gray-500 uppercase">
-                    {project.category}
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-display font-semibold mb-3 group-hover:text-white transition-colors">
-                  {project.title}
-                </h3>
-
-                <p className="text-sm text-gray-400 line-clamp-2 mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.slice(0, 3).map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 rounded-full glass text-xs text-gray-400 group-hover:text-gray-300 transition-colors"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                  {project.tags.length > 3 && (
-                    <span className="px-3 py-1 rounded-full glass text-xs text-gray-500">
-                      +{project.tags.length - 3}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-
-              <div className="absolute inset-0 rounded-3xl border border-white/0 group-hover:border-white/20 transition-colors pointer-events-none" />
-            </div>
-          ))}
-        </div>
+      {/* 3D Background Canvas */}
+      <div className="canvas-container absolute inset-0 z-0 pointer-events-none opacity-60">
+        <Canvas camera={{ position: [0, 0, 5] }}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[10, 10, 10]} intensity={1} />
+          <Environment preset="city" />
+          <BackgroundBlob />
+        </Canvas>
       </div>
 
+      {/* Persistent Header */}
+      <div className="absolute top-10 left-10 md:top-20 md:left-20 z-20">
+        <div className="text-xs tracking-[0.2em] uppercase text-gray-400 mb-2">Portfolio 2026</div>
+        <h2 className="heading-lg text-white">Selected Works</h2>
+      </div>
 
-      {selectedProject && (
-        <div
-          ref={modalBgRef}
-          onClick={closeProject}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-xl opacity-0"
-        >
-          <div
-            ref={modalRef}
-            onClick={(e) => e.stopPropagation()}
-            data-lenis-prevent="true"
-            className="glass-strong rounded-3xl p-6 sm:p-8 md:p-12 max-w-5xl w-full max-h-[90vh] overflow-y-auto opacity-0 scale-90 translate-y-12"
+      {/* Horizontal Scroll Wrapper */}
+      <div 
+        ref={wrapperRef} 
+        className="flex h-full z-10 relative items-center" 
+        style={{ width: `${projects.length * 100}vw` }}
+      >
+        {projects.map((project) => (
+          <div 
+            key={project.id} 
+            className="project-panel flex w-screen h-full items-center justify-center relative px-8 md:px-20"
           >
-
-            <div className="flex justify-between items-start mb-8">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs tracking-widest text-gray-500 uppercase">
-                    {selectedProject.category}
-                  </span>
-                  <span className="text-xs text-gray-600">•</span>
-                  <span className="text-xs text-gray-500">
-                    {selectedProject.year}
-                  </span>
-                </div>
-                <h3 className="heading-md mb-4">{selectedProject.title}</h3>
-              </div>
-
-              <button
-                onClick={closeProject}
-                className="w-12 h-12 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white transition-all ml-4 hover:scale-110 hover:rotate-90 active:scale-95"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div className="mb-10 w-full flex flex-col gap-4">
-              <div className="w-full aspect-video rounded-2xl bg-black/40 flex items-center justify-center relative overflow-hidden border border-white/5 shadow-2xl">
-                {(selectedProject.images && selectedProject.images.length > 0) ? (
-                  <img
-                    src={selectedProject.images[activeImageIndex]}
-                    alt={selectedProject.title}
-                    className="absolute inset-0 w-full h-full object-contain p-2 md:p-4 drop-shadow-2xl z-10"
-                  />
-                ) : selectedProject.image ? (
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    className="absolute inset-0 w-full h-full object-contain p-2 md:p-4 drop-shadow-2xl z-10"
-                  />
+            <div className="flex flex-col lg:flex-row w-full max-w-7xl gap-8 lg:gap-16 items-center">
+                
+              {/* Image Container with hidden overflow for Zoom Parallax */}
+              <div className="w-full lg:w-3/5 aspect-video overflow-hidden rounded-3xl relative shadow-2xl shadow-black/50 border border-white/10 group cursor-none">
+                {project.image ? (
+                   <img 
+                     src={project.image} 
+                     alt={project.title} 
+                     className="project-img absolute inset-0 w-full h-full object-cover origin-center" 
+                   />
                 ) : (
-                  <span className="text-gray-600 font-bold text-xl relative z-10">
-                    {selectedProject.status || "Project Screenshot"}
-                  </span>
+                   <div className="project-img absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-2xl font-bold text-gray-500">
+                     Under Construction
+                   </div>
                 )}
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
               </div>
 
-              {selectedProject.images && selectedProject.images.length > 0 && (
-                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide py-1">
-                  {selectedProject.images.map((imgSrc, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveImageIndex(idx)}
-                      className={`w-24 h-16 md:w-32 md:h-20 shrink-0 rounded-xl overflow-hidden border-2 transition-all p-1 bg-black/40 ${activeImageIndex === idx
-                        ? 'border-white opacity-100 scale-105 shadow-lg'
-                        : 'border-transparent opacity-50 hover:opacity-100'
-                        }`}
+              {/* Text Content */}
+              <div className="project-content w-full lg:w-2/5 flex flex-col gap-4">
+                 <span className="text-sm tracking-[0.2em] uppercase text-gray-400">
+                   {project.category} • {project.year}
+                 </span>
+                 
+                 <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-display">
+                   {project.title}
+                 </h3>
+                 
+                 <p className="text-lg text-gray-300 leading-relaxed mt-4">
+                   {project.description}
+                 </p>
+                 
+                 <div className="flex flex-wrap gap-2 mt-6">
+                    {project.tags.map(tag => (
+                        <span key={tag} className="px-4 py-2 rounded-full glass border border-white/10 text-xs text-gray-300">
+                          {tag}
+                        </span>
+                    ))}
+                 </div>
+                 
+                 <div className="mt-10 flex gap-4">
+                    <a 
+                      href={project.demoUrl || "#"} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="px-8 py-4 bg-white text-black rounded-full font-medium text-sm tracking-wide transition-all hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
                     >
-                      <img src={imgSrc} alt="Thumbnail" className="w-full h-full object-cover rounded-lg" />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="mb-8">
-              <h4 className="text-sm font-semibold mb-3 text-gray-400 uppercase tracking-wide">
-                Project Overview
-              </h4>
-              <p className="body-text leading-relaxed">
-                {selectedProject.longDescription}
-              </p>
-            </div>
-
-
-            <div className="mb-8">
-              <h4 className="text-sm font-semibold mb-4 text-gray-400 uppercase tracking-wide">
-                Technologies Used
-              </h4>
-              <div className="flex flex-wrap gap-3">
-                {selectedProject.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-5 py-2 rounded-full glass text-sm font-medium transition-transform hover:scale-105 hover:-translate-y-0.5"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                      View Live
+                    </a>
+                    {project.repoUrl && (
+                      <a 
+                        href={project.repoUrl} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        className="px-8 py-4 rounded-full border border-white/30 text-white font-medium text-sm tracking-wide hover:bg-white/10 transition-all hover:scale-105 active:scale-95"
+                      >
+                        Source Code
+                      </a>
+                    )}
+                 </div>
               </div>
-            </div>
 
-
-            <div className="flex flex-wrap gap-4">
-              {selectedProject.demoUrl && (
-                <a
-                  href={selectedProject.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-8 py-4 rounded-full bg-white text-black font-medium text-sm tracking-wide flex items-center gap-2 transition-transform hover:scale-105 hover:-translate-y-0.5 active:scale-95"
-                >
-                  <span>View Live Demo</span>
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    />
-                  </svg>
-                </a>
-              )}
-              {selectedProject.repoUrl && (
-                <a
-                  href={selectedProject.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-8 py-4 rounded-full text-sm tracking-wide border border-white/30 hover:bg-white/10 flex items-center gap-2 transition-all hover:scale-105 hover:-translate-y-0.5 active:scale-95"
-                >
-                  <span>View Code</span>
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                </a>
-              )}
             </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </section>
   );
 }
