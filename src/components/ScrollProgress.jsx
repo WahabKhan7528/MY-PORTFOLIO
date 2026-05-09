@@ -1,62 +1,40 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useLayoutEffect } from 'react';
+import { gsap, ScrollTrigger } from '../lib/gsap';
 
 export default function ScrollProgress() {
     const barRef = useRef(null);
 
-    useEffect(() => {
-        const bar = barRef.current;
-        if (!bar) return;
-
-        let rafId = null;
-        let targetProgress = 0;
-        let currentProgress = 0;
-
-        const animate = () => {
-            currentProgress += (targetProgress - currentProgress) * 0.15;
-            bar.style.transform = `scaleX(${currentProgress / 100})`;
-
-            if (Math.abs(targetProgress - currentProgress) > 0.05) {
-                rafId = requestAnimationFrame(animate);
-            } else {
-                currentProgress = targetProgress;
-                bar.style.transform = `scaleX(${currentProgress / 100})`;
-                rafId = null;
-            }
-        };
-
-        const onScroll = () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            targetProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-
-            if (rafId === null) {
-                rafId = requestAnimationFrame(animate);
-            }
-        };
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-
-        return () => {
-            window.removeEventListener('scroll', onScroll);
-            if (rafId !== null) cancelAnimationFrame(rafId);
-        };
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            // MOTION: Update scaleX based on scroll progress via ScrollTrigger
+            ScrollTrigger.create({
+                trigger: document.body,
+                start: 'top top',
+                end: 'bottom bottom',
+                onUpdate: self => {
+                    const val = Math.round(self.progress * 100);
+                    gsap.set(barRef.current, { scaleX: self.progress, transformOrigin: 'left' });
+                    if (barRef.current) {
+                        barRef.current.setAttribute('role', 'progressbar');
+                        barRef.current.setAttribute('aria-valuenow', String(val));
+                        barRef.current.setAttribute('aria-valuemin', '0');
+                        barRef.current.setAttribute('aria-valuemax', '100');
+                        barRef.current.setAttribute('aria-label', 'Page scroll progress');
+                    }
+                }
+            });
+        });
+        return () => ctx.revert();
     }, []);
 
     return (
         <div
             ref={barRef}
-            style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                height: '3px',
-                width: '100%',
-                transformOrigin: 'left center',
+            className="fixed top-0 left-0 h-[2px] w-full z-[9999] pointer-events-none"
+            style={{ 
+                background: 'linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.4) 100%)',
                 transform: 'scaleX(0)',
-                zIndex: 99999,
-                background: 'linear-gradient(to right, #6b7280, #d1d5db, #ffffff)',
-                pointerEvents: 'none',
-                willChange: 'transform',
+                transformOrigin: 'left'
             }}
         />
     );

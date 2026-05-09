@@ -1,142 +1,86 @@
-import { useEffect, useRef, useState } from 'react';
-import { useGSAP } from '@gsap/react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { gsap } from '../lib/gsap';
 
 export default function Preloader({ onComplete }) {
     const [progress, setProgress] = useState(0);
     const container = useRef(null);
-    const topHalf = useRef(null);
-    const bottomHalf = useRef(null);
-    const content = useRef(null);
-    const progressBar = useRef(null);
-    const textRef = useRef(null);
-    const glowRef = useRef(null);
+    const textStr = "WAHAB KHAN";
+    const chars = textStr.split("");
 
-    useGSAP(() => {
-        const tl = gsap.timeline({
-            onComplete: onComplete
-        });
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            // MOTION: Master timeline for preloader sequence
+            const tl = gsap.timeline({
+                onComplete: onComplete
+            });
 
-        const progressObj = { value: 0 };
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReduced) tl.duration(0);
 
-        tl.to(progressObj, {
-            value: 100,
-            duration: 1.8,
-            ease: "power2.inOut",
-            onUpdate: () => {
-                setProgress(Math.round(progressObj.value));
-            }
-        }, 0);
+            const progressObj = { val: 0 };
+            
+            tl.addLabel('start');
 
-        tl.to(progressBar.current, {
-            width: "100%",
-            duration: 1.8,
-            ease: "power2.inOut"
-        }, 0);
+            // MOTION: Increment progress counter 0 to 100
+            tl.to(progressObj, {
+                val: 100,
+                duration: 1.8,
+                ease: 'power2.inOut',
+                onUpdate: () => setProgress(Math.round(progressObj.val))
+            }, 'start');
 
-        tl.to(content.current, {
-            opacity: 0,
-            y: -20,
-            duration: 0.5,
-            ease: "power2.in"
-        }, "+=0.2");
+            // MOTION: Subtitle line draws in from left
+            tl.fromTo('.subtitle-line', 
+                { scaleX: 0 },
+                { scaleX: 1, duration: 1.8, transformOrigin: 'left center', ease: 'power2.inOut' }, 
+                'start'
+            );
 
-        tl.to(topHalf.current, {
-            yPercent: -100,
-            duration: 0.8,
-            ease: "power4.inOut"
-        }, "split");
+            // MOTION: Chars animate from y: 80, rotateX: -90, opacity: 0 to natural
+            tl.fromTo('.char', 
+                { y: 80, opacity: 0, rotateX: -90, transformOrigin: 'top' },
+                { y: 0, opacity: 1, rotateX: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out' },
+                'start+=0.2'
+            );
 
-        tl.to(bottomHalf.current, {
-            yPercent: 100,
-            duration: 0.8,
-            ease: "power4.inOut"
-        }, "split");
+            tl.addLabel('exit', '+=0.4');
 
-        const xTo = gsap.quickTo(glowRef.current, "x", { duration: 0.8, ease: "power3" });
-        const yTo = gsap.quickTo(glowRef.current, "y", { duration: 0.8, ease: "power3" });
+            // MOTION: Exit animation clipping preloader upward and hero counter-clipping downward
+            tl.to(container.current, {
+                y: '-105vh',
+                duration: 0.9,
+                ease: 'power3.inOut'
+            }, 'exit');
+            
+            tl.fromTo('.hero-container', {
+                y: '105vh'
+            }, {
+                y: '0vh',
+                duration: 0.9,
+                ease: 'power3.inOut'
+            }, 'exit');
 
-        const textXTo = gsap.quickTo(textRef.current, "x", { duration: 0.5, ease: "power2.out" });
-        const textYTo = gsap.quickTo(textRef.current, "y", { duration: 0.5, ease: "power2.out" });
+        }, container);
 
-        const handleMouseMove = (e) => {
-            const { clientX, clientY } = e;
-            const textBounds = textRef.current?.getBoundingClientRect();
-
-            if (textBounds) {
-                const textCenterX = textBounds.left + textBounds.width / 2;
-                const textCenterY = textBounds.top + textBounds.height / 2;
-
-                const distanceX = clientX - textCenterX;
-                const distanceY = clientY - textCenterY;
-
-                textXTo(distanceX * 0.1);
-                textYTo(distanceY * 0.1);
-            }
-
-            xTo(clientX);
-            yTo(clientY);
-        };
-
-        const handleMouseLeave = () => {
-            textXTo(0);
-            textYTo(0);
-            gsap.to(glowRef.current, { opacity: 0, duration: 0.3 });
-        };
-
-        const handleMouseEnter = () => {
-            gsap.to(glowRef.current, { opacity: 0.5, duration: 0.3 });
-        };
-
-        window.addEventListener('mousemove', handleMouseMove, { passive: true });
-        document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-        document.addEventListener('mouseenter', handleMouseEnter, { passive: true });
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseleave', handleMouseLeave);
-            document.removeEventListener('mouseenter', handleMouseEnter);
-        };
-
-    }, { scope: container });
+        return () => ctx.revert();
+    }, [onComplete]);
 
     return (
-        <div
-            ref={container}
-            className="fixed inset-0 z-[9999] pointer-events-auto flex flex-col overflow-hidden"
-        >
-            <div
-                ref={glowRef}
-                className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-0 mix-blend-screen"
-            />
+        <div ref={container} className="fixed inset-0 z-[9999] bg-black pointer-events-auto flex flex-col overflow-hidden items-center justify-center">
+            <div className="flex text-3xl sm:text-4xl font-display font-bold tracking-widest text-white mb-12 drop-shadow-2xl" style={{ perspective: '400px' }}>
+                {chars.map((char, index) => (
+                    <span key={index} className="char inline-block whitespace-pre">{char}</span>
+                ))}
+            </div>
 
-            <div ref={topHalf} className="h-1/2 w-full bg-black border-b border-white/5 relative z-10 pointer-events-none" />
-            <div ref={bottomHalf} className="h-1/2 w-full bg-black border-t border-white/5 relative z-10 pointer-events-none" />
-
-            <div
-                ref={content}
-                className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-20 pointer-events-none"
-            >
-                <div
-                    ref={textRef}
-                    className="text-3xl sm:text-4xl font-display font-bold tracking-widest text-white mb-12 drop-shadow-2xl"
-                >
-                    WAHAB.
+            <div className="w-full max-w-xs relative">
+                <div className="flex justify-between text-xs font-medium tracking-widest text-gray-400 uppercase mb-4">
+                    <span>Loading</span>
+                    <span>{progress}%</span>
                 </div>
 
-                <div className="w-full max-w-xs relative">
-                    <div className="flex justify-between text-xs font-medium tracking-widest text-gray-400 uppercase mb-4">
-                        <span>Loading</span>
-                        <span>{progress}%</span>
-                    </div>
-
-                    <div className="w-full h-[1px] bg-white/10 rounded-full overflow-hidden">
-                        <div
-                            ref={progressBar}
-                            className="h-full bg-white w-0"
-                            style={{ boxShadow: '0 0 10px rgba(255,255,255,0.5)' }}
-                        />
-                    </div>
+                <div className="w-full h-[1px] bg-white/10 rounded-full">
+                    <div className="subtitle-line w-full h-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
                 </div>
             </div>
         </div>

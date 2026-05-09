@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useGSAP } from '@gsap/react';
 import { gsap, ScrollTrigger } from '../lib/gsap';
+import { PERSONAL } from '../config/personal';
 
 const socialLinks = [
     {
@@ -33,39 +34,8 @@ const socialLinks = [
     },
 ];
 
-const contactMethods = [
-    {
-        title: 'Email',
-        value: 'haribkhan0625@gmail.com',
-        href: 'mailto:haribkhan0625@gmail.com',
-        icon: (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-        ),
-    },
-    {
-        title: 'Phone',
-        value: '+92 3078997313',
-        href: 'tel:+923078997313',
-        icon: (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-        ),
-    },
-    {
-        title: 'Location',
-        value: 'Bahawalpur,Pakistan',
-        href: 'https://www.google.com/maps/place/Bahawalpur/data=!4m2!3m1!1s0x393b90c46c611ad5:0xfcdf0da8e103f862?sa=X&ved=1t:242&ictx=111',
-        icon: (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-        ),
-    },
-];
+
+const contactMethods = PERSONAL.contactMethods;
 
 export default function Contact() {
     const container = useRef(null);
@@ -79,14 +49,21 @@ export default function Contact() {
     const [focusedField, setFocusedField] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const lastSubmitRef = useRef(0);
+
+    const isValid = useMemo(() => {
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return (
+            formData.name.trim().length > 1 &&
+            emailRe.test(formData.email) &&
+            formData.subject.trim().length > 2 &&
+            formData.message.trim().length > 5
+        );
+    }, [formData]);
 
     useGSAP(() => {
         const section = container.current;
-
-        gsap.fromTo('.contact-eyebrow',
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out', scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
-        );
 
         gsap.fromTo('.contact-title',
             { opacity: 0, x: -30 },
@@ -121,31 +98,57 @@ export default function Contact() {
 
     }, { scope: container });
 
+    const sanitize = (str = '') => str.replace(/<[^>]*>/g, '').trim();
+    const COOLDOWN_MS = 30_000;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
+        setErrorMessage('');
         setSubmitStatus(null);
 
+        if (!isValid) {
+            setErrorMessage('Please fill in all fields with valid information.');
+            return;
+        }
+
+        const now = Date.now();
+        if (now - lastSubmitRef.current < COOLDOWN_MS) {
+            setErrorMessage('Please wait a moment before sending another message.');
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        const payload = {
+            name: sanitize(formData.name),
+            email: sanitize(formData.email),
+            subject: sanitize(formData.subject),
+            message: sanitize(formData.message),
+        };
+
         try {
-            const emailjs = (await import('@emailjs/browser')).default;
+            const emailjs = await import('@emailjs/browser');
+            if (emailjs.init) {
+                try {
+                    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+                } catch (e) {
+                    // init might not be required; ignore init failures
+                }
+            }
 
             await emailjs.send(
                 import.meta.env.VITE_EMAILJS_SERVICE_ID,
                 import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-                {
-                    name: formData.name,
-                    email: formData.email,
-                    subject: formData.subject,
-                    message: formData.message,
-                },
-                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+                payload
             );
 
             setSubmitStatus('success');
             setFormData({ name: '', email: '', subject: '', message: '' });
+            lastSubmitRef.current = Date.now();
         } catch (error) {
-            console.error('EmailJS Error:', error);
+            console.error('EmailJS Error (dev):', error);
             setSubmitStatus('error');
+            setErrorMessage('Unable to send message right now. Please try again later.');
         } finally {
             setIsSubmitting(false);
         }
@@ -165,221 +168,126 @@ export default function Contact() {
 
             <div className="max-w-7xl mx-auto w-full relative z-10">
                 <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-                    <div className="lg:col-span-2">
-                        <div className="contact-eyebrow mb-6 opacity-0">
-                            <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
-                                Get In Touch
-                            </span>
-                        </div>
+                    <div className="lg:col-span-2 flex flex-col justify-between">
+                        <div>
+                            <div className="contact-title">
+                                <h2 className="text-6xl md:text-[80px] lg:text-[100px] font-display font-black leading-[0.9] tracking-tighter mb-8 text-white">
+                                    LET'S<br />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">TALK.</span>
+                                </h2>
+                                <p className="text-lg md:text-xl text-gray-400 font-light max-w-md leading-relaxed mb-16">
+                                    Have a project in mind? Let's discuss how we can work together to bring your vision to life.
+                                </p>
+                            </div>
 
-                        <div className="contact-title opacity-0">
-                            <h2 className="heading-lg mb-6 leading-tight">
-                                Let's Create
-                                <span className="block text-gradient">Something Amazing</span>
-                            </h2>
-
-                            <p className="body-text mb-12 text-lg leading-relaxed">
-                                Have a project in mind? Let's discuss how we can work together to bring your vision to life.
-                            </p>
-                        </div>
-
-                        <div className="space-y-4 mb-12">
-                            {contactMethods.map((method) => (
-                                <a
-                                    key={method.title}
-                                    href={method.href}
-                                    className="contact-method flex items-center gap-4 p-4 rounded-2xl glass hover:bg-white/5 transition-all transition-transform hover:translate-x-1 group opacity-0"
-                                >
-                                    <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
-                                        {method.icon}
+                            <div className="space-y-8 mb-16">
+                                {contactMethods.map((method) => (
+                                    <div key={method.title} className="contact-method group">
+                                        <div className="text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-2 font-bold">{method.title}</div>
+                                        <a href={method.href} className="text-xl md:text-2xl font-light text-white hover:text-gray-300 transition-colors inline-block relative overflow-hidden" rel="noopener noreferrer" target="_blank">
+                                            {method.value}
+                                            <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white transform origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+                                        </a>
                                     </div>
-                                    <div>
-                                        <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">{method.title}</div>
-                                        <div className="text-sm font-medium">{method.value}</div>
-                                    </div>
-                                </a>
-                            ))}
-                        </div>
-
-                        <div className="social-section opacity-0">
-                            <h3 className="text-sm font-semibold mb-4 text-gray-400 uppercase tracking-wide">Follow Me</h3>
-                            <div className="flex gap-3">
-                                {socialLinks.map((social) => (
-                                    <a
-                                        key={social.name}
-                                        href={social.url}
-                                        className="w-12 h-12 rounded-xl glass-hover flex items-center justify-center text-gray-400 hover:text-white transition-all hover:scale-110 hover:-translate-y-0.5 active:scale-95"
-                                        title={social.name}
-                                    >
-                                        {social.icon}
-                                    </a>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="availability-badge opacity-0 mt-8 flex items-center gap-3 p-4 rounded-2xl glass">
-                            <span className="relative flex h-3 w-3">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                            </span>
-                            <span className="text-sm text-gray-300">Available for new projects</span>
+                        <div>
+                            <div className="social-section mb-8">
+                                <div className="text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-4 font-bold">Socials</div>
+                                <div className="flex gap-4">
+                                    {socialLinks.map((social) => (
+                                        <a
+                                            key={social.name}
+                                            href={social.url}
+                                            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-105"
+                                            title={social.name}
+                                        >
+                                            {social.icon}
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="contact-form-container lg:col-span-3 opacity-0">
-                        <div className="relative">
-                            <div className="glass-strong rounded-3xl p-8 lg:p-12 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="contact-form-container lg:col-span-3 lg:pl-12 flex flex-col justify-center">
+                        <form onSubmit={handleSubmit} className="space-y-6 lg:space-y-10 relative z-10 w-full max-w-2xl ml-auto" >
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-10">
+                                <div className="relative group">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full bg-transparent border-b border-white/20 py-4 text-white text-lg font-light placeholder:text-gray-600 focus:outline-none focus:border-white transition-colors"
+                                        placeholder="What's your name?"
+                                    />
+                                </div>
 
-                                <h3 className="text-2xl font-display font-semibold mb-2">Send a Message</h3>
-                                <p className="text-gray-400 text-sm mb-8">Fill out the form below and I'll get back to you within 24 hours</p>
-
-                                <form onSubmit={handleSubmit} className="space-y-6 relative z-10" >
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                        <div className="relative">
-                                            <label htmlFor="name" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
-                                                Your Name
-                                            </label>
-                                            <div className="relative">
-                                                <input
-                                                    type="text"
-                                                    id="name"
-                                                    name="name"
-                                                    value={formData.name}
-                                                    onChange={handleChange}
-                                                    onFocus={() => setFocusedField('name')}
-                                                    onBlur={() => setFocusedField(null)}
-                                                    required
-                                                    className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all placeholder:text-gray-600 focus:outline-none ${focusedField === 'name'
-                                                        ? 'border-white/40 bg-black/30'
-                                                        : 'border-white/10 hover:border-white/20'
-                                                        }`}
-                                                    placeholder="John Doe"
-                                                />
-                                                <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'name' ? 'opacity-100' : 'opacity-0'}`} />
-                                            </div>
-                                        </div>
-
-                                        <div className="relative">
-                                            <label htmlFor="email" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
-                                                Email Address
-                                            </label>
-                                            <div className="relative">
-                                                <input
-                                                    type="email"
-                                                    id="email"
-                                                    name="email"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
-                                                    onFocus={() => setFocusedField('email')}
-                                                    onBlur={() => setFocusedField(null)}
-                                                    required
-                                                    className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all placeholder:text-gray-600 focus:outline-none ${focusedField === 'email'
-                                                        ? 'border-white/40 bg-black/30'
-                                                        : 'border-white/10 hover:border-white/20'
-                                                        }`}
-                                                    placeholder="john@example.com"
-                                                />
-                                                <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'email' ? 'opacity-100' : 'opacity-0'}`} />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="relative">
-                                        <label htmlFor="subject" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
-                                            Subject
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                type="text"
-                                                id="subject"
-                                                name="subject"
-                                                value={formData.subject}
-                                                onChange={handleChange}
-                                                onFocus={() => setFocusedField('subject')}
-                                                onBlur={() => setFocusedField(null)}
-                                                required
-                                                className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all placeholder:text-gray-600 focus:outline-none ${focusedField === 'subject'
-                                                    ? 'border-white/40 bg-black/30'
-                                                    : 'border-white/10 hover:border-white/20'
-                                                    }`}
-                                                placeholder="Project Inquiry"
-                                            />
-                                            <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'subject' ? 'opacity-100' : 'opacity-0'}`} />
-                                        </div>
-                                    </div>
-
-                                    <div className="relative">
-                                        <label htmlFor="message" className="block text-sm font-medium tracking-wide text-gray-300 mb-3">
-                                            Message
-                                        </label>
-                                        <div className="relative">
-                                            <textarea
-                                                id="message"
-                                                name="message"
-                                                value={formData.message}
-                                                onChange={handleChange}
-                                                onFocus={() => setFocusedField('message')}
-                                                onBlur={() => setFocusedField(null)}
-                                                required
-                                                rows={6}
-                                                className={`w-full px-5 py-4 rounded-2xl bg-black/20 border backdrop-blur-sm transition-all resize-none placeholder:text-gray-600 focus:outline-none ${focusedField === 'message'
-                                                    ? 'border-white/40 bg-black/30'
-                                                    : 'border-white/10 hover:border-white/20'
-                                                    }`}
-                                                placeholder="Tell me about your project, goals, and timeline..."
-                                            />
-                                            <div className={`absolute -inset-0.5 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl -z-10 transition-opacity duration-300 ${focusedField === 'message' ? 'opacity-100' : 'opacity-0'}`} />
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-center gap-4">
-                                        <button
-                                            type="submit"
-                                            disabled={isSubmitting || submitStatus === 'success'}
-                                            className="flex-1 px-8 py-5 rounded-2xl bg-white text-black font-semibold text-sm tracking-wide transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group hover:scale-[1.02] active:scale-98"
-                                        >
-                                            <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
-                                            <span className="relative z-10 flex items-center gap-3">
-                                                {isSubmitting ? (
-                                                    <>
-                                                        <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                                        </svg>
-                                                        <span>Sending...</span>
-                                                    </>
-                                                ) : submitStatus === 'success' ? (
-                                                    <>
-                                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                        </svg>
-                                                        <span>Message Sent!</span>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <span>Send Message</span>
-                                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                        </svg>
-                                                    </>
-                                                )}
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                    <div className={`transition-all duration-500 overflow-hidden ${submitStatus === 'success' ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                        <div className="p-4 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center gap-3 mt-4">
-                                            <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            <span className="text-sm text-green-300">Thank you! Your message has been sent successfully.</span>
-                                        </div>
-                                    </div>
-                                </form>
+                                <div className="relative group">
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full bg-transparent border-b border-white/20 py-4 text-white text-lg font-light placeholder:text-gray-600 focus:outline-none focus:border-white transition-colors"
+                                        placeholder="Your email address"
+                                    />
+                                </div>
                             </div>
-                        </div>
+
+                            <div className="relative group">
+                                <input
+                                    type="text"
+                                    name="subject"
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full bg-transparent border-b border-white/20 py-4 text-white text-lg font-light placeholder:text-gray-600 focus:outline-none focus:border-white transition-colors"
+                                    placeholder="Subject"
+                                />
+                            </div>
+
+                            <div className="relative group">
+                                <textarea
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    required
+                                    rows={4}
+                                    className="w-full bg-transparent border-b border-white/20 py-4 text-white text-lg font-light placeholder:text-gray-600 focus:outline-none focus:border-white transition-colors resize-none"
+                                    placeholder="Tell me about your project..."
+                                />
+                            </div>
+
+                            <div className="pt-8">
+                                        <button
+                                    type="submit"
+                                    disabled={isSubmitting || submitStatus === 'success' || !isValid}
+                                    className="w-full md:w-auto px-12 py-5 rounded-full bg-white text-black font-bold text-xs tracking-[0.2em] uppercase transition-all flex items-center justify-center gap-4 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
+                                >
+                                    <span>{isSubmitting ? 'Sending...' : submitStatus === 'success' ? 'Message Sent' : 'Send Message'}</span>
+                                    {!isSubmitting && submitStatus !== 'success' && (
+                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                    )}
+                                </button>
+                            </div>
+
+                            <div className={`transition-all duration-500 overflow-hidden ${submitStatus === 'success' ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3 mt-4">
+                                    <span className="text-sm text-gray-300 font-light">Thank you! Your message has been sent successfully. I'll get back to you soon.</span>
+                                </div>
+                            </div>
+                            {errorMessage && (
+                                <div className="text-sm text-red-400 mt-2">{errorMessage}</div>
+                            )}
+                        </form>
                     </div>
                 </div>
 

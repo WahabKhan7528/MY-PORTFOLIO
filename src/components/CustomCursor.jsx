@@ -1,71 +1,84 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useLayoutEffect, useState } from 'react';
 import { gsap } from '../lib/gsap';
 
 export default function CustomCursor() {
     const cursorRef = useRef(null);
-    const followerRef = useRef(null);
+    const [hasMouse, setHasMouse] = useState(false);
 
-    useEffect(() => {
-        const cursorX = gsap.quickTo(cursorRef.current, "x", { duration: 0, ease: "none" });
-        const cursorY = gsap.quickTo(cursorRef.current, "y", { duration: 0, ease: "none" });
+    useLayoutEffect(() => {
+        // Hide on touch devices
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            if (cursorRef.current) cursorRef.current.style.display = 'none';
+            return;
+        }
 
-        const followerX = gsap.quickTo(followerRef.current, "x", { duration: 0.15, ease: "power2.out" });
-        const followerY = gsap.quickTo(followerRef.current, "y", { duration: 0.15, ease: "power2.out" });
-
-        const moveCursor = (e) => {
-            cursorX(e.clientX);
-            cursorY(e.clientY);
-            followerX(e.clientX);
-            followerY(e.clientY);
+        const onFirstMouse = () => {
+            setHasMouse(true);
+            window.removeEventListener('mousemove', onFirstMouse);
         };
+        window.addEventListener('mousemove', onFirstMouse, { once: true });
 
-        const handleMouseDown = () => {
-            gsap.to(cursorRef.current, { scale: 0.5, duration: 0.2 });
-            gsap.to(followerRef.current, { scale: 1.5, opacity: 0.2, duration: 0.2 });
-        };
+        const ctx = gsap.context(() => {
+            if (!hasMouse) return;
+            // MOTION: QuickTo for lag-free cursor tracking
+            const xTo = gsap.quickTo(cursorRef.current, 'x', { duration: 0.4, ease: 'power3' });
+            const yTo = gsap.quickTo(cursorRef.current, 'y', { duration: 0.4, ease: 'power3' });
 
-        const handleMouseUp = () => {
-            gsap.to(cursorRef.current, { scale: 1, duration: 0.2 });
-            gsap.to(followerRef.current, { scale: 1, opacity: 0.5, duration: 0.2 });
-        };
+            const moveCursor = (e) => {
+                xTo(e.clientX);
+                yTo(e.clientY);
+            };
+            window.addEventListener('mousemove', moveCursor);
 
-        const handleMouseLeave = () => {
-            gsap.to([cursorRef.current, followerRef.current], { opacity: 0, duration: 0.3 });
-        };
+            // MOTION: Click down scale
+            const handleMouseDown = () => gsap.to(cursorRef.current, { scale: 0.75, duration: 0.2 });
+            const handleMouseUp = () => gsap.to(cursorRef.current, { scale: 1, duration: 0.2 });
+            window.addEventListener('mousedown', handleMouseDown);
+            window.addEventListener('mouseup', handleMouseUp);
 
-        const handleMouseEnter = () => {
-            gsap.to(cursorRef.current, { opacity: 1, duration: 0.3 });
-            gsap.to(followerRef.current, { opacity: 0.5, duration: 0.3 });
-        };
+            // MOTION: Magnetic hover
+            const handleInteractableEnter = (e) => {
+                const rect = e.target.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                // Move cursor to center
+                xTo(centerX);
+                yTo(centerY);
+                gsap.to(cursorRef.current, { scale: 2.5, mixBlendMode: 'difference', borderRadius: '50%', duration: 0.3 });
+            };
 
-        window.addEventListener('mousemove', moveCursor, { passive: true });
-        window.addEventListener('mousedown', handleMouseDown, { passive: true });
-        window.addEventListener('mouseup', handleMouseUp, { passive: true });
-        document.body.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-        document.body.addEventListener('mouseenter', handleMouseEnter, { passive: true });
+            const handleInteractableLeave = () => {
+                gsap.to(cursorRef.current, { scale: 1, mixBlendMode: 'normal', borderRadius: '50%', duration: 0.3 });
+            };
 
-        document.body.classList.add('cursor-none');
+            const interactables = document.querySelectorAll('a, button, input, textarea, .cursor-pointer');
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', handleInteractableEnter);
+                el.addEventListener('mouseleave', handleInteractableLeave);
+            });
+
+            return () => {
+                window.removeEventListener('mousemove', moveCursor);
+                window.removeEventListener('mousedown', handleMouseDown);
+                window.removeEventListener('mouseup', handleMouseUp);
+                interactables.forEach(el => {
+                    el.removeEventListener('mouseenter', handleInteractableEnter);
+                    el.removeEventListener('mouseleave', handleInteractableLeave);
+                });
+            };
+        });
 
         return () => {
-            window.removeEventListener('mousemove', moveCursor);
-            window.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mouseup', handleMouseUp);
-            document.body.removeEventListener('mouseleave', handleMouseLeave);
-            document.body.removeEventListener('mouseenter', handleMouseEnter);
-            document.body.classList.remove('cursor-none');
+            window.removeEventListener('mousemove', onFirstMouse);
+            ctx.revert();
         };
-    }, []);
+    }, [hasMouse]);
 
     return (
-        <>
-            <div
-                ref={cursorRef}
-                className="fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2 mix-blend-difference hidden md:block"
-            />
-            <div
-                ref={followerRef}
-                className="fixed top-0 left-0 w-8 h-8 border border-white/50 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block opacity-50 transition-colors duration-300"
-            />
-        </>
+        <div
+            ref={cursorRef}
+            aria-hidden="true"
+            className={`fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2 ${hasMouse ? 'md:block' : 'hidden'}`}
+        />
     );
 }

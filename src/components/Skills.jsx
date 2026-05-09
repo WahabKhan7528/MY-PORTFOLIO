@@ -4,12 +4,12 @@ import { gsap, ScrollTrigger } from '../lib/gsap';
 
 const skills = [
     {
-        category: 'Frontend Development',
+        category: 'Core Frontend',
         items: [
-            { name: 'React.js', level: 80 },
+            { name: 'React.js', level: 90 },
             { name: 'JavaScript (ES6+)', level: 85 },
-            { name: 'HTML5 & CSS3', level: 92 },
-            { name: 'Tailwind CSS', level: 90 },
+            { name: 'TypeScript', level: 80 },
+            { name: 'Next.js', level: 85 },
         ],
         icon: (
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -18,44 +18,44 @@ const skills = [
         )
     },
     {
-        category: 'Backend Development',
+        category: 'Styling & Layout',
         items: [
-            { name: 'Node.js', level: 80 },
-            { name: 'Express.js', level: 80 },
-            { name: 'RESTful APIs', level: 79 },
-            { name: 'JWT Authentication', level: 80 },
+            { name: 'Tailwind CSS', level: 95 },
+            { name: 'Modern CSS / SCSS', level: 92 },
+            { name: 'Responsive Design', level: 90 },
+            { name: 'CSS Modules', level: 85 },
         ],
         icon: (
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
             </svg>
         )
     },
     {
-        category: 'Database & Tools',
+        category: 'Motion & 3D',
         items: [
-            { name: 'MongoDB', level: 88 },
-            { name: 'Mongoose', level: 85 },
-            { name: 'Git & GitHub', level: 90 },
-            { name: 'Postman', level: 87 },
-        ],
-        icon: (
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-            </svg>
-        )
-    },
-    {
-        category: 'Additional Skills',
-        items: [
-            { name: 'Redux', level: 75 },
-            { name: 'Git & GitHub', level: 85 },
-            { name: 'Responsive Design', level: 80 },
-            { name: 'Deployment', level: 85 },
+            { name: 'GSAP Animation', level: 88 },
+            { name: 'Framer Motion', level: 85 },
+            { name: 'Three.js / R3F', level: 75 },
+            { name: 'SVG Animation', level: 80 },
         ],
         icon: (
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+        )
+    },
+    {
+        category: 'State & Tools',
+        items: [
+            { name: 'Redux / Toolkit', level: 85 },
+            { name: 'React Query', level: 80 },
+            { name: 'Zustand', level: 82 },
+            { name: 'Git & GitHub', level: 90 },
+        ],
+        icon: (
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
             </svg>
         )
     },
@@ -166,18 +166,18 @@ export default function Skills() {
             <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto w-full relative z-10">
-                <div className="skills-header mb-16 text-center opacity-0">
-                    <div className="skills-eyebrow mb-6 opacity-0">
+                <div className="skills-header mb-16 text-center">
+                    <div className="skills-eyebrow mb-6">
                         <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
                             Technical Skills
                         </span>
                     </div>
 
                     <h2 className="heading-lg mb-6">
-                        MERN Stack <span className="text-gradient">Expertise</span>
+                        Frontend <span className="text-gradient">Expertise</span>
                     </h2>
                     <p className="body-text max-w-2xl mx-auto">
-                        Proficient in the complete MERN stack and modern web development tools
+                        Specializing in modern frontend technologies to build performant, pixel-perfect interfaces
                     </p>
                 </div>
 
@@ -185,7 +185,7 @@ export default function Skills() {
                     {skills.map((skill) => (
                         <div
                             key={skill.category}
-                            className="skill-card glass-hover rounded-3xl p-8 group relative overflow-hidden opacity-0 transition-transform hover:-translate-y-2 duration-300"
+                            className="skill-card glass-hover rounded-3xl p-8 group relative overflow-hidden transition-transform hover:-translate-y-2 duration-300"
                         >
                             <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-gray-800/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -209,7 +209,7 @@ export default function Skills() {
                                             key={item.name}
                                             onMouseEnter={() => setHoveredSkill(hoverId)}
                                             onMouseLeave={() => setHoveredSkill(null)}
-                                            className="skill-item group/item opacity-0"
+                                            className="skill-item group/item"
                                         >
                                             <div className="flex items-center justify-between mb-2">
                                                 <span className="text-sm tracking-wide text-gray-400 group-hover/item:text-gray-300 transition-colors">
@@ -238,22 +238,25 @@ export default function Skills() {
                     ))}
                 </div>
 
-                <div className="tools-section glass-strong rounded-3xl p-8 md:p-12 opacity-0">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
-                        <div>
-                            <h3 className="text-2xl font-display font-semibold mb-3">
-                                Development Tools
+                <div className="tools-section border border-white/10 rounded-[2rem] p-8 md:p-12 mt-20 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 md:gap-12 relative z-10">
+                        <div className="md:w-1/3">
+                            <div className="text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-4 font-bold">Workflow</div>
+                            <h3 className="text-3xl md:text-4xl font-display font-black leading-tight tracking-tighter mb-4">
+                                DEVELOPMENT<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">SUITE</span>
                             </h3>
-                            <p className="text-gray-400 text-sm">
-                                Tools and platforms I use daily for development and deployment
+                            <p className="text-gray-400 text-sm font-light leading-relaxed">
+                                The tools, platforms, and environments I use daily to architect, build, and deploy high-performance applications.
                             </p>
                         </div>
 
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-3 md:w-2/3 md:justify-end">
                             {tools.map((tool) => (
                                 <span
                                     key={tool}
-                                    className="tool-pill px-5 py-2 rounded-full glass text-sm font-medium cursor-default opacity-0 transition-transform hover:scale-110 hover:-translate-y-0.5"
+                                    className="tool-pill px-6 py-3 rounded-full border border-white/10 bg-black/50 text-white text-xs tracking-[0.1em] uppercase font-bold cursor-default hover:bg-white hover:text-black hover:scale-105 transition-all duration-300"
                                 >
                                     {tool}
                                 </span>
@@ -262,7 +265,7 @@ export default function Skills() {
                     </div>
                 </div>
 
-                <div className="bottom-cta mt-16 text-center opacity-0">
+                <div className="bottom-cta mt-16 text-center">
                     <p className="text-gray-400 mb-6">Want to see these skills in action?</p>
                     <a
                         href="#projects"
