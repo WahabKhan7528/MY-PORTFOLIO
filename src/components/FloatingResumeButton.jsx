@@ -56,8 +56,8 @@ export default function FloatingResumeButton() {
         >
             <a
                 ref={buttonRef}
-                href="/resume.pdf"
-                download="Wahab_Resume.pdf"
+                href="/AWAK_ATS_Resume.docx"
+                download="AWAK_ATS_Resume.docx"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 onMouseEnter={handleMouseEnter}
