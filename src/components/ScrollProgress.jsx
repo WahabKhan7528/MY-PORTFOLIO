@@ -30,7 +30,7 @@ export default function ScrollProgress() {
     return (
         <div
             ref={barRef}
-            className="fixed top-0 left-0 h-[2px] w-full z-[9999] pointer-events-none"
+            className="fixed top-0 left-0 h-[1px] sm:h-[1.5px] md:h-[2px] w-full z-[9999] pointer-events-none"
             style={{ 
                 background: 'linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.4) 100%)',
                 transform: 'scaleX(0)',

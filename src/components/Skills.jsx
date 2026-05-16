@@ -1,409 +1,160 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "../lib/gsap";
+import { gsap } from "../lib/gsap";
 
-const skills = [
-  {
-    category: "Core MERN",
-    items: [
-      { name: "React.js", level: 90 },
-      { name: "JavaScript (ES6+)", level: 85 },
-      { name: "Node.js", level: 82 },
-      { name: "Express.js", level: 80 },
-    ],
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-        />
-      </svg>
-    ),
-  },
-  {
-    category: "Styling & UI",
-    items: [
-      { name: "Tailwind CSS", level: 95 },
-      { name: "Modern CSS / SCSS", level: 92 },
-      { name: "Responsive Design", level: 90 },
-      { name: "CSS Modules", level: 85 },
-    ],
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
-        />
-      </svg>
-    ),
-  },
-  {
-    category: "Databases & APIs",
-    items: [
-      { name: "MongoDB", level: 88 },
-      { name: "Mongoose", level: 85 },
-      { name: "REST APIs", level: 86 },
-      { name: "Authentication", level: 82 },
-    ],
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M12 3a4 4 0 00-4 4v2H7a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V7a4 4 0 00-4-4zm-2 6V7a2 2 0 114 0v2h-4z"
-        />
-      </svg>
-    ),
-  },
-  {
-    category: "Tools & Deployment",
-    items: [
-      { name: "Git & GitHub", level: 90 },
-      { name: "Postman", level: 84 },
-      { name: "Vercel", level: 88 },
-      { name: "Netlify", level: 82 },
-    ],
-    icon: (
-      <svg
-        className="w-8 h-8"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
-        />
-      </svg>
-    ),
-  },
-];
-
-const tools = [
-  "VS Code",
-  "npm/npx",
-  "Git & GitHub",
-  "Chrome DevTools",
-  "Postman",
-  "Vercel",
-  "Netlify",
-  "MongoDB Compass",
-];
-
+/**
+ * Arsenal component - Technical proficiency visualization.
+ * Redesigned with a machine-first "Precision Noir" aesthetic.
+ * Features an "Asset Manifest" theme with high-fidelity UI elements.
+ */
 export default function Skills() {
-  const [hoveredSkill, setHoveredSkill] = useState(null);
-  const container = useRef(null);
+    const container = useRef(null);
 
-  useGSAP(
-    () => {
-      gsap.fromTo(
-        ".skills-header",
-        { opacity: 0, y: 20 },
+    const arsenal = [
         {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: ".skills-header",
-            start: "top 85%",
-            once: true,
-          },
+            category: "Interface Systems",
+            id: "ARS-01",
+            status: "Stable",
+            items: ["React.js", "Next.js", "Tailwind CSS", "GSAP", "Framer Motion"],
+            description: "Building fast, interactive user interfaces."
         },
-      );
-
-      gsap.fromTo(
-        ".skills-eyebrow",
-        { opacity: 0, y: 15 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: ".skills-header",
-            start: "top 85%",
-            once: true,
-          },
+            category: "Backend",
+            id: "ARS-02",
+            status: "Optimized",
+            items: ["Node.js", "Express.js", "REST APIs", "Socket.io", "GraphQL"],
+            description: "Server-side logic and real-time features."
         },
-      );
-
-      const cards = gsap.utils.toArray(".skill-card");
-      gsap.fromTo(
-        cards,
-        { opacity: 0, y: 40 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: "expo.out",
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: ".skills-grid",
-            start: "top 85%",
-            once: true,
-          },
+            category: "Databases",
+            id: "ARS-03",
+            status: "Secure",
+            items: ["MongoDB", "PostgreSQL", "Firebase", "Redis", "Mongoose"],
+            description: "Data storage and fast queries."
         },
-      );
-
-      const progressBars = gsap.utils.toArray(".progress-fill");
-      gsap.fromTo(
-        progressBars,
-        { width: 0 },
         {
-          width: (i, el) => el.dataset.level + "%",
-          duration: 2,
-          ease: "expo.out",
-          stagger: 0.05,
-          scrollTrigger: {
-            trigger: ".skills-grid",
-            start: "top 85%",
-            once: true,
-          },
+            category: "Deployment",
+            id: "ARS-04",
+            status: "Live",
+            items: ["Docker", "Git", "AWS", "Vercel", "Linux"],
+            description: "Deploying and running apps in production."
         },
-      );
+    ];
 
-      const skillItems = gsap.utils.toArray(".skill-item");
-      gsap.fromTo(
-        skillItems,
-        { opacity: 0, x: -20 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.4,
-          stagger: 0.02,
-          scrollTrigger: {
-            trigger: ".skills-grid",
-            start: "top 85%",
-            once: true,
-          },
-        },
-      );
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: container.current,
+                start: "top 70%",
+            }
+        });
 
-      gsap.fromTo(
-        ".tools-section",
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: ".tools-section",
-            start: "top 85%",
-            once: true,
-          },
-        },
-      );
+        tl.fromTo(".arsenal-badge",
+            { opacity: 0, x: -20 },
+            { opacity: 1, x: 0, duration: 0.8, ease: "power2.out" }
+        )
+            .fromTo(".arsenal-title",
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, "-=0.4"
+            )
+            .fromTo(".arsenal-card",
+                { opacity: 0, scale: 0.95, y: 40 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "expo.out",
+                }, "-=0.6"
+            );
+    }, { scope: container });
 
-      const toolsPills = gsap.utils.toArray(".tool-pill");
-      gsap.fromTo(
-        toolsPills,
-        { opacity: 0, scale: 0.8 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.4,
-          stagger: 0.05,
-          scrollTrigger: {
-            trigger: ".tools-section",
-            start: "top 85%",
-            once: true,
-          },
-        },
-      );
+    return (
+        <section id="skills" ref={container} className="bg-black relative overflow-hidden flex items-center py-32 border-b border-white/5">
+            {/* Background Infrastructure */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+            <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black to-transparent z-10" />
+            <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent z-10" />
 
-      gsap.fromTo(
-        ".bottom-cta",
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: 0.4,
-          scrollTrigger: {
-            trigger: ".bottom-cta",
-            start: "top 90%",
-            once: true,
-          },
-        },
-      );
-    },
-    { scope: container },
-  );
-
-  useGSAP(() => {
-    if (hoveredSkill) {
-      gsap.to(`.glow-${hoveredSkill.replace(/[^a-zA-Z0-9]/g, "")}`, {
-        x: "200%",
-        duration: 1.5,
-        repeat: -1,
-        ease: "sine.inOut",
-        overwrite: "auto",
-      });
-    }
-  }, [hoveredSkill]);
-
-  return (
-    <section
-      id="skills"
-      ref={container}
-      className="section-padding min-h-screen flex items-center relative overflow-hidden"
-    >
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="skills-header mb-16 text-center">
-          <div className="skills-eyebrow mb-6">
-            <span className="inline-block px-4 py-2 rounded-full border border-white/20 text-xs tracking-[0.2em] uppercase text-gray-400">
-              Technical Skills
-            </span>
-          </div>
-
-          <h2 className="heading-lg mb-6">
-            MERN Stack <span className="text-gradient">Expertise</span>
-          </h2>
-          <p className="body-text max-w-2xl mx-auto">
-            Specializing in React, Node.js, Express, and MongoDB to build
-            performant, end-to-end web applications
-          </p>
-        </div>
-
-        <div className="skills-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {skills.map((skill) => (
-            <div
-              key={skill.category}
-              className="skill-card glass-hover rounded-3xl p-8 group relative overflow-hidden transition-transform hover:-translate-y-2 duration-300"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-gray-800/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-              <div className="w-16 h-16 rounded-2xl glass flex items-center justify-center mb-6 text-white/70 group-hover:text-white transition-all duration-700 relative z-10 group-hover:rotate-[360deg] group-hover:scale-110">
-                {skill.icon}
-              </div>
-
-              <h3 className="text-xl font-display font-semibold mb-6 group-hover:text-white transition-colors relative z-10">
-                {skill.category}
-              </h3>
-
-              <div className="space-y-4 relative z-10">
-                {skill.items.map((item) => {
-                  const hoverId = `${skill.category}-${item.name}`;
-                  const safeHoverId = hoverId.replace(/[^a-zA-Z0-9]/g, "");
-
-                  return (
-                    <div
-                      key={item.name}
-                      onMouseEnter={() => setHoveredSkill(hoverId)}
-                      onMouseLeave={() => setHoveredSkill(null)}
-                      className="skill-item group/item"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm tracking-wide text-gray-400 group-hover/item:text-gray-300 transition-colors">
-                          {item.name}
-                        </span>
-                        <span className="text-xs text-gray-500 font-medium">
-                          {item.level}%
-                        </span>
-                      </div>
-
-                      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                        <div
-                          data-level={item.level}
-                          className="progress-fill h-full bg-gradient-to-r from-white/50 to-white rounded-full relative"
-                        >
-                          <div
-                            className={`glow-${safeHoverId} absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 -translate-x-full`}
-                          />
-                        </div>
-                      </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-20 w-full">
+                <div className="mb-16 sm:mb-20 lg:mb-24">
+                    <div className="arsenal-badge flex items-center gap-4 mb-8">
+                        <div className="h-[1px] w-12 bg-white/40" />
+                        <span className="text-xs sm:text-sm md:text-base font-mono tracking-[0.8em] text-white/80 uppercase">Skills</span>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
+                    <h2 className="arsenal-title text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-display font-black tracking-tighter leading-[0.92] sm:leading-[0.9]">
+                        Technical<br />
+                        <span className="text-white/20">Skills</span>
+                    </h2>
+                </div>
 
-        <div className="tools-section border border-white/10 rounded-[2rem] p-8 md:p-12 mt-20 relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 md:gap-12 relative z-10">
-            <div className="md:w-1/3">
-              <div className="text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-4 font-bold">
-                Workflow
-              </div>
-              <h3 className="text-3xl md:text-4xl font-display font-black leading-tight tracking-tighter mb-4">
-                DEVELOPMENT
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">
-                  SUITE
-                </span>
-              </h3>
-              <p className="text-gray-400 text-sm font-light leading-relaxed">
-                The tools, platforms, and environments I use daily to architect,
-                build, and deploy high-performance applications.
-              </p>
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+                    {arsenal.map((module, idx) => (
+                        <div key={idx} className="arsenal-card group relative bg-black p-8 sm:p-10 md:p-16 lg:p-20 overflow-hidden transition-all duration-700 hover:bg-white/[0.03]">
+                            {/* Scanning effect */}
+                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-y-full group-hover:animate-scan pointer-events-none z-30" />
 
-            <div className="flex flex-wrap gap-3 md:w-2/3 md:justify-end">
-              {tools.map((tool) => (
-                <span
-                  key={tool}
-                  className="tool-pill px-6 py-3 rounded-full border border-white/10 bg-black/50 text-white text-xs tracking-[0.1em] uppercase font-bold cursor-default hover:bg-white hover:text-black hover:scale-105 transition-all duration-300"
-                >
-                  {tool}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+                            {/* Holographic Mesh Overlay */}
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2)_0%,transparent_70%)]" />
 
-        <div className="bottom-cta mt-16 text-center">
-          <p className="text-gray-400 mb-6">
-            Want to see these skills in action?
-          </p>
-          <a
-            href="#projects"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-medium text-sm tracking-wide transition-transform hover:scale-105 active:scale-95"
-          >
-            <span>View Projects</span>
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-  );
+                            {/* UI Decoration */}
+                            <div className="absolute top-8 right-8 flex flex-col items-end gap-1.5 opacity-40 group-hover:opacity-80 transition-opacity duration-500">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs font-mono tracking-widest uppercase">NODE_REF: {module.id}</span>
+                                    <div className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
+                                </div>
+                                <span className="text-xs font-mono tracking-widest uppercase text-white/60">MEMORY_ADDR: 0x{((idx + 1) * 256).toString(16).toUpperCase()}</span>
+                            </div>
+
+                            <div className="relative z-10 h-full flex flex-col">
+                                <div className="mb-12">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-white transition-all duration-500" />
+                                        <span className="text-sm font-mono text-white/70 tracking-[0.4em] uppercase group-hover:text-white transition-colors">INIT::{module.category}</span>
+                                    </div>
+                                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold tracking-tight mb-6 group-hover:translate-x-2 transition-transform duration-500">
+                                        {module.category.split('_').join(' ')}
+                                    </h3>
+                                    <p className="text-sm sm:text-base md:text-lg text-white/60 font-mono leading-relaxed max-w-lg mb-10 opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
+                                        {module.description}
+                                    </p>
+                                </div>
+
+                                <div className="mt-auto">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8">
+                                        {module.items.map((item, i) => (
+                                            <div key={i} className="flex items-center gap-4 group/item">
+                                                <div className="w-2 h-2 border border-white/20 group-hover/item:border-white group-hover/item:rotate-45 transition-all duration-300" />
+                                                <span className="text-xs sm:text-sm md:text-base font-mono text-white/70 group-hover/item:text-white transition-colors uppercase tracking-widest font-medium">
+                                                    {item}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Progress Indicator / Decrypting Animation */}
+                                <div className="mt-16 w-full h-[2px] bg-white/5 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-0 transition-transform duration-[1500ms] ease-in-out" />
+                                </div>
+
+                                <div className="mt-8 flex justify-between items-center">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-xs font-mono text-white/40 tracking-widest uppercase">STATUS</span>
+                                        <span className="text-xs font-mono text-white/80 tracking-widest uppercase group-hover:text-white transition-colors">[{module.status}]</span>
+                                    </div>
+                                    <span className="text-xs font-mono text-white/30 group-hover:text-white/50 transition-colors">PRTC_0{idx + 1} // 04</span>
+                                </div>
+                            </div>
+
+                            {/* Corner Brackets */}
+                            <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/10 group-hover:border-white/40 transition-all duration-500 group-hover:w-12 group-hover:h-12" />
+                            <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/10 group-hover:border-white/40 transition-all duration-500 group-hover:w-12 group-hover:h-12" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
 }

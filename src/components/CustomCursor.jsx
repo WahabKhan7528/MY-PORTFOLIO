@@ -18,6 +18,8 @@ export default function CustomCursor() {
         };
         window.addEventListener('mousemove', onFirstMouse, { once: true });
 
+        let currentState = 'default'; // 'default', 'link', 'media'
+
         const ctx = gsap.context(() => {
             if (!hasMouse) return;
             // MOTION: QuickTo for lag-free cursor tracking
@@ -36,35 +38,48 @@ export default function CustomCursor() {
             window.addEventListener('mousedown', handleMouseDown);
             window.addEventListener('mouseup', handleMouseUp);
 
-            // MOTION: Magnetic hover
-            const handleInteractableEnter = (e) => {
-                const rect = e.target.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                // Move cursor to center
-                xTo(centerX);
-                yTo(centerY);
-                gsap.to(cursorRef.current, { scale: 2.5, mixBlendMode: 'difference', borderRadius: '50%', duration: 0.3 });
+            // MOTION: Hover visual change via event delegation
+            const updateCursorState = (e) => {
+                const target = e.target;
+                if (!target || !target.closest) return;
+
+                const interactable = target.closest('a, button, input, textarea, .cursor-pointer');
+                // Detect if hovering over an image or video, or a specific container that acts as a visual element
+                const isMedia = target.closest('img, video, figure, .project-card, [data-media-cursor]');
+
+                let newState = 'default';
+                // If it's a media element and it's clickable (or inside a project card), switch to 'media' sniper crosshair
+                if (isMedia && (interactable || target.closest('.project-card'))) {
+                    newState = 'media';
+                } else if (interactable) {
+                    newState = 'link';
+                }
+
+                if (currentState !== newState) {
+                    currentState = newState;
+                    if (newState === 'media') {
+                        gsap.to('.cursor-line-h, .cursor-line-v', { scale: 0, opacity: 0, duration: 0.3, ease: 'power3.out' });
+                        gsap.to('.cursor-dot', { scale: 0.5, duration: 0.3 });
+                        gsap.to('.cursor-sniper', { opacity: 1, scale: 1, rotation: 90, duration: 0.5, ease: 'back.out(1.7)' });
+                    } else if (newState === 'link') {
+                        gsap.to('.cursor-line-h, .cursor-line-v', { scale: 0, opacity: 0, duration: 0.3, ease: 'power3.out' });
+                        gsap.to('.cursor-dot', { scale: 2, duration: 0.3 });
+                        gsap.to('.cursor-sniper', { opacity: 0, scale: 0.5, rotation: 0, duration: 0.3 });
+                    } else {
+                        gsap.to('.cursor-line-h, .cursor-line-v', { scale: 1, opacity: 1, duration: 0.3, ease: 'power3.out' });
+                        gsap.to('.cursor-dot', { scale: 1, duration: 0.3 });
+                        gsap.to('.cursor-sniper', { opacity: 0, scale: 0.5, rotation: 0, duration: 0.3 });
+                    }
+                }
             };
 
-            const handleInteractableLeave = () => {
-                gsap.to(cursorRef.current, { scale: 1, mixBlendMode: 'normal', borderRadius: '50%', duration: 0.3 });
-            };
-
-            const interactables = document.querySelectorAll('a, button, input, textarea, .cursor-pointer');
-            interactables.forEach(el => {
-                el.addEventListener('mouseenter', handleInteractableEnter);
-                el.addEventListener('mouseleave', handleInteractableLeave);
-            });
+            window.addEventListener('mouseover', updateCursorState);
 
             return () => {
                 window.removeEventListener('mousemove', moveCursor);
                 window.removeEventListener('mousedown', handleMouseDown);
                 window.removeEventListener('mouseup', handleMouseUp);
-                interactables.forEach(el => {
-                    el.removeEventListener('mouseenter', handleInteractableEnter);
-                    el.removeEventListener('mouseleave', handleInteractableLeave);
-                });
+                window.removeEventListener('mouseover', updateCursorState);
             };
         });
 
@@ -78,7 +93,26 @@ export default function CustomCursor() {
         <div
             ref={cursorRef}
             aria-hidden="true"
-            className={`fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2 ${hasMouse ? 'md:block' : 'hidden'}`}
-        />
+            className={`fixed top-0 left-0 pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center ${hasMouse ? 'md:block' : 'hidden'}`}
+        >
+            {/* Sniper Bounding Box / Corners */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 cursor-sniper opacity-0 scale-50 transition-none pointer-events-none">
+                {/* Top Left */}
+                <div className="absolute top-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-l-2 border-white/80" />
+                {/* Top Right */}
+                <div className="absolute top-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-t-2 border-r-2 border-white/80" />
+                {/* Bottom Left */}
+                <div className="absolute bottom-0 left-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-l-2 border-white/80" />
+                {/* Bottom Right */}
+                <div className="absolute bottom-0 right-0 w-2 h-2 sm:w-3 sm:h-3 border-b-2 border-r-2 border-white/80" />
+            </div>
+
+            {/* Horizontal Lines */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 sm:w-6 h-[1px] bg-white/40 cursor-line-h" />
+            {/* Vertical Lines */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1px] h-4 sm:h-6 bg-white/40 cursor-line-v" />
+            {/* Central Dot */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0.5 sm:w-1 h-0.5 sm:h-1 bg-white cursor-dot" />
+        </div>
     );
 }
