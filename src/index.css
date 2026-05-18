@@ -121,8 +121,8 @@ h6 {
 
 @media (min-width: 1536px) {
   .section-padding {
-    padding-left: 8rem;
-    padding-right: 8rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 }
 
@@ -181,6 +181,13 @@ h6 {
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1;
+}
+
+.heading-xl,
+.heading-lg,
+.heading-md {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 @media (min-width: 768px) {
@@ -257,6 +264,33 @@ h6 {
   width: 100%;
   position: relative;
   overflow: visible;
+}
+
+.hero-section {
+  min-height: calc(100dvh - var(--nav-height));
+}
+
+.ios-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 639px) {
+  body {
+    letter-spacing: 0.02em;
+  }
+
+  .heading-xl,
+  .heading-lg,
+  .heading-md {
+    letter-spacing: -0.015em;
+  }
+}
+
+@media (hover: none) {
+  *:hover {
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 .hero-section {
