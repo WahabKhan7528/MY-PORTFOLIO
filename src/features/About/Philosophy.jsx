@@ -103,18 +103,6 @@ export default function Philosophy() {
               ARCHITECTURAL <br />
               <span className="text-white/20 italic">PRINCIPLES.</span>
             </h2>
-            <p className="text-white/60 font-mono text-xs uppercase tracking-widest">
-              v2.0.4 // SYSTEM_CORE_RELIABILITY_PROTOCOL
-            </p>
-          </div>
-
-          <div className="hidden lg:block text-right">
-            <div className="text-xs font-mono text-white/50 mb-2 uppercase tracking-widest">GLOBAL_SYNC_STATUS</div>
-            <div className="flex gap-1 justify-end">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className={`w-1 h-4 ${i < 9 ? 'bg-white/40' : 'bg-white/5'}`} />
-              ))}
-            </div>
           </div>
         </div>
 
@@ -171,23 +159,6 @@ export default function Philosophy() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Footer Technical Metadata */}
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-wrap gap-x-6 sm:gap-x-12 gap-y-4 justify-between items-center opacity-40 hover:opacity-80 transition-opacity">
-          <div className="flex gap-8 text-xs font-mono uppercase tracking-[0.3em]">
-            <span>LAT: 35.6895° N</span>
-            <span>LNG: 139.6917° E</span>
-            <span>TIME: 19:24:18Z</span>
-          </div>
-          <div className="flex gap-4 items-center">
-            <span className="text-xs font-mono uppercase tracking-[0.2em]">SYSTEM_STABILITY</span>
-            <div className="flex gap-1">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="w-2 h-1 bg-white/40" />
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>

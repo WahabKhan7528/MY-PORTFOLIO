@@ -139,23 +139,6 @@ export default function Experience() {
                           {exp.desc}
                         </p>
                       </div>
-
-                      {/* Technical Specs Footer */}
-                      <div className={`mt-12 pt-8 border-t border-white/5 grid grid-cols-2 gap-8 ${i % 2 === 0 ? "" : "lg:text-right"}`}>
-                         <div>
-                            <div className="text-xs font-mono text-white/60 uppercase tracking-[0.4em] mb-2">AUTH_STATUS</div>
-                            <div className="text-xs font-mono text-white/90 uppercase">VERIFIED_LOG_ENTRY</div>
-                         </div>
-                         <div className={`flex flex-col ${i % 2 === 0 ? "items-start" : "lg:items-end"}`}>
-                            <div className="text-xs font-mono text-white/60 uppercase tracking-[0.4em] mb-2">SYSTEM_PRIORITY</div>
-                            <div className="flex gap-1">
-                               {[...Array(5)].map((_, idx) => (
-                                 <div key={idx} className={`w-2 h-2 border border-white/20 ${idx < 4 ? 'bg-white/40' : 'bg-transparent'}`} />
-                               ))}
-                            </div>
-                         </div>
-                      </div>
-
                       {/* Interactive Corner Accents */}
                       <div className="absolute top-0 left-0 w-8 h-8 pointer-events-none group-hover:scale-110 transition-transform">
                         <div className="absolute top-0 left-0 w-[2px] h-4 bg-white/20 group-hover:bg-white/60 transition-all duration-500" />

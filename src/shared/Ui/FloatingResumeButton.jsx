@@ -1,4 +1,4 @@
-﻿import { useRef, useLayoutEffect, useState, useEffect } from 'react';
+import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import { gsap } from '@/lib/gsap';
 
 /**
@@ -94,18 +94,18 @@ export default function FloatingResumeButton() {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label="Toggle Menu"
-                className="group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-500 hover:border-white"
+                className="group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-700 hover:border-white"
             >
                 {/* Background Inversion Layer */}
-                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
 
                 {/* Surgical Corner Accents */}
-                <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-500" />
-                <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-500" />
+                <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-700" />
+                <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-700" />
 
                 {/* Icon Assembly */}
                 <div className="relative z-10 flex items-center justify-center">
-                    <span className="text-sm font-black tracking-widest text-white group-hover:text-black transition-colors duration-500 font-mono">
+                    <span className="text-sm font-black tracking-widest text-white group-hover:text-black transition-colors duration-700 font-mono">
                         {isOpen ? 'X' : 'GOTO'}
                     </span>
                 </div>
@@ -136,13 +136,13 @@ export default function FloatingResumeButton() {
                 {/* Terminal Button */}
                 <button
                     onClick={openTerminal}
-                    className="menu-item opacity-0 scale-80 group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-500 hover:border-white pointer-events-none"
+                    className="menu-item opacity-0 scale-80 group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-700 hover:border-white pointer-events-none"
                 >
-                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
-                    <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-500" />
-                    <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+                    <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-700" />
+                    <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-700" />
                     <div className="relative z-10 flex items-center justify-center">
-                        <span className="text-xs font-bold tracking-widest text-white group-hover:text-black transition-colors duration-500 font-mono">
+                        <span className="text-xs font-bold tracking-widest text-white group-hover:text-black transition-colors duration-700 font-mono">
                             TRM
                         </span>
                     </div>
@@ -161,13 +161,13 @@ export default function FloatingResumeButton() {
                 {/* Scroll to Top Button */}
                 <button
                     onClick={scrollToTop}
-                    className="menu-item opacity-0 scale-80 group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-500 hover:border-white pointer-events-none"
+                    className="menu-item opacity-0 scale-80 group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-700 hover:border-white pointer-events-none"
                 >
-                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
-                    <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-500" />
-                    <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+                    <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-700" />
+                    <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-700" />
                     <div className="relative z-10 flex items-center justify-center">
-                        <span className="text-xs font-bold tracking-widest text-white group-hover:text-black transition-colors duration-500 font-mono">
+                        <span className="text-xs font-bold tracking-widest text-white group-hover:text-black transition-colors duration-700 font-mono">
                             TOP
                         </span>
                     </div>
@@ -188,13 +188,13 @@ export default function FloatingResumeButton() {
                     href="/AWAK_ATS_Resume.docx"
                     download="AWAK_ATS_Resume.docx"
                     onClick={() => setIsOpen(false)}
-                    className="menu-item opacity-0 scale-80 group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-500 hover:border-white pointer-events-none"
+                    className="menu-item opacity-0 scale-80 group relative flex items-center justify-center w-12 h-12 bg-black border border-white/30 overflow-hidden transition-all duration-700 hover:border-white pointer-events-none"
                 >
-                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
-                    <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-500" />
-                    <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+                    <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-700" />
+                    <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-700" />
                     <div className="relative z-10 flex items-center justify-center">
-                        <span className="text-xs font-bold tracking-widest text-white group-hover:text-black transition-colors duration-500 font-mono">
+                        <span className="text-xs font-bold tracking-widest text-white group-hover:text-black transition-colors duration-700 font-mono">
                             CV
                         </span>
                     </div>

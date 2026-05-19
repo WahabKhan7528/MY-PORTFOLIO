@@ -1,4 +1,4 @@
-﻿import { useRef, lazy, Suspense } from "react";
+import { useRef, lazy, Suspense } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { Link } from "react-router-dom";
@@ -128,10 +128,12 @@ export default function Hero() {
         <div className="hero-cta-container flex flex-wrap gap-6 items-center justify-center">
           <Link
             to="/projects"
-            className="group relative px-6 sm:px-10 py-4 sm:py-5 min-h-[44px] text-sm bg-gray-200 text-black overflow-hidden transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95"
+            className="group relative px-6 sm:px-10 py-4 sm:py-5 min-h-[44px] text-sm bg-transparent border border-white/20 text-white font-bold uppercase tracking-[0.3em] overflow-hidden transition-all duration-700 hover:border-white hover:text-black rounded-none"
           >
+            {/* Background Inversion Layer */}
+            <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+
             <span className="relative z-10 text-[11px] tracking-[0.3em] uppercase font-bold">View Projects</span>
-            <div className="absolute inset-0 bg-white translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
           </Link>
 
           <Link

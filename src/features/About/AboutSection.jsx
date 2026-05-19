@@ -77,7 +77,7 @@ export default function AboutSection() {
                   I focus on full-stack solutions using the MERN stack. My work aims for clear, scalable, and reliable code.
                 </p>
                 <div className="mt-6 flex gap-4 text-xs font-mono text-white/50">
-                  <span>LOC: 40.7128° N</span>
+                  <span>29.3978 Latitude, 71.6752 longitude</span>
                   <span>/</span>
                   <span>STATUS: ACTIVE</span>
                 </div>

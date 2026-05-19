@@ -133,9 +133,6 @@ export default function ProjectsGrid({ onProjectSelect }) {
                       {project.title}
                     </h3>
                   </div>
-                  <div className="px-3 py-1 border border-white/20 rounded-full">
-                    <span className="text-sm font-mono text-white/80 tracking-widest uppercase">{project.status}</span>
-                  </div>
                 </div>
 
                 <div className="aspect-[16/9] overflow-hidden border border-white/5 relative group-hover:border-white/20 transition-colors">

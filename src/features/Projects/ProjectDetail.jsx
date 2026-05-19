@@ -171,7 +171,7 @@ export default function ProjectDetail({ project, onClose }) {
                 <img 
                   src={activeImage} 
                   alt={project.title} 
-                  className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
+                  className="w-full h-full object-contain grayscale-[30%] group-hover:grayscale-0 transition-all duration-700"
                 />
                 {/* Corner Accents */}
                 <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/50" />
@@ -216,22 +216,22 @@ export default function ProjectDetail({ project, onClose }) {
               {/* Tech Stack & Specs Grid */}
               <div className="grid grid-cols-2 gap-4 md:gap-6 animate-stagger">
                 <div className="space-y-1 border-l-2 border-white/20 pl-3 md:pl-4">
-                  <span className="text-[9px] md:text-[10px] font-mono text-white/40 tracking-widest uppercase">TYPE</span>
-                  <p className="text-xs md:text-sm font-mono tracking-wider uppercase text-white/90">
+                  <span className="text-[9px] md:text-[11px] lg:text-xs font-mono text-white/40 tracking-widest uppercase">TYPE</span>
+                  <p className="text-xs md:text-base lg:text-lg font-mono tracking-wider uppercase text-white/90">
                     {project.category || 'PROJECT'}
                   </p>
                 </div>
                 <div className="space-y-1 border-l-2 border-white/20 pl-3 md:pl-4">
-                  <span className="text-[9px] md:text-[10px] font-mono text-white/40 tracking-widest uppercase">YEAR</span>
-                  <p className="text-xs md:text-sm font-mono tracking-wider uppercase text-white/90">
+                  <span className="text-[9px] md:text-[11px] lg:text-xs font-mono text-white/40 tracking-widest uppercase">YEAR</span>
+                  <p className="text-xs md:text-base lg:text-lg font-mono tracking-wider uppercase text-white/90">
                     {project.year || '2026'}
                   </p>
                 </div>
                 <div className="col-span-2 space-y-2 border-l-2 border-white/20 pl-3 md:pl-4 pt-2">
-                  <span className="text-[9px] md:text-[10px] font-mono text-white/40 tracking-widest uppercase">TECHNOLOGY_STACK</span>
+                  <span className="text-[9px] md:text-[11px] lg:text-xs font-mono text-white/40 tracking-widest uppercase">TECHNOLOGY_STACK</span>
                   <div className="flex flex-wrap gap-2">
                     {(project.tech || ['REACT', 'TAILWIND']).map((t, i) => (
-                      <span key={i} className="px-2 py-1 bg-white/10 border border-white/20 text-[9px] md:text-[10px] font-mono tracking-widest uppercase">
+                      <span key={i} className="px-2.5 py-1 bg-white/10 border border-white/20 text-[10px] md:text-xs lg:text-sm font-mono tracking-widest uppercase">
                         {t}
                       </span>
                     ))}

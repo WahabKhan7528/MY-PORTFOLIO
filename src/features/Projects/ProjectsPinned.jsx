@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 
@@ -204,10 +204,12 @@ export default function ProjectsPinned({ onProjectSelect, isHero = false }) {
                 <div className="flex gap-4 pt-2">
                   <button
                     onClick={() => onProjectSelect(project)}
-                    className="group relative px-8 py-4 min-h-[44px] bg-gray-200 text-black overflow-hidden transition-all duration-300 hover:bg-white hover:scale-105"
+                    className="group relative px-8 py-4 min-h-[44px] bg-transparent border border-white/20 text-white font-bold uppercase tracking-[0.3em] overflow-hidden transition-all duration-700 hover:border-white hover:text-black rounded-none"
                   >
+                    {/* Background Inversion Layer */}
+                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+
                     <span className="relative z-10 text-xs tracking-[0.3em] uppercase font-bold italic">Open Project</span>
-                    <div className="absolute inset-0 bg-white translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
                   </button>
                 </div>
               </div>
