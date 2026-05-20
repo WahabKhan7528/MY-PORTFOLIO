@@ -62,6 +62,13 @@ const TransitionWrapper = ({ children }) => {
     .add(() => {
       setDisplayLocation(location);
       window.scrollTo(0, 0);
+      if (window.locomotiveScroll) {
+        if (window.locomotiveScroll.lenisInstance) {
+          window.locomotiveScroll.lenisInstance.scrollTo(0, { immediate: true });
+        } else {
+          window.locomotiveScroll.scrollTo(0, { immediate: true });
+        }
+      }
     }, "-=0.1")
     // Reveal content and fade out logo simultaneously
     .to(path, { 

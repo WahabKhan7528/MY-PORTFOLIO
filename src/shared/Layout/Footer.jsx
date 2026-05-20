@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { Link } from "react-router-dom";
@@ -10,40 +10,77 @@ import { Link } from "react-router-dom";
  */
 export default function Footer() {
   const footerRef = useRef(null);
+  const scannerRef = useRef(null);
+  const textRef = useRef(null);
   const date = new Date().getFullYear();
 
-  // Modern GSAP Animation Logic
-  useGSAP(
-    () => {
-      const tl = gsap.timeline({
-        repeat: -1,
-        repeatDelay: 0.5,
-        defaults: { ease: "power1.inOut" },
+  const syncAnimation = useCallback(() => {
+    const footer = footerRef.current;
+    const scanner = scannerRef.current;
+    const text = textRef.current;
+    if (!footer || !scanner || !text) return;
+
+    // Get dimensions at the moment each frame renders
+    const getFooterH = () => footer.offsetHeight;
+    const getScannerH = () => scanner.offsetHeight;
+    const getTextH = () => text.offsetHeight;
+
+    const proxy = { p: 0 };
+
+    const tl = gsap.timeline({
+      repeat: -1,
+      repeatDelay: 1.2,
+      defaults: { ease: "none" },
+    });
+
+    // Phase 1: Fade in
+    tl.set([scanner, text], { opacity: 0 })
+      .to([scanner, text], { opacity: 1, duration: 0.5, ease: "power2.out" })
+
+      // Phase 2: The scan sweep  (progress 0 → 1)
+      .fromTo(
+        proxy,
+        { p: 0 },
+        {
+          p: 1,
+          duration: 3.2,
+          ease: "power1.inOut",
+          onUpdate() {
+            const fH = getFooterH();
+            const sH = getScannerH();
+            const tH = getTextH();
+
+            // Scanner: slides from just above the footer to just below it
+            const scanY = -sH + (fH + sH) * proxy.p;
+            gsap.set(scanner, { y: scanY });
+
+            // Text mask: the mask window height ≈ text height.
+            // Slide the mask from above the text to below it.
+            const maskH = tH;
+            const maskY = -maskH + (tH + maskH) * proxy.p;
+            text.style.WebkitMaskPosition = `0 ${maskY}px`;
+            text.style.maskPosition = `0 ${maskY}px`;
+          },
+        },
+        "sweep"
+      )
+
+      // Phase 3: Fade out
+      .to([scanner, text], {
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.in",
       });
 
-      tl.set(["#footer-scanner", "#footer-reveal-text"], { opacity: 0 })
-        .to(["#footer-scanner", "#footer-reveal-text"], {
-          opacity: 1,
-          duration: 0.4,
-        })
-        .fromTo(
-          "#footer-scanner",
-          { top: "-250px" },
-          { top: "100%", duration: 3 },
-          "scan",
-        )
-        .fromTo(
-          "#footer-reveal-text",
-          { webkitMaskPosition: "0 -250px", opacity: 1 },
-          { webkitMaskPosition: "0 1000px", opacity: 1, duration: 3 },
-          "scan",
-        )
-        .to(["#footer-scanner", "#footer-reveal-text"], {
-          opacity: 0,
-          duration: 0.6,
-        });
+    return tl;
+  }, []);
+
+  useGSAP(
+    () => {
+      const tl = syncAnimation();
+      return () => tl?.kill();
     },
-    { scope: footerRef },
+    { scope: footerRef, dependencies: [syncAnimation] }
   );
 
   const socialLinks = [
@@ -69,26 +106,36 @@ export default function Footer() {
       ref={footerRef}
       className="relative w-full bg-black border-t border-white/5 pt-16 sm:pt-24 md:pt-32 pb-8 sm:pb-10 overflow-hidden"
     >
-      {/* Technical Scanning Reveal Effect */}
+      {/* ── Technical Scanning Reveal Effect ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* The Scanning Bar */}
+        {/* Scanning Bar — height scales with viewport */}
         <div
-          id="footer-scanner"
-          className="absolute left-0 w-full h-[250px] bg-gradient-to-b from-transparent via-white/[0.12] to-transparent z-20"
-          style={{ top: "-250px" }}
-        />
+          ref={scannerRef}
+          className="absolute left-0 top-0 w-full z-20 opacity-0"
+          style={{ height: "clamp(120px, 25vw, 280px)" }}
+        >
+          {/* Core glow */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.10] to-transparent" />
+          {/* Thin bright scanline at center */}
+          <div className="absolute left-0 w-full top-1/2 -translate-y-1/2 h-px bg-white/20" />
+        </div>
 
-        {/* The Revealed Text Container */}
-        <div className="absolute bottom-[140px] left-0 w-full flex justify-center pointer-events-none select-none z-10">
+        {/* Revealed Text — centred in footer, mask driven by JS */}
+        <div className="absolute inset-0 flex items-center justify-center select-none z-10">
           <h2
-            id="footer-reveal-text"
-            className="text-[clamp(6rem,22vw,28rem)] font-black text-white leading-none tracking-tighter uppercase whitespace-nowrap opacity-0"
+            ref={textRef}
+            className="text-[clamp(4.5rem,20vw,26rem)] font-black text-white/[0.07] leading-none tracking-tighter uppercase whitespace-nowrap opacity-0"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to bottom, transparent, black, transparent)",
-              WebkitMaskSize: "100% clamp(12rem, 30vw, 20rem)",
+                "linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%)",
+              WebkitMaskSize: "100% 100%",
+              maskSize: "100% 100%",
               WebkitMaskRepeat: "no-repeat",
-              WebkitMaskPosition: "0 calc(clamp(12rem, 30vw, 20rem) * -1)",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "0 -100%",
+              maskPosition: "0 -100%",
             }}
           >
             WAHAB

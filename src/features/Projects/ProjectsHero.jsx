@@ -91,7 +91,7 @@ export default function ProjectsHero() {
         <div className="w-full flex flex-col items-center">
           <div className="hero-meta flex items-center justify-center gap-4 mb-8">
             <div className="h-px w-12 bg-white/40" />
-            <span className="text-sm font-mono tracking-[0.6em] text-white/90 uppercase">/ Projects \</span>
+            <span className="text-sm font-mono tracking-[0.6em] text-white/90 uppercase">/ WORKS \</span>
             <div className="h-px w-12 bg-white/40" />
           </div>
 
