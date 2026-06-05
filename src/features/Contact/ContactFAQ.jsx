@@ -71,6 +71,13 @@ export default function ContactFAQ() {
       id: "Q4",
       status: "Available"
     }
+    ,
+    {
+      q: "Do you provide maintenance after launch?",
+      a: "Yes — I offer post-launch support and maintenance packages tailored to your needs, including updates, monitoring, and optimizations.",
+      id: "Q5",
+      status: "Ongoing"
+    }
   ];
 
   return (
@@ -103,15 +110,15 @@ export default function ContactFAQ() {
               <div className="absolute top-0 left-0 w-full h-[1px] bg-white/20 -translate-y-full group-hover:translate-y-[120px] transition-transform duration-[2s] ease-linear pointer-events-none" />
 
               <div className="flex justify-between items-center mb-6 relative z-10">
-                <span className="text-[11px] font-mono text-white/70 tracking-[0.3em]">Response Time</span>
-                <div className="flex gap-1.5">
+                <span className="text-sm sm:text-base md:text-lg lg:text-[15px] font-mono font-semibold text-white tracking-[0.12em]">Response Time</span>
+                <div className="flex gap-2">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className={`w-1.5 h-1.5 ${i === 1 ? 'bg-white/80' : 'bg-white/20'}`} />
+                    <div key={i} className={`w-2 sm:w-2 h-2 sm:h-2 rounded-full ${i === 2 ? 'bg-white/90' : 'bg-white/30'}`} />
                   ))}
                 </div>
               </div>
-              <div className="text-2xl font-mono text-white tracking-[0.05em] mb-1 relative z-10">24–48 hours</div>
-              <div className="text-[10px] font-mono text-white/50 tracking-[0.2em] relative z-10">Reply window</div>
+              <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-mono font-semibold text-white tracking-[0.02em] mb-1 relative z-10">4 - 5 hours</div>
+              <div className="text-xs sm:text-sm md:text-base font-mono text-white/80 tracking-[0.18em] relative z-10">Reply window</div>
             </div>
 
             {/* Current Status Node */}
@@ -126,13 +133,13 @@ export default function ContactFAQ() {
               <div className="absolute top-0 left-0 w-full h-[1px] bg-white/20 -translate-y-full group-hover:translate-y-[120px] transition-transform duration-[2s] ease-linear pointer-events-none" />
 
               <div className="flex justify-between items-center mb-6 relative z-10">
-                <span className="text-[11px] font-mono text-white/70 tracking-[0.3em]">System state</span>
+                <span className="text-sm sm:text-base md:text-lg font-mono font-semibold text-white tracking-[0.12em]">System state</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-mono text-white/90 uppercase tracking-widest bg-white/10 px-2 py-0.5">ACTIVE</span>
+                  <span className="text-xs sm:text-sm md:text-base font-mono text-white uppercase tracking-widest bg-white/20 px-2 py-0.5 rounded-sm">ACTIVE</span>
                 </div>
               </div>
-              <div className="text-2xl font-mono text-white tracking-[0.05em] mb-1 relative z-10">Accepting projects</div>
-              <div className="text-[10px] font-mono text-white/50 tracking-[0.2em] relative z-10">Queue open</div>
+              <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-mono font-semibold text-white tracking-[0.02em] mb-1 relative z-10">Accepting projects</div>
+              <div className="text-xs sm:text-sm md:text-base font-mono text-white/80 tracking-[0.18em] relative z-10">Queue open</div>
             </div>
           </div>
         </div>

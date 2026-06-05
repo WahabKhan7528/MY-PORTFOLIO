@@ -3,10 +3,9 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 
 const stats = [
-  { label: "EXPERIENCE", value: "3", suffix: "YRS", id: "01" },
-  { label: "PROJECTS", value: "40", suffix: "+", id: "02" },
-  { label: "CLIENTS", value: "25", suffix: "+", id: "03" },
-  { label: "COMMITS", value: "1.2", suffix: "K+", id: "04" }
+  { label: "PROJECTS BUILT", value: "5", suffix: "+", id: "01" },
+  { label: "DEPLOYMENTS", value: "5", suffix: "+", id: "02" },
+  { label: "EXPERIENCE", value: "2", suffix: "Years +", id: "03" }
 ];
 
 export default function Stats() {
@@ -60,8 +59,8 @@ export default function Stats() {
         {/* Section Header */}
         <div className="stat-header flex flex-col md:flex-row justify-between items-start md:items-end mb-16 sm:mb-20 border-l-2 border-white/20 pl-6 md:pl-10">
           <div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black text-white tracking-tighter mb-4">Core Metrics</h2>
-            <p className="text-xs sm:text-sm md:text-base font-mono text-white/70 tracking-[0.3em]">Key numbers that show experience and work done</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black text-white tracking-tighter mb-4">Fresher Highlights</h2>
+            <p className="text-xs sm:text-sm md:text-base font-mono text-white/70 tracking-[0.3em]">Portfolio numbers that better reflect a junior developer profile</p>
           </div>
           <div className="mt-8 md:mt-0 text-left md:text-right flex flex-col md:items-end">
             <div className="w-12 h-px bg-white/20 mb-4" />
@@ -72,12 +71,12 @@ export default function Stats() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white/10">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className={`stat-box group p-8 sm:p-10 md:p-10 lg:p-14 flex flex-col items-start justify-between relative transition-all duration-500 hover:bg-white/[0.04] overflow-hidden ${index % 4 !== 3 ? 'md:border-r border-white/10' : ''
-                } ${index % 2 === 0 ? 'sm:border-r border-white/10' : ''
+              className={`stat-box group p-8 sm:p-10 md:p-10 lg:p-14 flex flex-col items-start justify-between relative transition-all duration-500 hover:bg-white/[0.04] overflow-hidden ${index < stats.length - 1 ? 'md:border-r border-white/10' : ''
+                } ${index % 2 === 0 && index !== stats.length - 1 ? 'sm:border-r border-white/10' : ''
                 } border-b border-white/10 md:border-b-0 last:border-b-0`}
             >
               {/* Scanning line effect */}
@@ -110,7 +109,7 @@ export default function Stats() {
                   {stat.label}
                 </div>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-xs sm:text-[13px] md:text-sm font-mono text-white/70 tracking-tighter animate-pulse">
-                VERIFIED
+                  VERIFIED
                 </div>
               </div>
 

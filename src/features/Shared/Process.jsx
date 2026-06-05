@@ -7,25 +7,21 @@ const steps = [
     number: "01",
     title: "Discovery",
     description: "We learn your goals and users to plan the right solution.",
-    details: ["User Flows", "Requirements", "Plan"]
   },
   {
     number: "02",
     title: "Architecture",
     description: "We design a clear, scalable system and data model.",
-    details: ["Database", "APIs", "Design"]
   },
   {
     number: "03",
     title: "Build",
     description: "We write reliable code and assemble the product.",
-    details: ["Development", "State", "Security"]
   },
   {
     number: "04",
     title: "Launch",
     description: "We test, optimize, and deploy so the product runs well.",
-    details: ["Testing", "CI/CD", "Deploy"]
   }
 ];
 
@@ -110,14 +106,7 @@ export default function Process() {
                   </p>
                 </div>
 
-                <div className="space-y-3 pt-8 border-t border-white/5">
-                  {step.details.map((detail, idx) => (
-                    <div key={idx} className="flex items-center gap-3 group/detail">
-                      <span className="text-[9px] sm:text-[10px] md:text-[11px] lg:text-xs font-mono text-white/40 group-hover/detail:text-white/80 transition-colors font-bold">[{idx + 1}]</span>
-                      <span className="text-[10px] sm:text-[11px] md:text-xs lg:text-[13px] font-mono text-white/50 uppercase tracking-widest group-hover/detail:text-white/80 transition-colors">{detail}</span>
-                    </div>
-                  ))}
-                </div>
+                {/* details removed */}
               </div>
 
               {/* Corner Accents */}

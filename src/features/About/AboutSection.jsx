@@ -65,22 +65,16 @@ export default function AboutSection() {
                 <div className="absolute top-0 left-0 w-4 h-[1px] bg-white/40" />
                 <div className="absolute bottom-0 left-0 w-4 h-[1px] bg-white/40" />
 
-                <p className="text-base sm:text-lg md:text-xl text-gray-300 font-light leading-relaxed max-w-xl italic">
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] text-gray-300 font-light leading-relaxed sm:leading-[1.75] max-w-xl italic">
                   "I turn complex ideas into fast, reliable web systems."
                 </p>
               </div>
 
-                <div className="bg-white/[0.02] border border-white/5 p-5 sm:p-8 font-mono text-sm leading-relaxed text-gray-400 relative overflow-hidden group">
+              <div className="bg-white/[0.02] border border-white/5 p-5 sm:p-8 font-mono text-sm leading-relaxed text-gray-400 relative overflow-hidden group">
                 <div className="absolute top-0 left-0 w-full h-1 bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
-                <div className="text-xs font-mono text-white/50 mb-4 uppercase tracking-widest">// BIO_TERMINAL</div>
-                <p>
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed sm:leading-[1.8]">
                   I focus on full-stack solutions using the MERN stack. My work aims for clear, scalable, and reliable code.
                 </p>
-                <div className="mt-6 flex gap-4 text-xs font-mono text-white/50">
-                  <span>29.3978 Latitude, 71.6752 longitude</span>
-                  <span>/</span>
-                  <span>STATUS: ACTIVE</span>
-                </div>
               </div>
             </div>
 
@@ -91,7 +85,7 @@ export default function AboutSection() {
                 <div className="absolute -left-4 top-0 w-0.5 h-full bg-white/10 group-hover:bg-white/40 transition-colors" />
               </div>
               <div className="group relative">
-                <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black mb-2 transition-transform duration-500">40+</div>
+                <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black mb-2 transition-transform duration-500">5+</div>
                 <div className="text-xs font-mono text-white/70 uppercase tracking-[0.3em]">Systems Built</div>
                 <div className="absolute -left-4 top-0 w-0.5 h-full bg-white/10 group-hover:bg-white/40 transition-colors" />
               </div>
@@ -120,12 +114,11 @@ export default function AboutSection() {
 
               <div className="mt-8 flex justify-between items-center">
                 <div className="flex flex-col gap-1">
-                  <div className="text-xs font-mono text-white/70 uppercase tracking-[0.4em]">AUTH_PROTOCOL: ARCHITECT</div>
-                  <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">REF_ID: 882-X04</div>
+                  <div className="text-xs font-mono text-white/70 uppercase tracking-[0.4em]">ARCHITECT</div>
                 </div>
                 <div className="flex gap-2">
                   {[...Array(6)].map((_, i) => (
-                    <div key={i} className={`w-1 h-3 bg-white/10 transition-all duration-300 ${i < 3 ? 'group-hover:bg-white/40' : ''}`} />
+                    <div key={i} className={`w-1 h-3 bg-white/10 transition-all duration-300 ${i < 6 ? 'group-hover:bg-white/40' : ''}`} />
                   ))}
                 </div>
               </div>

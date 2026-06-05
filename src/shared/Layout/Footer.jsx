@@ -1,195 +1,91 @@
-import { useRef, useCallback } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-/**
- * Footer component - High-fidelity "Precision Noir" implementation.
- * Features high-density technical metadata, brutalist typography,
- * and magnetic hover states.
- */
 export default function Footer() {
-  const footerRef = useRef(null);
-  const scannerRef = useRef(null);
-  const textRef = useRef(null);
   const date = new Date().getFullYear();
+  const [time, setTime] = useState(new Date());
 
-  const syncAnimation = useCallback(() => {
-    const footer = footerRef.current;
-    const scanner = scannerRef.current;
-    const text = textRef.current;
-    if (!footer || !scanner || !text) return;
-
-    // Get dimensions at the moment each frame renders
-    const getFooterH = () => footer.offsetHeight;
-    const getScannerH = () => scanner.offsetHeight;
-    const getTextH = () => text.offsetHeight;
-
-    const proxy = { p: 0 };
-
-    const tl = gsap.timeline({
-      repeat: -1,
-      repeatDelay: 1.2,
-      defaults: { ease: "none" },
-    });
-
-    // Phase 1: Fade in
-    tl.set([scanner, text], { opacity: 0 })
-      .to([scanner, text], { opacity: 1, duration: 0.5, ease: "power2.out" })
-
-      // Phase 2: The scan sweep  (progress 0 → 1)
-      .fromTo(
-        proxy,
-        { p: 0 },
-        {
-          p: 1,
-          duration: 3.2,
-          ease: "power1.inOut",
-          onUpdate() {
-            const fH = getFooterH();
-            const sH = getScannerH();
-            const tH = getTextH();
-
-            // Scanner: slides from just above the footer to just below it
-            const scanY = -sH + (fH + sH) * proxy.p;
-            gsap.set(scanner, { y: scanY });
-
-            // Text mask: the mask window height ≈ text height.
-            // Slide the mask from above the text to below it.
-            const maskH = tH;
-            const maskY = -maskH + (tH + maskH) * proxy.p;
-            text.style.WebkitMaskPosition = `0 ${maskY}px`;
-            text.style.maskPosition = `0 ${maskY}px`;
-          },
-        },
-        "sweep"
-      )
-
-      // Phase 3: Fade out
-      .to([scanner, text], {
-        opacity: 0,
-        duration: 0.7,
-        ease: "power2.in",
-      });
-
-    return tl;
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
   }, []);
-
-  useGSAP(
-    () => {
-      const tl = syncAnimation();
-      return () => tl?.kill();
-    },
-    { scope: footerRef, dependencies: [syncAnimation] }
-  );
-
-  const socialLinks = [
-    { name: "GitHub", href: "https://github.com/WahabKhan7528", icon: "GH" },
-    {
-      name: "LinkedIn",
-      href: "https://www.linkedin.com/in/wahab-khan-3a21a521a/",
-      icon: "LI",
-    },
-    { name: "Instagram", href: "#", icon: "IG" },
-    { name: "Twitter", href: "#", icon: "X" },
-  ];
 
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
     { name: "Contact", href: "/contact" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
   ];
 
+  const socialLinks = [
+    { name: "GitHub", href: "https://github.com/WahabKhan7528", icon: "GH" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/in/wahab-khan-3a21a521a/", icon: "LI" },
+    { name: "Instagram", href: "#", icon: "IG" },
+    { name: "Twitter", href: "#", icon: "X" },
+  ];
+
+  const legalLinks = [
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms of Service", href: "/terms" },
+  ];
+
+  // Opacities for the 3x3 grid logo to give it a tech feel
+  const opacities = [1, 1, 0.7, 1, 0.7, 0.4, 0.7, 0.4, 0.2];
+
   return (
-    <footer
-      ref={footerRef}
-      className="relative w-full bg-black border-t border-white/5 pt-16 sm:pt-24 md:pt-32 pb-8 sm:pb-10 overflow-hidden"
-    >
-      {/* ── Technical Scanning Reveal Effect ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Scanning Bar — height scales with viewport */}
-        <div
-          ref={scannerRef}
-          className="absolute left-0 top-0 w-full z-20 opacity-0"
-          style={{ height: "clamp(120px, 25vw, 280px)" }}
-        >
-          {/* Core glow */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.10] to-transparent" />
-          {/* Thin bright scanline at center */}
-          <div className="absolute left-0 w-full top-1/2 -translate-y-1/2 h-px bg-white/20" />
-        </div>
-
-        {/* Revealed Text — centred in footer, mask driven by JS */}
-        <div className="absolute inset-0 flex items-center justify-center select-none z-10">
-          <h2
-            ref={textRef}
-            className="text-[clamp(4.5rem,20vw,26rem)] font-black text-white/[0.07] leading-none tracking-tighter uppercase whitespace-nowrap opacity-0"
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%)",
-              maskImage:
-                "linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%)",
-              WebkitMaskSize: "100% 100%",
-              maskSize: "100% 100%",
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-              WebkitMaskPosition: "0 -100%",
-              maskPosition: "0 -100%",
-            }}
-          >
-            WAHAB
-          </h2>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 mb-12 sm:mb-16 md:mb-24 lg:mb-32">
-          {/* Brand Column */}
-          <div className="md:col-span-5">
-            <div className="flex flex-col gap-10">
-              <Link to="/" className="group inline-block">
-                <span className="font-display font-black text-3xl sm:text-4xl tracking-wider sm:tracking-[0.25em] text-white uppercase relative">
-                  Wahab.
-                  <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-white transition-all duration-700 group-hover:w-full shadow-[0_0_15px_rgba(255,255,255,0.8)]" />
+    <footer className="w-full bg-black border-t border-white/5 pt-20 overflow-hidden font-sans">
+      <div className="max-w-7xl mx-auto px-8 relative z-10">
+        <div className="flex flex-col xl:flex-row justify-between gap-16 mb-20">
+          
+          {/* Logo and Copyright */}
+          <div className="flex flex-col justify-between mb-8 xl:mb-0 xl:w-1/4">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="grid grid-cols-3 gap-[3px]">
+                  {[...Array(9)].map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="w-[7px] h-[7px] bg-white rounded-[1px]" 
+                      style={{ opacity: opacities[i] }} 
+                    />
+                  ))}
+                </div>
+                <span className="text-3xl font-medium tracking-tight text-white leading-none -mt-1 ml-1">
+                  Wahab
                 </span>
-              </Link>
-              <p className="text-white/70 text-sm leading-relaxed max-w-sm font-medium tracking-wide sm:tracking-widest uppercase opacity-90">
-                Architecting high-fidelity digital experiences through the
-                intersection of brutalist design and machine-first engineering.
-              </p>
+              </div>
+              
+              <div className="mt-8 max-w-[280px]">
+                <p className="text-[#666] text-sm leading-relaxed font-medium">
+                  I&apos;m Abdul Wahab Khan Arib — a full‑stack engineer and designer based in Bahawalpur, Pakistan. Building performant, accessible web applications and crafting polished UX.
+                </p>
+              </div>
             </div>
+            
+            <p className="hidden xl:block text-[#666] text-sm mt-12">
+              © {date} Wahab Khan
+            </p>
           </div>
 
-          {/* Navigation Column */}
-          <div className="md:col-span-3">
-            <div className="flex flex-col gap-10">
-              <span className="text-xs text-white/60 uppercase tracking-[0.4em] font-black opacity-80">
-                Core Directory
-              </span>
-              <nav className="flex flex-col gap-5">
-                {navLinks.map((link, index) => (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    className="group inline-flex items-center gap-4 w-fit min-h-[44px]"
-                  >
-                    <span className="text-xs font-mono text-white/40 group-hover:text-white transition-colors duration-300">
-                      0{index + 1}
-                    </span>
-                    <span className="text-sm font-black tracking-[0.25em] uppercase text-white/70 group-hover:text-white transition-all duration-300 group-hover:translate-x-2">
-                      {link.name}
-                    </span>
+          {/* Links Section */}
+          <div className="flex flex-col md:flex-row gap-12 lg:gap-24 xl:w-3/4 xl:justify-end">
+            {/* Column 1: Navigation */}
+            <div className="flex flex-col gap-6 md:w-32">
+              <span className="text-[#666] text-sm font-medium">Navigation</span>
+              <div className="flex flex-col gap-4">
+                {navLinks.map((link) => (
+                  <Link key={link.name} to={link.href} className="text-[#bbb] hover:text-white transition-colors text-[15px] font-medium">
+                    {link.name}
                   </Link>
                 ))}
-              </nav>
+              </div>
             </div>
-          </div>
 
-          {/* Social/Technical Column */}
-          <div className="md:col-span-4">
-            <div className="flex flex-col gap-10">
-              <span className="text-xs text-white/60 uppercase tracking-[0.4em] font-black opacity-80">
+            {/* Column 2: Secure Nodes */}
+            <div className="flex flex-col gap-6 md:flex-1 max-w-md">
+              <span className="text-[#666] text-sm font-medium uppercase tracking-[0.2em]">
                 Secure Nodes
               </span>
               <div className="grid grid-cols-2 gap-px bg-white/5 border border-white/5">
@@ -199,107 +95,113 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative flex items-center justify-between p-6 bg-black hover:bg-white/[0.08] transition-colors duration-300 overflow-hidden"
+                    className="group relative flex flex-col justify-center gap-2 p-6 bg-black hover:bg-white/[0.05] transition-colors duration-300 overflow-hidden min-h-[100px]"
                   >
                     {/* Subtle corner accent inside grid cell */}
                     <div className="absolute top-0 right-0 w-1 h-1 border-t border-r border-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                    <span className="text-xs font-black tracking-[0.2em] uppercase text-white/70 group-hover:text-white transition-colors">
-                      {social.name}
-                    </span>
-                    <span className="text-xs font-mono text-white/50 group-hover:text-white transition-colors">
-                      [{social.icon}]
-                    </span>
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-xs font-black tracking-[0.2em] uppercase text-white/70 group-hover:text-white transition-colors">
+                        {social.name}
+                      </span>
+                      <span className="text-xs font-mono text-white/40 group-hover:text-white transition-colors">
+                        [{social.icon}]
+                      </span>
+                    </div>
                   </a>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-16 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10">
-          <div className="flex flex-wrap justify-center md:justify-start items-center gap-x-8 gap-y-4 text-xs font-mono text-white/60 uppercase tracking-[0.2em]">
-            <span className="text-white/80 font-bold">© {date} Wahab Khan</span>
-            <div className="hidden md:block w-px h-3 bg-white/10" />
-            <span className="flex items-center gap-2">
-              <span className="text-white/40">SYS_TIME:</span>{" "}
-              {new Date().toLocaleTimeString("en-US", {
-                hour12: false,
-                hour: "2-digit",
-                minute: "2-digit",
-              })}{" "}
-              UTC
-            </span>
-          </div>
-
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group relative flex items-center gap-4 sm:gap-8 py-4 px-10 min-h-[44px] border border-white/10 overflow-hidden transition-all duration-700 hover:border-white hover:text-black"
-          >
-            {/* Background Inversion Layer */}
-            <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
-
-            {/* Surgical Corner Accents */}
-            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-500" />
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-500" />
-
-            <div className="relative z-10 flex items-center gap-5">
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-black font-bold  tracking-[0.4em] uppercase">
-                  Return_to_Top
-                </span>
+            {/* Column 3: Legal & Actions */}
+            <div className="flex flex-col gap-6 md:w-fit">
+              <span className="text-[#666] text-sm font-medium">Legal</span>
+              <div className="flex flex-col gap-4">
+                {legalLinks.map((link) => (
+                  <Link key={link.name} to={link.href} className="text-[#bbb] hover:text-white transition-colors text-[15px] font-medium">
+                    {link.name}
+                  </Link>
+                ))}
               </div>
 
-              <div className="relative w-5 h-5 flex items-center justify-center overflow-hidden">
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="transition-transform duration-500 group-hover:-translate-y-8"
+              {/* Time & Action Button */}
+              <div className="mt-8 flex flex-col gap-8">
+                <div className="flex items-center gap-2 text-xs font-mono text-[#666] uppercase tracking-[0.2em]">
+                  <span className="text-[#444]">SYS_TIME:</span>
+                  <span className="text-[#bbb]">
+                    {time.toLocaleTimeString("en-US", {
+                      hour12: false,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                      timeZone: "Asia/Karachi"
+                    })}{" "}
+                    PKT
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  className="group relative flex items-center gap-4 py-4 px-6 min-h-[44px] border border-white/10 overflow-hidden transition-all duration-700 hover:border-white hover:text-black w-fit"
                 >
-                  <path
-                    d="M6 1V11M6 1L1 6M6 1L11 6"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="square"
-                  />
-                </svg>
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute translate-y-8 transition-transform duration-500 group-hover:translate-y-0"
-                >
-                  <path
-                    d="M6 1V11M6 1L1 6M6 1L11 6"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="square"
-                  />
-                </svg>
+                  {/* Background Inversion Layer */}
+                  <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+
+                  {/* Surgical Corner Accents */}
+                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30 group-hover:border-black/40 transition-colors duration-500" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30 group-hover:border-black/40 transition-colors duration-500" />
+
+                  <div className="relative z-10 flex items-center gap-4">
+                    <span className="text-[11px] font-black tracking-[0.3em] uppercase text-white group-hover:text-black transition-colors duration-700">
+                      Return_to_Top
+                    </span>
+
+                    <div className="relative w-4 h-4 flex items-center justify-center overflow-hidden text-white group-hover:text-black transition-colors duration-700">
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-500 group-hover:-translate-y-8">
+                        <path d="M6 1V11M6 1L1 6M6 1L11 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+                      </svg>
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute translate-y-8 transition-transform duration-500 group-hover:translate-y-0">
+                        <path d="M6 1V11M6 1L1 6M6 1L11 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+                      </svg>
+                    </div>
+                  </div>
+                </button>
               </div>
             </div>
-          </button>
+          </div>
+
+          {/* Mobile Copyright */}
+          <p className="block md:hidden text-[#666] text-sm mt-4">
+            © {date} Wahab Khan
+          </p>
         </div>
       </div>
 
-      {/* Brutalist Frame Accents */}
-      <div className="absolute top-0 left-0 w-8 h-px bg-gradient-to-r from-white/40 to-transparent" />
-      <div className="absolute top-0 left-0 w-px h-8 bg-gradient-to-b from-white/40 to-transparent" />
-
-      <div className="absolute top-0 right-0 w-8 h-px bg-gradient-to-l from-white/40 to-transparent" />
-      <div className="absolute top-0 right-0 w-px h-8 bg-gradient-to-b from-white/40 to-transparent" />
-
-      <div className="absolute bottom-0 left-0 w-8 h-px bg-gradient-to-r from-white/40 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-px h-8 bg-gradient-to-t from-white/40 to-transparent" />
-
-      <div className="absolute bottom-0 right-0 w-8 h-px bg-gradient-to-l from-white/40 to-transparent" />
-      <div className="absolute bottom-0 right-0 w-px h-8 bg-gradient-to-t from-white/40 to-transparent" />
+      {/* Giant Blocky Text at the Bottom */}
+      <div className="relative w-full flex justify-center items-end px-4 mt-10 pointer-events-none">
+        <h2 
+          className="text-[clamp(6rem,24vw,32rem)] font-black leading-[0.75] tracking-tighter uppercase whitespace-nowrap select-none"
+          style={{ 
+            color: '#1a1a1a',
+            textShadow: `
+              0px -1px 0px rgba(255,255,255,0.03),
+              1px 1px 0px #151515,
+              2px 2px 0px #151515,
+              3px 3px 0px #151515,
+              4px 4px 0px #151515,
+              5px 5px 0px #111111,
+              6px 6px 0px #111111,
+              7px 7px 0px #111111,
+              8px 8px 0px #0a0a0a,
+              9px 9px 0px #0a0a0a,
+              10px 10px 0px #0a0a0a
+            `,
+            WebkitTextStroke: '1px rgba(255,255,255,0.02)'
+          }}
+        >
+          WAHAB
+        </h2>
+      </div>
     </footer>
   );
 }

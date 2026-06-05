@@ -10,7 +10,6 @@ import FloatingResumeButton from '@/shared/Ui/FloatingResumeButton';
 import Preloader from '@/shared/Ui/Preloader';
 import CustomCursor from '@/shared/Ui/CustomCursor';
 import EasterEggs from '@/shared/Ui/EasterEggs';
-import SystemInit from '@/shared/Ui/SystemInit';
 import FlashPanel from '@/shared/Ui/FlashPanel';
 import ParticleDataStream from '@/shared/Effects/ParticleDataStream';
 import ProjectDetail from '@/features/Projects/ProjectDetail';
@@ -24,9 +23,11 @@ import Home from '@/app/routes/Home';
 import AboutPage from '@/app/routes/About';
 import ProjectsPage from '@/app/routes/Projects';
 import ContactPage from '@/app/routes/Contact';
+import PrivacyPage from '@/app/routes/Privacy';
+import TermsPage from '@/app/routes/Terms';
 
 function App() {
-  const [systemStarted, setSystemStarted] = useState(false);
+  const [systemStarted, setSystemStarted] = useState(true);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const location = useLocation();
@@ -41,7 +42,7 @@ function App() {
       <ParticleDataStream />
       <FlashPanel />
 
-      {!systemStarted && <SystemInit onStart={() => setSystemStarted(true)} />}
+      {/* SystemInit removed: app starts immediately */}
 
       {systemStarted && loading && <Preloader onComplete={() => setLoading(false)} />}
 
@@ -59,6 +60,8 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/projects" element={<ProjectsPage onProjectSelect={setSelectedProject} />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/terms" element={<TermsPage />} />
                 <Route path="/test-preloader" element={<Preloader onComplete={() => console.log('Preloader test complete')} />} />
               </Routes>
             )}

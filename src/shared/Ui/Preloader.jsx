@@ -1,9 +1,10 @@
-﻿import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { gsap } from '@/lib/gsap';
 import { audioEngine } from '@/lib/audio';
 
 export default function Preloader({ onComplete }) {
     const [progress, setProgress] = useState(0);
+    const [currentTime, setCurrentTime] = useState(() => new Date().toLocaleTimeString([], { hour12: false }));
     const container = useRef(null);
     const logsRef = useRef(null);
 
@@ -16,6 +17,17 @@ export default function Preloader({ onComplete }) {
         "[ 1.541212] CALIBRATING INTERFACE...",
         "[ 1.845121] SYSTEM OPERATIONAL."
     ];
+
+    useEffect(() => {
+        const updateClock = () => {
+            setCurrentTime(new Date().toLocaleTimeString([], { hour12: false }));
+        };
+
+        updateClock();
+        const intervalId = window.setInterval(updateClock, 1000);
+
+        return () => window.clearInterval(intervalId);
+    }, []);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -42,15 +54,15 @@ export default function Preloader({ onComplete }) {
             const logLines = container.current.querySelectorAll('.log-line');
             tl.fromTo(logLines,
                 { opacity: 0, x: -5 },
-                { 
-                    opacity: 1, 
-                    x: 0, 
-                    duration: 0.2, 
+                {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.2,
                     stagger: {
                         each: 0.15,
                         onStart: () => audioEngine.playTelemetry()
-                    }, 
-                    ease: 'power1.out' 
+                    },
+                    ease: 'power1.out'
                 },
                 'start+=0.1'
             );
@@ -108,7 +120,7 @@ export default function Preloader({ onComplete }) {
     }, [onComplete]);
 
     return (
-        <div ref={container} className="fixed inset-0 z-[9999] bg-black pointer-events-auto flex flex-col overflow-hidden font-mono text-white p-6 sm:p-10">
+        <div ref={container} className="fixed inset-0 z-[9999] bg-black pointer-events-auto flex flex-col overflow-hidden font-mono text-white p-4 sm:p-10">
             {/* Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:50px_50px]" />
 
@@ -124,33 +136,33 @@ export default function Preloader({ onComplete }) {
             {/* Content Areas */}
 
             {/* Top Left: System Info */}
-            <div className="metadata-text absolute top-6 sm:top-10 left-6 sm:left-10 text-xs uppercase tracking-widest text-white/70">
+            <div className="metadata-text absolute top-4 sm:top-10 left-4 sm:left-10 text-[9px] sm:text-xs uppercase tracking-widest text-white/70">
                 <div>System: WAHAB_OS_V1.0</div>
                 <div>Kernel: Precision_Noir</div>
                 <div>Status: Initializing</div>
             </div>
 
             {/* Top Right: Time/Date or Metadata */}
-            <div className="metadata-text absolute top-6 sm:top-10 right-6 sm:right-10 text-xs uppercase tracking-widest text-white/70 text-right">
+            <div className="metadata-text absolute top-4 sm:top-10 right-4 sm:right-10 text-[9px] sm:text-xs uppercase tracking-widest text-white/70 text-right">
                 <div>Sector: 0x7A4</div>
                 <div>Mode: Secure</div>
-                <div>Time: {new Date().toISOString().slice(11, 19)}</div>
+                <div>Time: {currentTime}</div>
             </div>
 
             {/* Center: Massive Loading Percentage */}
             <div className="flex-1 flex flex-col items-center justify-center percentage-text">
-                <div className="text-[120px] sm:text-[160px] md:text-[200px] font-display font-bold leading-none text-white tracking-tighter">
+                <div className="text-[clamp(5rem,18vw,12.5rem)] font-display font-bold leading-none text-white tracking-tighter">
                     {progress.toString().padStart(2, '0')}
                 </div>
-                <div className="text-xs uppercase tracking-[0.5em] text-white/70 -mt-4">
+                <div className="text-[9px] sm:text-xs uppercase tracking-[0.4em] sm:tracking-[0.5em] text-white/70 -mt-2 sm:-mt-4">
                     Percent Loaded
                 </div>
             </div>
 
             {/* Bottom Left: Logs */}
-            <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 max-w-md hidden sm:block">
-                <div className="text-xs uppercase tracking-widest text-white/70 mb-2">Boot Logs:</div>
-                <div ref={logsRef} className="space-y-1 font-mono text-xs text-white/80">
+            <div className="absolute bottom-4 sm:bottom-10 left-4 sm:left-10 max-w-md hidden sm:block">
+                <div className="text-[10px] sm:text-xs uppercase tracking-widest text-white/70 mb-2">Boot Logs:</div>
+                <div ref={logsRef} className="space-y-1 font-mono text-[10px] sm:text-xs text-white/80">
                     {logMessages.map((msg, index) => (
                         <div key={index} className="log-line">
                             {msg}
@@ -160,10 +172,8 @@ export default function Preloader({ onComplete }) {
             </div>
 
             {/* Bottom Right: Progress Bar Segmented */}
-            <div className="progress-bar-container absolute bottom-6 sm:bottom-10 right-6 sm:right-10 w-full max-w-[160px] sm:max-w-[200px] md:max-w-xs">
-                <div className="flex justify-between text-xs uppercase tracking-widest text-white/70 mb-2">
-                    <span>Progress Bar</span>
-                    <span>{progress}%</span>
+            <div className="progress-bar-container absolute bottom-4 sm:bottom-10 right-4 sm:right-10 w-full max-w-[150px] sm:max-w-[200px] md:max-w-xs">
+                <div className="flex justify-between text-[9px] sm:text-xs uppercase tracking-widest text-white/70 mb-2">
                 </div>
                 <div className="flex space-x-1">
                     {Array.from({ length: 20 }).map((_, i) => (

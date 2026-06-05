@@ -24,8 +24,8 @@ export default function AvailabilityStatus() {
   }, { scope: container });
 
   const metrics = [
-    { label: "Availability", value: "Open for remote work", detail: "Current status" },
-    { label: "Response Time", value: "24–48 hours", detail: "Average reply" }
+    { label: "Availability", value: "Open for remote / onsite work", detail: "Current status" },
+    { label: "Response Time", value: "4 - 5 hours", detail: "Average reply" }
   ];
 
   return (

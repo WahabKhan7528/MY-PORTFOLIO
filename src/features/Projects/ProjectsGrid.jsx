@@ -5,11 +5,10 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 const projects = [
   {
     id: "01",
-    title: "TBC_SYSTEM",
-    category: "LMS_PLATFORM",
-    year: "2025",
-    status: "STABLE",
-    description: "Interactive educational ecosystem with resilient architecture.",
+    title: "TBC Campus OS",
+    category: "LMS & CMS PLATFORM",
+    year: "2026",
+    description: "TBC is an enterprise-grade College Management System that digitizes the academic and administrative operations of educational institutions. It features a dual-module architecture with a Learning Management System (LMS) for course delivery, assignments, and student progress tracking, and a Content Management System (CMS) for institutional announcements, notices, and dynamic content.",
     demoUrl: "https://the-best-group-of-colleges.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/THE-BEST-GROUP-OF-COLLEGES",
     image: "/project-images/TBC/1.webp",
@@ -19,17 +18,17 @@ const projects = [
       "/project-images/TBC/3.webp",
       "/project-images/TBC/4.webp"
     ],
-    tech: ["REACT", "GSAP", "FIREBASE"]
+    tech: ["REACT", "GSAP", "EXPRESS", "MONGODB", "TAILWIND", "REDUX","JWT", "NODE", "AXIOS"]
   },
   {
     id: "02",
-    title: "NOIR_INTERFACE",
-    category: "UI_SYSTEM",
+    title: "CLIENT PORTFOLIO",
+    category: "PORTFOLIO WEBSITE",
     year: "2026",
     status: "BETA",
-    description: "High-fidelity visual protocols for luxury digital experiences.",
-    demoUrl: "#",
-    repoUrl: "https://github.com/WahabKhan7528/MY-PORTFOLIO",
+    description: "A personal portfolio website built for Masooma, a UX/UI and brand designer. The site is crafted to reflect her design identity clean, minimal, and visually intentional. Built with React and Vite for a fast, modern frontend experience, styled with Tailwind CSS for a fully responsive layout across all devices, and deployed on Vercel for seamless continuous delivery.",
+    demoUrl: "https://masooma-portfolio.vercel.app/",
+    repoUrl: "https://github.com/WahabKhan7528/masooma-portfolio",
     image: "/project-images/Momo Portfolio/2.webp",
     screenshots: [
       "/project-images/Momo Portfolio/1.webp",
@@ -56,8 +55,8 @@ const projects = [
   },
   {
     id: "04",
-    title: "KRONOS_ENGINE",
-    category: "DATA_CORE",
+    title: "ARABIC KITCHEN",
+    category: "Restraunt WEBSITE",
     year: "2024",
     status: "ACTIVE",
     description: "High-throughput data processing engine with zero latency.",
@@ -78,13 +77,13 @@ export default function ProjectsGrid({ onProjectSelect }) {
   const container = useRef(null);
 
   useGSAP(() => {
-    gsap.fromTo(".project-card", 
+    gsap.fromTo(".project-card",
       { opacity: 0, y: 50 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 1, 
-        stagger: 0.2, 
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
         ease: "power3.out",
         scrollTrigger: {
           trigger: container.current,
@@ -106,21 +105,19 @@ export default function ProjectsGrid({ onProjectSelect }) {
               <span className="text-white/30 italic">Projects.</span>
             </h2>
           </div>
-          <div className="text-right hidden md:block">
-            <p className="text-sm font-semibold text-white/70 tracking-[0.5em]">Filter: All</p>
-          </div>
+          
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
           {projects.map((project, index) => (
-            <div 
+            <div
               key={project.id}
               className="project-card group relative bg-black p-6 sm:p-8 md:p-12 overflow-hidden cursor-pointer"
               onClick={() => onProjectSelect && onProjectSelect(project)}
             >
               {/* Card Hover Effect */}
               <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+
               {/* Surgical Corner Accents */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/20 group-hover:border-white/50 transition-colors" />
               <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/20 group-hover:border-white/50 transition-colors" />
@@ -136,13 +133,13 @@ export default function ProjectsGrid({ onProjectSelect }) {
                 </div>
 
                 <div className="aspect-[16/9] overflow-hidden border border-white/5 relative group-hover:border-white/20 transition-colors">
-                  <img 
-                    src={project.image} 
+                  <img
+                    src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover md:grayscale md:brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-                  
+
                   {/* Scanning Bar */}
                   <div className="absolute top-0 left-0 w-full h-[1px] bg-white opacity-0 group-hover:opacity-50 group-hover:translate-y-[200px] transition-all duration-[2000ms] ease-linear pointer-events-none" />
                   <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
