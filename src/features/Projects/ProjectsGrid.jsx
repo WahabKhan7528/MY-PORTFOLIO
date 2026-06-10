@@ -25,7 +25,6 @@ const projects = [
     title: "CLIENT PORTFOLIO",
     category: "PORTFOLIO WEBSITE",
     year: "2026",
-    status: "BETA",
     description: "A personal portfolio website built for Masooma, a UX/UI and brand designer. The site is crafted to reflect her design identity clean, minimal, and visually intentional. Built with React and Vite for a fast, modern frontend experience, styled with Tailwind CSS for a fully responsive layout across all devices, and deployed on Vercel for seamless continuous delivery.",
     demoUrl: "https://masooma-portfolio.vercel.app/",
     repoUrl: "https://github.com/WahabKhan7528/masooma-portfolio",
@@ -35,39 +34,35 @@ const projects = [
       "/project-images/Momo Portfolio/2.webp",
       "/project-images/Momo Portfolio/3.webp"
     ],
-    tech: ["VITE", "TAILWIND", "GSAP"]
+    tech: ["REACT", "TAILWIND", "GSAP", "VITE", "VERCEL"]
   },
   {
     id: "03",
-    title: "WOXO_MODULE",
-    category: "CONTENT_HUB",
-    year: "2023",
-    status: "LEGACY",
-    description: "Scalable data distribution and content management node.",
-    demoUrl: "#",
-    repoUrl: "https://github.com/WahabKhan7528",
-    image: "/project-images/woxo-blogs-1.png",
+    title: "CRUX - AI Career Intelligence",
+    category: "AI SAAS & DASHBOARD",
+    year: "2026",
+    description: "A premium, AI-powered career intelligence platform designed to bridge the gap between job seekers and their target roles. It features dynamic dashboard interfaces, automated resume parsing and analysis, and intelligent job matching algorithms. The front-end is heavily focused on delivering a high-end, dynamic user experience with fluid framer-motion layout transitions, responsive segmented controls, custom interactive toggles, and robust session management UI.",
+    demoUrl: "https://crux-opal.vercel.app",
+    repoUrl: "https://github.com/WahabKhan7528/CRUX",
+    image: "/project-images/CRUX/HERO.webp",
     screenshots: [
-      "/project-images/woxo-blogs-1.png",
-      "/project-images/woxo-blogs-2.png"
+      "/project-images/CRUX/HERO.webp",
+      "/project-images/CRUX/DASHBOARD.webp",
+      "/project-images/CRUX/BYOK.webp"
     ],
-    tech: ["NODE", "MONGODB", "EXPRESS"]
+    tech: ["REACT", "TAILWIND CSS", "FRAMER MOTION", "VITE"]
   },
   {
     id: "04",
     title: "ARABIC KITCHEN",
     category: "Restraunt WEBSITE",
-    year: "2024",
-    status: "ACTIVE",
-    description: "High-throughput data processing engine with zero latency.",
-    demoUrl: "#",
-    repoUrl: "https://github.com/WahabKhan7528",
-    image: "/project-images/TBC/1.webp",
-    screenshots: [
-      "/project-images/TBC/1.webp",
-      "/project-images/TBC/2.webp"
-    ],
-    tech: ["PYTHON", "REDIS", "DOCKER"]
+    year: "2026",
+    description: "Arabic Kitchen is a single-page web experience built with React and Vite, designed to present a restaurant’s offerings with rich visuals and tactile interactions. The site combines vivid photography, an interactive menu, reservation functionality, and customer testimonials with subtle motion and cultural UI details to create an engaging dining-first impression. Custom components including an Arabic geometric pattern overlay, grain texture, animated hero particles, a custom cursor, and magnetic hover effects add personality while preserving fast load times and responsive behavior across devices.",
+    demoUrl: "https://arabic-kitchen.vercel.app/",
+    repoUrl: "https://github.com/WahabKhan7528/ARABIC-KITCHEN",
+    image: "/project-images/ARABIC-KITCHEN/HOME.png",
+    screenshots: [],
+    tech: ["REACT", "TAILWIND", "THREEJS", "VITE", "VERCEL"]
   }
 ];
 
@@ -136,7 +131,7 @@ export default function ProjectsGrid({ onProjectSelect }) {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover md:grayscale md:brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700 group-hover:scale-105"
+                    className="w-full h-full object-contain md:grayscale md:brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
 

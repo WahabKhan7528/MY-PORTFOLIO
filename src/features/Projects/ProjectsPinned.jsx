@@ -24,13 +24,13 @@ const projects = [
   },
   {
     id: 3,
-    title: "WOXO Module",
-    category: "Content Hub",
-    year: "2023",
-    description: "A content management and distribution system.",
-    demoUrl: "#",
-    repoUrl: "https://github.com/WahabKhan7528",
-    image: "/project-images/woxo-blogs-1.png",
+    title: "CRUX",
+    category: "AI Dashboard",
+    year: "2026",
+    description: "A premium, AI-powered career intelligence platform.",
+    demoUrl: "https://crux-opal.vercel.app",
+    repoUrl: "https://github.com/WahabKhan7528/CRUX",
+    image: "/project-images/CRUX/HERO.webp",
   },
 ];
 
