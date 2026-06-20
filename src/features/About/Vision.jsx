@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 
@@ -33,38 +33,38 @@ export default function Vision() {
         ease: "expo.out"
       }
     )
-    .fromTo(".vision-text",
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "power3.out"
-      },
-      "-=1"
-    )
-    .fromTo(".protocol-node",
-      { opacity: 0, x: -20 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power2.out"
-      },
-      "-=0.8"
-    )
-    .fromTo(".hud-panel",
-      { opacity: 0, scale: 0.9, x: 50 },
-      {
-        opacity: 1,
-        scale: 1,
-        x: 0,
-        duration: 1.5,
-        ease: "power4.out"
-      },
-      "-=1"
-    );
+      .fromTo(".vision-text",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out"
+        },
+        "-=1"
+      )
+      .fromTo(".protocol-node",
+        { opacity: 0, x: -20 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power2.out"
+        },
+        "-=0.8"
+      )
+      .fromTo(".hud-panel",
+        { opacity: 0, scale: 0.9, x: 50 },
+        {
+          opacity: 1,
+          scale: 1,
+          x: 0,
+          duration: 1.5,
+          ease: "power4.out"
+        },
+        "-=1"
+      );
 
     // Continuous rotation for the core visual
     gsap.to(".rotating-core", {
@@ -96,7 +96,7 @@ export default function Vision() {
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 relative z-10 w-full">
         <div className="grid lg:grid-cols-12 gap-10 md:gap-14 lg:gap-16 items-center">
-          
+
           {/* Left Side: Typography & Copy (7 cols) */}
           <div className="lg:col-span-7">
             <h2 className="vision-title text-5xl sm:text-6xl md:text-7xl font-display font-black text-white leading-[0.85] tracking-tighter mb-8">
@@ -105,11 +105,11 @@ export default function Vision() {
               <span className="text-white/20 italic">I ARCHITECT</span><br />
               DIGITAL FUTURES.
             </h2>
-            
+
             <p className="vision-text text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed max-w-xl mb-12">
               My mission is to transform abstract concepts into high-performance digital machines. I believe that every line of code should contribute to a larger, seamless ecosystem.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-white/10">
               <div className="protocol-node">
                 <div className="text-xs font-mono text-white/70 mb-2">// PROTOCOL_01</div>
@@ -127,7 +127,7 @@ export default function Vision() {
           {/* Right Side: Complex HUD Visual (5 cols) */}
           <div className="lg:col-span-5 relative flex justify-center items-center">
             <div className="hud-panel relative w-full max-w-[380px] mx-auto lg:mx-0 aspect-square bg-white/[0.02] border border-white/10 backdrop-blur-md p-8 flex flex-col justify-between overflow-hidden group transition-transform duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
-              
+
               {/* Corner Accents */}
               <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white/40" />
               <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-white/40" />
@@ -155,7 +155,7 @@ export default function Vision() {
                     <line x1="50" y1="5" x2="50" y2="95" stroke="currentColor" strokeWidth="0.5" />
                     <line x1="5" y1="50" x2="95" y2="50" stroke="currentColor" strokeWidth="0.5" />
                   </svg>
-                  
+
                   {/* Central Node */}
                   <div className="absolute w-2 h-2 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 </div>

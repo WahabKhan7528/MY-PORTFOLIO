@@ -18,7 +18,7 @@ const projects = [
       "/project-images/TBC/3.webp",
       "/project-images/TBC/4.webp"
     ],
-    tech: ["REACT", "GSAP", "EXPRESS", "MONGODB", "TAILWIND", "REDUX","JWT", "NODE", "AXIOS"]
+    tech: ["REACT", "GSAP", "EXPRESS", "MONGODB", "TAILWIND", "REDUX", "JWT", "NODE", "AXIOS"]
   },
   {
     id: "02",
@@ -100,7 +100,7 @@ export default function ProjectsGrid({ onProjectSelect }) {
               <span className="text-white/30 italic">Projects.</span>
             </h2>
           </div>
-          
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
@@ -138,11 +138,7 @@ export default function ProjectsGrid({ onProjectSelect }) {
                   {/* Scanning Bar */}
                   <div className="absolute top-0 left-0 w-full h-[1px] bg-white opacity-0 group-hover:opacity-50 group-hover:translate-y-[200px] transition-all duration-[2000ms] ease-linear pointer-events-none" />
                   <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  <div className="absolute bottom-4 left-4 flex gap-2 sm:translate-y-8 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 transition-all duration-500 delay-100">
-                    {project.tech.map(t => (
-                      <span key={t} className="text-xs font-mono bg-white text-black px-2 py-0.5 font-bold tracking-widest">{t}</span>
-                    ))}
-                  </div>
+
                 </div>
 
                 <div className="space-y-4">

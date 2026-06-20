@@ -366,3 +366,17 @@ h6 {
 .animate-scanline {
   animation: scanline 6s linear infinite;
 }
+
+@keyframes letter-reveal {
+  0%, 100% {
+    color: #1a1a1a;
+  }
+  50% {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+}
+
+.animate-letter-reveal {
+  animation: letter-reveal 3s infinite ease-in-out;
+}

@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { PERSONAL } from "@/config/personal";
@@ -270,7 +270,7 @@ export default function ContactSection({ isHero = false }) {
             {/* Hover Reveal Scanning Line */}
             <div className="absolute top-0 left-0 w-full h-[1px] bg-white/40 -translate-y-full group-hover/form:translate-y-[800px] transition-transform duration-[3s] ease-linear pointer-events-none opacity-0 group-hover/form:opacity-100" />
 
-              <div className="flex flex-col gap-3 mb-16 relative z-10">
+            <div className="flex flex-col gap-3 mb-16 relative z-10">
               <div className="flex items-center gap-3">
                 <span className="w-2 h-2 bg-white/40 animate-pulse" />
                 <h3 className="text-2xl font-bold text-white tracking-widest">Contact Form</h3>

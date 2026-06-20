@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
@@ -16,18 +16,18 @@ export default function ProjectsCTA() {
       transformOrigin: "center center"
     });
 
-    gsap.fromTo(".radar-ping", 
+    gsap.fromTo(".radar-ping",
       { scale: 0, opacity: 1 },
       { scale: 2, opacity: 0, duration: 2, repeat: -1, ease: "power1.out", stagger: 0.8 }
     );
 
-    gsap.fromTo(".cta-text-reveal", 
+    gsap.fromTo(".cta-text-reveal",
       { opacity: 0, y: 30 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 1, 
-        stagger: 0.1, 
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: container.current,
@@ -46,10 +46,10 @@ export default function ProjectsCTA() {
         <div className="relative w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] border border-white/20 rounded-full flex items-center justify-center">
           <div className="absolute w-[600px] h-[600px] border border-white/10 rounded-full" />
           <div className="absolute w-[400px] h-[400px] border border-white/5 rounded-full" />
-          
+
           {/* Radar Line */}
           <div className="radar-line absolute top-0 left-1/2 w-[1px] h-1/2 bg-gradient-to-t from-transparent to-white/40 origin-bottom" />
-          
+
           {/* Pings */}
           <div className="radar-ping absolute w-4 h-4 bg-white rounded-full blur-sm" style={{ top: '20%', left: '30%' }} />
           <div className="radar-ping absolute w-4 h-4 bg-white rounded-full blur-sm" style={{ top: '60%', left: '70%' }} />
@@ -59,11 +59,11 @@ export default function ProjectsCTA() {
 
       <div className="relative z-10 w-full max-w-7xl">
         <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20 items-center">
-          
+
           {/* Left: Collaboration Info */}
           <div className="space-y-12 order-2 lg:order-1">
             <div className="cta-text-reveal space-y-4">
-                <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
                 <div className="w-8 h-px bg-white/60" />
                 <span className="text-[12px] font-mono tracking-[0.5em] text-white/90 uppercase">Inquiry</span>
               </div>
@@ -83,7 +83,7 @@ export default function ProjectsCTA() {
             <div className="cta-text-reveal group relative p-8 bg-white/5 border border-white/10 overflow-hidden backdrop-blur-sm">
               {/* Card Scanline */}
               <div className="absolute top-0 left-0 w-full h-[1px] bg-white/20 -translate-y-full group-hover:translate-y-[400px] transition-transform duration-[4000ms] ease-linear" />
-              
+
               <div className="relative z-10 space-y-6">
                 <div className="flex justify-between items-start">
                   <div className="flex items-center gap-3">
@@ -101,7 +101,7 @@ export default function ProjectsCTA() {
                     I'm open to new projects. If you need a reliable, well‑designed web product, let's talk.
                   </p>
 
-                  
+
                   {/* Inquiry Process */}
                   <div className="space-y-3 pt-6 border-t border-white/10">
                     {[
@@ -143,16 +143,16 @@ export default function ProjectsCTA() {
               Build<br />
               <span className="text-white/20 italic">Something</span>
             </h2>
-            
+
             <div className="cta-text-reveal flex flex-col lg:items-end gap-8">
               <p className="text-gray-400 font-light text-sm md:text-lg max-w-md lg:ml-auto leading-relaxed text-white/60">
                 Execute the next phase of your digital strategy. Let's discuss how we can elevate your project with a precision-engineered web experience.
               </p>
 
-              
-                <Link 
+
+              <Link
                 to="/contact"
-                  className="group relative w-full sm:w-fit px-8 sm:px-12 py-6 sm:py-8 min-h-[44px] bg-white text-black overflow-hidden transition-all duration-500 hover:scale-[1.02] flex items-center justify-center gap-4"
+                className="group relative w-full sm:w-fit px-8 sm:px-12 py-6 sm:py-8 min-h-[44px] bg-white text-black overflow-hidden transition-all duration-500 hover:scale-[1.02] flex items-center justify-center gap-4"
               >
                 <span className="relative z-10 text-xs tracking-[0.6em] font-bold">Get in Touch</span>
                 <span className="relative z-10 text-lg">→</span>

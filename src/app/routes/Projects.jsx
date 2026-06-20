@@ -1,6 +1,6 @@
-﻿import ProjectsHero from '@/features/Projects/ProjectsHero';
+import ProjectsHero from '@/features/Projects/ProjectsHero';
 import ProjectsGrid from '@/features/Projects/ProjectsGrid';
-import ProjectsArchive from '@/features/Projects/ProjectsArchive';
+
 import ProjectsCTA from '@/features/Projects/ProjectsCTA';
 
 const ProjectsPage = ({ onProjectSelect }) => {

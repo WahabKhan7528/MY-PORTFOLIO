@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 
@@ -99,7 +99,7 @@ export default function Philosophy() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-8 phi-header">
           <div className="max-w-3xl">
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-black text-white tracking-tighter leading-none mb-4">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-black text-white tracking-tighter leading-none mb-4">
               ARCHITECTURAL <br />
               <span className="text-white/20 italic">PRINCIPLES.</span>
             </h2>

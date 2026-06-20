@@ -240,21 +240,27 @@ export default function ProjectDetail({ project, onClose }) {
               </div>
 
               {/* Action Links */}
-              <div className="flex flex-col gap-3 md:gap-4 pt-4 md:pt-6 animate-stagger">
+              <div className="flex flex-col gap-3 md:gap-4 pt-4 md:pt-6 animate-stagger w-full">
                 {project.demoUrl && project.demoUrl !== '#' && (
                   <a 
                     href={project.demoUrl} 
                     target="_blank" 
                     rel="noreferrer"
-                    className="group relative flex items-center justify-between p-4 border border-white bg-white text-black hover:bg-black hover:text-white transition-colors duration-300 overflow-hidden"
+                    className="group relative flex w-full items-center justify-between px-4 py-4 md:px-6 md:py-5 bg-white text-black overflow-hidden hover:scale-[1.02] transition-transform duration-300"
                   >
-                    <span className="relative z-10 text-xs md:text-sm font-bold tracking-[0.3em] uppercase">
-                      LAUNCH_LIVE_DEMO
-                    </span>
-                    <svg className="w-4 h-4 relative z-10 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                    <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+                    <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-black/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
+                    
+                    <div className="flex items-center gap-3 md:gap-4 relative z-10">
+                      <span className="text-[11px] md:text-sm font-black tracking-[0.2em] md:tracking-[0.3em] uppercase mt-[2px]">
+                        LAUNCH_LIVE_DEMO
+                      </span>
+                    </div>
+                    
+                    <div className="relative z-10 flex items-center justify-center">
+                      <svg className="w-5 h-5 md:w-7 md:h-7 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
                   </a>
                 )}
                 
@@ -262,14 +268,27 @@ export default function ProjectDetail({ project, onClose }) {
                   href={project.repoUrl || '#'} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="group flex items-center justify-between p-4 border border-white/20 hover:border-white transition-colors duration-300"
+                  className="group relative flex w-full items-center justify-between px-4 py-4 md:px-6 md:py-5 border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300"
                 >
-                  <span className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-white/60 group-hover:text-white transition-colors">
-                    VIEW_SOURCE_CODE
-                  </span>
-                  <svg className="w-4 h-4 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
+                  <div className="flex items-center gap-3 md:gap-4 relative z-10">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-white/40 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                    <span className="text-[11px] md:text-sm font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-white/60 group-hover:text-white transition-colors mt-[2px]">
+                      VIEW_SOURCE_CODE
+                    </span>
+                  </div>
+                  
+                  <div className="relative z-10 flex items-center overflow-hidden">
+                    <div className="flex -space-x-1">
+                      <svg className="w-5 h-5 md:w-7 md:h-7 text-white/20 group-hover:text-white/60 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                      <svg className="w-5 h-5 md:w-7 md:h-7 text-white/20 group-hover:text-white transition-colors duration-300 delay-75" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
                 </a>
               </div>
 

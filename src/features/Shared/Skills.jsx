@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 
@@ -15,14 +15,14 @@ export default function Skills() {
             category: "Frontend",
             id: "ARS-01",
             status: "Stable",
-            items: ["React.js", "Tailwind CSS", "GSAP","Redux","ZOD"],
+            items: ["React.js", "Tailwind CSS", "GSAP", "Redux", "ZOD"],
             description: "Building fast, interactive user interfaces."
         },
         {
             category: "Backend",
             id: "ARS-02",
             status: "Optimized",
-            items: ["Node.js", "Express.js", "REST APIs","JWT","Cloudinary"],
+            items: ["Node.js", "Express.js", "REST APIs", "JWT", "Cloudinary"],
             description: "Server-side logic and real-time features."
         },
         {
@@ -103,7 +103,7 @@ export default function Skills() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
                     {arsenal.map((module, idx) => (
                         <div key={idx} className="arsenal-card group relative bg-black p-8 sm:p-10 md:p-12 lg:p-16 overflow-hidden transition-all duration-700 hover:bg-white/[0.03]">
-                           
+
 
                             {/* Holographic Mesh Overlay */}
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2)_0%,transparent_70%)]" />

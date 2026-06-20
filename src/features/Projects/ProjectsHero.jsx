@@ -1,4 +1,4 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 
@@ -12,31 +12,31 @@ export default function ProjectsHero() {
       { scaleX: 0 },
       { scaleX: 1, duration: 1.5, ease: "power4.inOut" }
     )
-    .fromTo(".hero-meta",
-      { opacity: 0, x: -20 },
-      { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
-      "-=0.5"
-    )
-    .fromTo(".hero-title-line",
-      { y: 100, skewY: 10, opacity: 0 },
-      { y: 0, skewY: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" },
-      "-=0.8"
-    )
-    .fromTo(".hero-desc",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-      "-=0.6"
-    )
-    .fromTo(".tech-spec",
-      { opacity: 0, x: 20 },
-      { opacity: 1, x: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" },
-      "-=0.4"
-    )
-    .fromTo(".corner-accent",
-      { scale: 0, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" },
-      "-=0.5"
-    );
+      .fromTo(".hero-meta",
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+        "-=0.5"
+      )
+      .fromTo(".hero-title-line",
+        { y: 100, skewY: 10, opacity: 0 },
+        { y: 0, skewY: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" },
+        "-=0.8"
+      )
+      .fromTo(".hero-desc",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+        "-=0.6"
+      )
+      .fromTo(".tech-spec",
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" },
+        "-=0.4"
+      )
+      .fromTo(".corner-accent",
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5, stagger: 0.1, ease: "back.out(1.7)" },
+        "-=0.5"
+      );
 
     // Decorative Sphere Rotation
     gsap.to(".hero-sphere", {
