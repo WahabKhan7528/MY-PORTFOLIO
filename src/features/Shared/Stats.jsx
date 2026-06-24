@@ -60,7 +60,6 @@ export default function Stats() {
         <div className="stat-header flex flex-col md:flex-row justify-between items-start md:items-end mb-16 sm:mb-20 border-l-2 border-white/20 pl-6 md:pl-10">
           <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black text-white tracking-tighter mb-4">Fresher Highlights</h2>
-            <p className="text-xs sm:text-sm md:text-base font-mono text-white/70 tracking-[0.3em]">Portfolio numbers that better reflect a junior developer profile</p>
           </div>
           <div className="mt-8 md:mt-0 text-left md:text-right flex flex-col md:items-end">
             <div className="w-12 h-px bg-white/20 mb-4" />

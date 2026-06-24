@@ -15,7 +15,7 @@ export default function Skills() {
             category: "Frontend",
             id: "ARS-01",
             status: "Stable",
-            items: ["React.js", "Tailwind CSS", "GSAP", "Redux", "ZOD"],
+            items: ["Html","Css","Js","React.js", "Tailwind CSS", "GSAP", "ZOD","axios",],
             description: "Building fast, interactive user interfaces."
         },
         {

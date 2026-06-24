@@ -6,22 +6,22 @@ const steps = [
   {
     number: "01",
     title: "Discovery",
-    description: "We learn your goals and users to plan the right solution.",
+    description: "Learn your goals and users to plan the right solution.",
   },
   {
     number: "02",
     title: "Architecture",
-    description: "We design a clear, scalable system and data model.",
+    description: "Design a clear, scalable system and data model.",
   },
   {
     number: "03",
     title: "Build",
-    description: "We write reliable code and assemble the product.",
+    description: "Write reliable code and assemble the product.",
   },
   {
     number: "04",
     title: "Launch",
-    description: "We test, optimize, and deploy so the product runs well.",
+    description: "Test, optimize, and deploy so the product runs well.",
   }
 ];
 
