@@ -68,7 +68,7 @@ export default function Footer() {
             <div>
               <div className="flex items-center gap-3">
                 <span className="text-4xl font-medium tracking-tight text-white leading-none -mt-1 ml-1">
-                  Wahab
+                  Wahab Khan
                 </span>
               </div>
 

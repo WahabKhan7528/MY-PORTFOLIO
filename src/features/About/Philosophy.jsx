@@ -7,8 +7,7 @@ const philosophies = [
     id: "01",
     title: "PRECISION",
     tagline: "SURGICAL_EXECUTION",
-    desc: "Every pixel and every function must serve a purpose. There is no room for digital clutter or redundant processes. We build for absolute efficiency.",
-    metrics: ["EFFICIENCY: 99.9%", "LATENCY: <10ms", "OVERHEAD: 0.0%"],
+    desc: "Every pixel and every function must serve a purpose. There is no room for digital clutter or redundant processes.",
     icon: "▣"
   },
   {
@@ -16,7 +15,6 @@ const philosophies = [
     title: "RESILIENCE",
     tagline: "FAULT_TOLERANCE",
     desc: "Systems must be built to withstand extreme load, handle errors gracefully, and scale infinitely. Failure is not an option; it is a parameter to be managed.",
-    metrics: ["UPTIME: 100%", "SCALABILITY: INF", "REDUNDANCY: 3X"],
     icon: "◰"
   },
   {
@@ -24,7 +22,6 @@ const philosophies = [
     title: "AESTHETICS",
     tagline: "VISUAL_DOMINANCE",
     desc: "Form follows function, but the form itself must inspire and command attention. A beautiful system is a respected system. Design is a technical requirement.",
-    metrics: ["IMPACT: MAX", "COHESION: 1.0", "FIDELITY: HIGH"],
     icon: "◈"
   }
 ];
@@ -134,20 +131,7 @@ export default function Philosophy() {
                 {phi.desc}
               </p>
 
-              {/* Technical Metrics */}
-              <div className="space-y-3 pt-8 border-t border-white/5">
-                {phi.metrics.map((metric, idx) => (
-                  <div key={idx} className="flex justify-between items-center group/metric">
-                    <span className="text-xs font-mono text-white/60 group-hover/metric:text-white/80 transition-colors">
-                      {metric.split(':')[0]}
-                    </span>
-                    <div className="flex-1 mx-4 h-[1px] bg-white/5 group-hover/metric:bg-white/10 transition-colors" />
-                    <span className="text-xs font-mono text-white/80 group-hover/metric:text-white/90 transition-colors">
-                      {metric.split(':')[1]}
-                    </span>
-                  </div>
-                ))}
-              </div>
+
 
               {/* Corner Accents */}
               <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20 group-hover:border-white/60 transition-colors" />

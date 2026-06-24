@@ -107,7 +107,7 @@ export default function Hero() {
 
         <h1 ref={headingRef} className="hero-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-black text-white tracking-tighter leading-[0.82] uppercase flex flex-col mb-12">
           <div className="overflow-hidden pb-2">
-            <span className="hero-heading-line inline-block">Full-Stack</span>
+            <span className="hero-heading-line inline-block">Full Stack</span>
           </div>
           <div className="overflow-hidden">
             <span className="hero-heading-line inline-block text-white/20 italic">Architect</span>

@@ -97,7 +97,7 @@ export default function ContactHero() {
           </div>
 
           <p className="hero-desc text-[10px] sm:text-xs md:text-sm lg:text-base text-gray-400 font-light leading-relaxed max-w-2xl mx-auto">
-            Use the form or email to start a project conversation. I usually reply within 24–48 hours. Let's collaborate to build something amazing together.
+            Use the form or email to start a project conversation. I usually reply within 4-5 hours. Let's collaborate to build something amazing together.
           </p>
         </div>
       </div>

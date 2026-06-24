@@ -1,7 +1,7 @@
-﻿import { useEffect } from 'react';
+import { useEffect } from 'react';
 import AboutHero from '@/features/About/AboutHero';
 import AboutSection from '@/features/About/AboutSection';
-import Vision from '@/features/About/Vision';
+
 import Philosophy from '@/features/About/Philosophy';
 import Experience from '@/features/About/Experience';
 import Stats from '@/features/Shared/Stats';
@@ -23,7 +23,7 @@ const AboutPage = () => {
       <AboutHero />
       <Stats />
       <AboutSection />
-      <Vision />
+
       <Philosophy />
       <Process />
       <Experience />

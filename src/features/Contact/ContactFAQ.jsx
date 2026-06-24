@@ -186,30 +186,7 @@ export default function ContactFAQ() {
                         {faq.a}
                       </p>
 
-                      <div className="flex flex-col sm:flex-row gap-16 items-start sm:items-end">
-                        <div className="space-y-6 flex-1">
-                          <div className="flex justify-between items-center text-xs font-mono text-white/40 tracking-[0.3em]">
-                            <span>Progress</span>
-                            <span>100%</span>
-                          </div>
-                          <div className="h-2 w-full bg-white/5 relative overflow-hidden">
-                            <div className={`absolute top-0 left-0 h-full bg-white/80 transition-all duration-1500 delay-500 ease-out ${activeIndex === i ? 'w-full' : 'w-0'}`} />
-                          </div>
-                        </div>
 
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                          }}
-                          className="group/cta flex items-center gap-6 px-6 sm:px-10 py-4 sm:py-5 min-h-[44px] border-2 border-white/10 hover:border-white/60 hover:bg-white/[0.05] transition-all duration-500 rounded-none shrink-0"
-                        >
-                          <span className="text-xs font-mono text-white/80 group-hover/cta:text-white tracking-[0.3em]">Contact Now</span>
-                          <svg className="w-6 h-6 text-white/40 group-hover/cta:text-white group-hover/cta:translate-x-2 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                          </svg>
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>
