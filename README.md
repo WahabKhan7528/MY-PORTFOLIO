@@ -281,4 +281,4 @@ This project is for portfolio purposes. All rights reserved.
 
 ---
 
-_Available for freelance and full-time opportunities_ ✨
+_Available for freelance and full-time opportunities_
