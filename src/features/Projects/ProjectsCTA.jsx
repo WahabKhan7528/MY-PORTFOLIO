@@ -75,10 +75,10 @@ export default function ProjectsCTA() {
 
               <Link
                 to="/contact"
-                className="group relative w-full sm:w-fit px-8 sm:px-12 py-6 sm:py-8 min-h-[44px] bg-white text-black overflow-hidden transition-all duration-500 hover:scale-[1.02] flex items-center justify-center gap-4"
+                className="group relative w-full sm:w-fit px-6 sm:px-8 py-3.5 sm:py-4 min-h-[44px] bg-white text-black overflow-hidden transition-all duration-500 hover:scale-[1.02] flex items-center justify-center gap-3"
               >
-                <span className="relative z-10 text-lg sm:text-xl md:text-2xl tracking-[0.6em] font-bold">Get in Touch</span>
-                <span className="relative z-10 text-3xl sm:text-4xl md:text-5xl">→</span>
+                <span className="relative z-10 text-sm sm:text-base md:text-lg tracking-[0.3em] sm:tracking-[0.4em] font-bold">Get in Touch</span>
+                <span className="relative z-10 text-xl sm:text-2xl md:text-3xl">→</span>
                 {/* Button Scanline */}
                 <div className="absolute inset-0 bg-gray-200 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-out" />
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-black/10 group-hover:bg-black/30 transition-colors" />
