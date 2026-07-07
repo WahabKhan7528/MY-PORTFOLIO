@@ -162,10 +162,10 @@ export default function ProjectDetail({ project, onClose }) {
             </p>
           </section>
 
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-start justify-between">
             
             {/* Left Column: Visuals */}
-            <div className="flex-1 md:max-w-2xl lg:max-w-3xl xl:max-w-6xl space-y-6 md:space-y-8 animate-stagger">
+            <div className="w-full lg:w-7/12 min-w-0 space-y-6 md:space-y-8 animate-stagger">
               {/* Main Hero Image Container */}
               <div className="relative group w-full aspect-[4/3] md:aspect-video border border-white/20 bg-white/5 overflow-hidden">
                 <img 
@@ -211,7 +211,7 @@ export default function ProjectDetail({ project, onClose }) {
             </div>
 
             {/* Right Column: Details */}
-            <div className="lg:w-1/3 lg:min-w-[320px] space-y-8 md:space-y-12">
+            <div className="w-full lg:w-4/12 min-w-0 space-y-8 md:space-y-12">
               
               {/* Tech Stack & Specs Grid */}
               <div className="grid grid-cols-2 gap-4 md:gap-6 animate-stagger">
