@@ -35,8 +35,11 @@ export default function Preloader({ onComplete }) {
                 onComplete: onComplete
             });
 
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (prefersReduced) tl.duration(0);
+            const prefersReduced = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+            if (prefersReduced) {
+                onComplete();
+                return;
+            }
 
             const progressObj = { val: 0 };
 
