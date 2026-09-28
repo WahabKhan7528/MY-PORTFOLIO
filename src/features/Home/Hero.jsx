@@ -101,7 +101,7 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-7xl flex flex-col items-center text-center">
         <div className="hero-meta flex items-center justify-center gap-4 mb-8">
           <div className="h-px w-12 bg-white/40" />
-          <span className="text-[12px] font-mono tracking-[0.6em] text-white/70 uppercase">-----</span>
+          <span className="text-[13px] font-mono tracking-[0.6em] text-white/70 uppercase">ABDUL WAHAB KHAN</span>
           <div className="h-px w-12 bg-white/40" />
         </div>
 
